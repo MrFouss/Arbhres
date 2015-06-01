@@ -6,10 +6,8 @@ package arbhres;
  * @since 05/21/2015
  */
 
-public class Launcher
-{
-	public static void main(String[] args)
-	{
-		
-	}
+public class Launcher {
+    public static void main(String[] args) {
+
+    }
 }
