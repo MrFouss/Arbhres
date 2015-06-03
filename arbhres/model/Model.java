@@ -6,7 +6,6 @@ package arbhres.model;
  * @since 05/21/2015
  */
 
-public class Model
-{
+public class Model {
 
 }

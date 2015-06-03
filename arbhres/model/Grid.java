@@ -40,18 +40,18 @@ public class Grid {
 
     private int selectAnySide() {
 	Random rnd = new Random();
-	return 3 + (rnd.nextInt(3)) * 4;	
+	return 3 + (rnd.nextInt(3)) * 4;
     }
 
     private void left(Tile tile, int side) {
 	Tile newTile = new Tile(queue.getQueue().poll());
 	add(selectAnySide(), newTile);
     }
-    
-    public void rotate(int side){
+
+    public void rotate(int side) {
 	Tile[] newTiles = new Tile[16];
 	int angle;
-	switch(side){
+	switch (side) {
 	case 1:
 	    angle = 90;
 	    break;
@@ -62,7 +62,7 @@ public class Grid {
 	    angle = 270;
 	    break;
 	}
-	
+
     }
-    
+
 }
