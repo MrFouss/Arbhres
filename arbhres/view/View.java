@@ -15,9 +15,9 @@ import java.io.IOException;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import view.graphicObject.*;
-import view.viewContent.ViewContent;
-import view.viewContent.sprite.TileSprite;
+import arbhres.view.graphicObject.*;
+import arbhres.view.viewContent.ViewContent;
+import arbhres.view.viewContent.sprite.TileSprite;
 
 public class View extends JFrame {
     	ViewContent content;

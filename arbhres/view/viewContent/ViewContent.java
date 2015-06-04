@@ -1,47 +1,75 @@
 package arbhres.view.viewContent;
 
-import arbhres.view.graphicObject.GraphicObject;
 import arbhres.view.viewContent.sprite.*;
 
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
-import java.util.HashMap;
-import java.util.LinkedList;
 
-import javax.swing.JFileChooser;
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import arbhres.view.viewContent.sprite.TileCoverSprite.TileCoverSpriteType;
 import arbhres.view.viewContent.sprite.TileSprite.TileLocation;
 
 public class ViewContent extends JPanel {
     
-	private final GeneralSprite[] base;
-	private TileSprite[] gridTile;
-	private TileSprite[] nextTile;
+	private final GeneralSprite[] background;
+	
+	private ButtonSprite[] buttons;
+	
+	private TileSprite[] gridTiles;
+	private TileSprite[] nextTiles;
 	private TileSprite storeTile;
-	private LinkedList<BonusSprite> bonusObj;
-	private ButtonSprite[] storeBonus;
+	
+	//Bonus
+	
+	private TileCoverSprite[] gridBlindTiles;
+	private TileCoverSprite[] nextBlindTiles;
+	private TileCoverSprite storeBlindTile;
+	
+	private TileCoverSprite target;
+	
+	private TileCoverSprite[] tileHighlight;
 	
 	public ViewContent() {
 	    super();
 	    this.setBackground(Color.white);
 		this.setPreferredSize(new Dimension (800, 695));
 		
-		base  = GeneralSprite.getGeneralSpriteList();
-		//buttonList = ButtonSprite.getButtonSpriteList();
-		storeBonus = ButtonSprite.getButtonSprites();
-		gridTile = new TileSprite[4*4];
-		nextTile = new TileSprite[3];
+		background  = GeneralSprite.getGeneralSprites();
+		
+		buttons = ButtonSprite.getButtonSprites();
+		
+		gridTiles = new TileSprite[4*4];
+		initArray(gridTiles);
+		nextTiles = new TileSprite[3];
+		initArray(gridTiles);
 		storeTile = null;
-		bonusObj = null;
+		
+		//bonus
+		
+		gridBlindTiles = new TileCoverSprite[4*4];
+		initArray(gridTiles);
+		gridBlindTiles = new TileCoverSprite[3];
+		initArray(gridTiles);
+		storeTile = null;
+		
+		target = new TileCoverSprite(TileCoverSpriteType.TARGET	, null);
+		
+		tileHighlight = new TileCoverSprite[4];
+		initArray(tileHighlight);
+	}
+	
+	private void initArray(Sprite[] s) {
+		for (int i = 0; i < s.length; i++) {
+			s[i] = null;
+		}
 	}
 	
 	public boolean addGridTile(int x, int y, int value)
 	{
 	    if (x >= 0 && x < 4 && y >= 0 && y < 4) {
-		gridTile[4* y + x] = new TileSprite(TileLocation.GRID, value, x, y);
+		gridTiles[4* y + x] = new TileSprite(TileLocation.GRID, value, x, y);
 		return true;
 	    }
 	    return false;
@@ -50,7 +78,7 @@ public class ViewContent extends JPanel {
 	public boolean removeGridTile(int x, int y)
 	{
 	    if (x >= 0 && x < 4 && y >= 0 && y < 4) {
-		gridTile[x + y * 4] = null;
+		gridTiles[x + y * 4] = null;
 		return true;
 	    }
 	    return false;
@@ -68,7 +96,7 @@ public class ViewContent extends JPanel {
 	
 	public void setNextTile(int index, int value) {
 	    if (index >= 0 && index < 3) {
-		nextTile[index] = new TileSprite(TileLocation.NEXT, value, 0, index);
+		nextTiles[index] = new TileSprite(TileLocation.NEXT, value, 0, index);
 	    }
 	}
 	
@@ -77,13 +105,13 @@ public class ViewContent extends JPanel {
 	    
 	    switch (loc) {
 	    case GRID:
-		t = gridTile[4*y + x];
+		t = gridTiles[4*y + x];
 		break;
 	    case STORE:
 		t = storeTile;
 		break;
 	    case NEXT:
-		t = nextTile[y];
+		t = nextTiles[y];
 		break;
 	    default:
 		t = null;
@@ -106,9 +134,16 @@ public class ViewContent extends JPanel {
 	
 	public void move()
 	{
+		int value = 3;
+
+		addGridTile(0, 0, 1);
+		addGridTile(0, 1, 2);
+		addGridTile(0, 2, 3);
+		
 	    for (int i = 0; i < 4; i++) {
 		    for (int j = 0; j < 4; j++) {
-				addGridTile(i, j, 1);
+				addGridTile(i, j, value);
+				value *= 2;
 		    }
 		}
 	    
@@ -123,12 +158,19 @@ public class ViewContent extends JPanel {
 
 	public void paint(Graphics g)
 	{    
-		paintIteration(g, base);
-		paintIteration(g, gridTile);
-		paintIteration(g, nextTile);
+		paintIteration(g, background);
+		paintIteration(g, buttons);
+		paintIteration(g, gridTiles);
+		paintIteration(g, nextTiles);
 		if (storeTile != null) {
 			storeTile.paint(g);
 		}
-		paintIteration(g, storeBonus);
+		target.paint(g);
+		
+		TileCoverSprite t = new TileCoverSprite(TileCoverSpriteType.BLIND, gridTiles[0]);
+		t.paint(g);
+		
+		TileCoverSprite t1 = new TileCoverSprite(TileCoverSpriteType.HIGHLIGHT, gridTiles[10]);
+		t1.paint(g);
 	}
 }

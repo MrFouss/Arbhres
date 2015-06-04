@@ -4,6 +4,7 @@ import java.awt.Graphics;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 
+import arbhres.view.graphicObject.GraphicObject;
 import arbhres.view.graphicObject.Picture;
 import arbhres.view.viewContent.RelativeSize;
 import arbhres.view.viewContent.Sprite;
@@ -24,7 +25,11 @@ public class TileSprite implements Sprite {
     public void paint(Graphics g) {
 	sprite.paint(g);
     }
-
+    
+	public Picture getSprite() {
+		return sprite;
+	}
+	
     public static enum TileLocation {
 	GRID(new Point2D.Double(1075, 1455)),
 	NEXT(new Point2D.Double(225, 3975-445-1600)),

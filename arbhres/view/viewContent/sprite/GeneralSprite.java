@@ -33,6 +33,10 @@ public enum GeneralSprite implements Sprite
 	    this.sprite = type.getGraphicObject(position, name, font);
 	}
 
+	public GraphicObject getSprite() {
+		return sprite;
+	}
+	
 	public void paint(Graphics g)
 	{
 	    sprite.paint(g);

@@ -1,6 +1,8 @@
 package arbhres.view.viewContent.sprite;
 
 import java.awt.Graphics;
+
+import arbhres.view.graphicObject.GraphicObject;
 import arbhres.view.graphicObject.Picture;
 import arbhres.view.viewContent.Sprite;
 
@@ -21,6 +23,10 @@ public enum ExtraMysteryButtonSprite implements Sprite
 	private ExtraMysteryButtonSprite(String name)
 	{
 		this.sprite = new Picture(ButtonSprite.MYSTERY.getBox(), path + name + extension);
+	}
+	
+	public Picture getSprite() {
+		return sprite;
 	}
 	
 	public void paint(Graphics g)

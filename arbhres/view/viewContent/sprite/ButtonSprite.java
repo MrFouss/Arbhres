@@ -2,6 +2,7 @@ package arbhres.view.viewContent.sprite;
 
 import java.awt.Graphics;
 import java.awt.geom.Rectangle2D;
+
 import arbhres.view.graphicObject.*;
 import arbhres.view.viewContent.RelativeSize;
 import arbhres.view.viewContent.Sprite;
@@ -47,6 +48,10 @@ public enum ButtonSprite implements Sprite {
 	return sprite.getBox();
     }
     
+	public Button getSprite() {
+		return sprite;
+	}
+	
     public void paint(Graphics g) {
 	sprite.paint(g);
     }
