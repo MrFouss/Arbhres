@@ -29,7 +29,7 @@ public class Grid {
 		int i = 0;
 		Random rnd = new Random();
 		do {
-			add(rnd.nextInt(3) + 1, tile);
+			addTile(rnd.nextInt(3) + 1, tile);
 		} while (i < 9);
 	}
 
@@ -49,7 +49,7 @@ public class Grid {
 
 	private void left(Tile tile, int side) {
 		Tile newTile = new Tile(queue.getQueue().poll());
-		add(selectAnySide(), newTile);
+		addTile(selectAnySide(), newTile);
 	}
 
 	public void rotate(int side) {
@@ -59,25 +59,25 @@ public class Grid {
 		int oldY = 0;
 		switch (side) {
 		case 1:
-			for(int i; i<16; i++) {
-				oldX=tiles[i]%4;
-				oldY=tiles[i]/4;
+			for(int i=0; i<16; i++) {
+				oldX=tiles[i].getData()%4;
+				oldY=tiles[i].getData()/4;
 				newTiles[3-oldY+(4*oldX)]=tiles[i];
 				this.tiles=newTiles;
 			}
 			break;
 		case 2:
-			for(int i; i<16; i++) {
-				oldX=tiles[i]%4;
-				oldY=tiles[i]/4;
+			for(int i=0; i<16; i++) {
+				oldX=tiles[i].getData()%4;
+				oldY=tiles[i].getData()/4;
 				newTiles[oldY+4*(3-oldX)]=tiles[i];
 				this.tiles=newTiles;
 			}
 			break;
 		case 3:
-			for(int i; i<16; i++) {
-				oldX=tiles[i]%4;
-				oldY=tiles[i]/4;
+			for(int i=0; i<16; i++) {
+				oldX=tiles[i].getData()%4;
+				oldY=tiles[i].getData()/4;
 				newTiles[3-oldX+4*(3-oldY)]=tiles[i];
 				this.tiles=newTiles;
 			}
