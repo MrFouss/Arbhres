@@ -1,10 +1,10 @@
-package view.viewContent.sprite;
+package arbhres.view.viewContent.sprite;
 
 import java.awt.Graphics;
 import java.awt.geom.Rectangle2D;
-import view.graphicObject.*;
-import view.viewContent.RelativeSize;
-import view.viewContent.Sprite;
+import arbhres.view.graphicObject.*;
+import arbhres.view.viewContent.RelativeSize;
+import arbhres.view.viewContent.Sprite;
 
 public enum ButtonSprite implements Sprite {   
     NEW_GAME	(ButtonLocation.NEW_GAME, 0, 0, "newGame"),

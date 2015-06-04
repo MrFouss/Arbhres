@@ -1,4 +1,4 @@
-package view;
+package arbhres.view;
 
 import java.awt.Color;
 import java.awt.Dimension;

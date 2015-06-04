@@ -1,12 +1,12 @@
-package view.viewContent.sprite;
+package arbhres.view.viewContent.sprite;
 
 import java.awt.Graphics;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 
-import view.graphicObject.Picture;
-import view.viewContent.RelativeSize;
-import view.viewContent.Sprite;
+import arbhres.view.graphicObject.Picture;
+import arbhres.view.viewContent.RelativeSize;
+import arbhres.view.viewContent.Sprite;
 
 public class TileSprite implements Sprite {
     private final Picture sprite;

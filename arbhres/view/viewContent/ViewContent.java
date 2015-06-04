@@ -1,7 +1,7 @@
-package view.viewContent;
+package arbhres.view.viewContent;
 
-import view.graphicObject.GraphicObject;
-import view.viewContent.sprite.*;
+import arbhres.view.graphicObject.GraphicObject;
+import arbhres.view.viewContent.sprite.*;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -13,7 +13,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import view.viewContent.sprite.TileSprite.TileLocation;
+import arbhres.view.viewContent.sprite.TileSprite.TileLocation;
 
 public class ViewContent extends JPanel {
     

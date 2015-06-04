@@ -1,4 +1,4 @@
-package view.graphicObject;
+package arbhres.view.graphicObject;
 
 import java.awt.Graphics;
 import java.awt.geom.Dimension2D;

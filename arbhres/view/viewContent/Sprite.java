@@ -1,4 +1,4 @@
-package view.viewContent;
+package arbhres.view.viewContent;
 
 import java.awt.Graphics;
 

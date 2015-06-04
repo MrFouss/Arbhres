@@ -1,12 +1,12 @@
-package view.viewContent.sprite;
+package arbhres.view.viewContent.sprite;
 
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.geom.Rectangle2D;
 
-import view.viewContent.RelativeSize;
-import view.viewContent.Sprite;
-import view.graphicObject.*;
+import arbhres.view.viewContent.RelativeSize;
+import arbhres.view.viewContent.Sprite;
+import arbhres.view.graphicObject.*;
 
 public enum GeneralSprite implements Sprite
 {	

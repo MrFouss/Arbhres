@@ -1,8 +1,8 @@
-package view.viewContent.sprite;
+package arbhres.view.viewContent.sprite;
 
 import java.awt.Graphics;
-import view.graphicObject.Picture;
-import view.viewContent.Sprite;
+import arbhres.view.graphicObject.Picture;
+import arbhres.view.viewContent.Sprite;
 
 public enum ExtraMysteryButtonSprite implements Sprite
 {
