@@ -33,7 +33,7 @@ public class Grid {
 		} while (i < 9);
 	}
 
-	public void add(int coord, Tile tile) {
+	public void addTile(int coord, Tile tile) {
 		this.tiles[coord] = tile;
 	}
 
@@ -55,15 +55,32 @@ public class Grid {
 	public void rotate(int side) {
 		Tile[] newTiles = new Tile[16];
 		int angle;
+		int oldX = 0;
+		int oldY = 0;
 		switch (side) {
 		case 1:
-			angle = 90;
+			for(int i; i<16; i++) {
+				oldX=tiles[i]%4;
+				oldY=tiles[i]/4;
+				newTiles[3-oldY+(4*oldX)]=tiles[i];
+				this.tiles=newTiles;
+			}
 			break;
 		case 2:
-			angle = 180;
+			for(int i; i<16; i++) {
+				oldX=tiles[i]%4;
+				oldY=tiles[i]/4;
+				newTiles[oldY+4*(3-oldX)]=tiles[i];
+				this.tiles=newTiles;
+			}
 			break;
 		case 3:
-			angle = 270;
+			for(int i; i<16; i++) {
+				oldX=tiles[i]%4;
+				oldY=tiles[i]/4;
+				newTiles[3-oldX+4*(3-oldY)]=tiles[i];
+				this.tiles=newTiles;
+			}
 			break;
 		}
 
