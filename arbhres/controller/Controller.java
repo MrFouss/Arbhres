@@ -18,27 +18,24 @@ import arbhres.controller.listeners.ControllerListener;
  * @since	05/21/2015
  */
 public class Controller extends InputAdapter {
-	private Boolean normalMode = true;
 	private final EventListenerList listeners = new EventListenerList();
+	
+	public Controller () {}
 
 	/* NEEDED OVERRIDEN METHODS */
 
 	@Override
 	public void keyTyped(KeyEvent e) {
-		if (normalMode) {
-			fireKeyPressed(e);
-		}
+		fireKeyPressed(e);
 	}
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		System.out.println("Click coordinates: [" + e.getX() + ";" + e.getY()
-				+ "]");
-		if (normalMode) {
-			// TODO fireButtonClicked(getButton(e.getX(), e.getY()));
-		} else {
-			// TODO fireTileClicked(getButton(e.getX(), e.getY()));
-		}
+		/*if (isButton(e.getX(), e.getY())) {
+			fireButtonClicked(getButton(e.getX(), e.getY()));
+		} else if (isTile(e.getX(), e.getY())) {
+			fireTileClicked(getTileIndex(e.getX(), e.getY()));
+		}*/
 	}
 
 	/* LISTENER METHODS */

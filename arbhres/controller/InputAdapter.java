@@ -4,10 +4,8 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
 
-public class InputAdapter implements MouseListener, MouseMotionListener,
-		KeyListener {
+public class InputAdapter implements MouseListener, KeyListener {
 
 	// KEYBOARD LISTENER METHODS
 
@@ -21,12 +19,6 @@ public class InputAdapter implements MouseListener, MouseMotionListener,
 	}
 
 	// MOUSE LISTENER METHODS
-
-	public void mouseDragged(MouseEvent e) {
-	}
-
-	public void mouseMoved(MouseEvent e) {
-	}
 
 	public void mouseClicked(MouseEvent e) {
 	}
