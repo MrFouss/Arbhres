@@ -6,6 +6,8 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Point;
+import java.awt.geom.Point2D;
+import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -25,8 +27,8 @@ public class ViewContent extends JPanel {
 	
 	private HashMap<ButtonType, ButtonSprite> buttons;
 	
-	private HashMap<TileType, ArrayList<TileSprite>> grid;
-	private HashMap<TileType, ArrayList<TileSprite>> next;
+	private HashMap<TileType, TileSprite[]> grid;
+	private HashMap<TileType, TileSprite[]> next;
 	private HashMap<TileType, TileSprite> store;
 	
 	public ViewContent() {
@@ -66,20 +68,20 @@ public class ViewContent extends JPanel {
 	private void initGrid() {
 		TileType[] tType = TileType.getTiles();
 		
-		grid = new HashMap<TileType, ArrayList<TileSprite>>(tType.length);
+		grid = new HashMap<TileType, TileSprite[]>(tType.length);
 		
 		for (int i = 0; i < tType.length; i++) {
-			grid.put(tType[i], new ArrayList<TileSprite>(4*4));
+			grid.put(tType[i], new TileSprite[4*4]);
 		}
 	}
 	
 	private void initNext() {
 		TileType[] tType = TileType.getTiles();
 		
-		next = new HashMap<TileType, ArrayList<TileSprite>>(tType.length);
+		next = new HashMap<TileType, TileSprite[]>(tType.length);
 		
 		for (int i = 0; i < tType.length; i++) {
-			next.put(tType[i],new ArrayList<TileSprite>(3));
+			next.put(tType[i],new TileSprite[3]);
 		}
 	}
 	
@@ -93,13 +95,21 @@ public class ViewContent extends JPanel {
 		}
 	}
 	
+	//buttons
+	
+	public ButtonSprite getButton(ButtonType bt) {
+		return buttons.get(bt);
+	}
+	
+	//tiles
+	
 	public void addTile(TileLocation tLoc, TileType tType, int x, int y, int value)
 	{
 	    switch (tLoc) {
 		case GRID:
 			x = Math.min(3, x);
 			y = Math.min(3, x);
-			grid.get(tType).set(index, element)get(y*4 + x) = new TileSprite(tLoc, tType, value, x, y);
+			grid.get(tType)[y * 4 + x] = new TileSprite(tLoc, tType, value, x, y);
 			break;
 		case NEXT:
 			y = Math.min(y, 2);
@@ -172,15 +182,33 @@ public class ViewContent extends JPanel {
 			break;
 		}*/
 	}
-	
-	private void paintIteration(Graphics g, Sprite[] sl)
-	{
-		for (Sprite s : sl)
-		{
-		    if (s != null) {
-			s.paint(g);
-		    }
-			
+
+	public void move() {
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		addTile(TileLocation.GRID, TileType.TILE, 0, 0, 1);
+		TileSprite ts = getTile(TileLocation.GRID, TileType.TILE, 0, 0);
+		Point2D o = new Point2D.Double(ts.getBox().getX(), ts.getBox().getY());
+		Rectangle2D r = TileLocation.STORE.getBoxOfTile(0, 0);
+		Point2D d = new Point2D.Double(r.getX(), r.getY());
+		repaint();
+		TileMovement tmv = new TileMovement(getTile(TileLocation.GRID, TileType.TILE, 0, 0),
+				o, d);
+		tmv.initMovement();
+		repaint();
+
+		while (!tmv.stepForward()) {
+			repaint();
+			try {
+				Thread.sleep(50);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 

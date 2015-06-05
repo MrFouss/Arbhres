@@ -19,7 +19,18 @@ public enum GeneralType implements SpriteType{
 	{
 	   this.type = type;
 	   this.location = position;
-	   this.content = Sprite.path + name + Sprite.extension;
+		   switch (type) {
+		case PICTURE:
+			this.content = Sprite.path + name + Sprite.extension;
+			break;
+		case TEXT:
+			this.content = name;
+			break;
+		default:
+			content = "";
+			break;
+		}
+		   
 	}
 	
 	public static GeneralType[] getGeneralSprites()

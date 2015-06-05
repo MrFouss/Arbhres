@@ -28,6 +28,8 @@ public class View extends JFrame {
 	    getContentPane().add(content);
 	    pack();
 	    setVisible(true);
+	    
+	    content.move();
 	}
 
 	public ViewContent getContent() {
