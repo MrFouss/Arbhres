@@ -1,4 +1,4 @@
-package arbhres.model;
+package arbhres.model.modifiers;
 
 /**
  * @author Stéphane Perrez <stephane.perrez@utbm.fr>

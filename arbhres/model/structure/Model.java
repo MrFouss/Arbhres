@@ -1,10 +1,12 @@
-package arbhres.model;
+package arbhres.model.structure;
 
 import arbhres.controller.Controller;
 import arbhres.controller.events.ButtonClickEvent;
 import arbhres.controller.events.MovementEvent;
 import arbhres.controller.events.TileClickEvent;
 import arbhres.controller.listeners.ControllerListener;
+import arbhres.model.Grid;
+import arbhres.model.modifiers.Pause;
 
 /**
  * @author	Pierre Brunet <pierre.brunet@krophil.fr>

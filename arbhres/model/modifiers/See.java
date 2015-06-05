@@ -1,4 +1,4 @@
-package arbhres.model;
+package arbhres.model.modifiers;
 
 public class See extends Modifier {
 	
