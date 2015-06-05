@@ -84,9 +84,31 @@ public class Grid {
 	public int getInventory() {
 		return this.inventory;
 	}
-
+	
 	/**
-	 * Initializes the tile array with 9 random tiles between 1 and 3
+	 * Inventory tile setter
+	 * 
+	 * @param inventory
+	 */
+	public void setInventory(int inventory) {
+		this.inventory=inventory;
+	}
+	
+	/**
+	 * Return the value of the selected tile
+	 * 
+	 * @param tileIndex 
+	 * @return the value contained in the tile
+	 */
+	public int getTile(int tileIndex) {
+		return this.tiles[tileIndex];
+	}
+	
+	public void emptyGrid(){
+		this.tiles = null;
+	}
+	/**
+	 * Initialize the tile array with 9 random tiles between 1 and 3
 	 */
 	public void initTiles() {
 		Random rnd = new Random();
@@ -101,6 +123,19 @@ public class Grid {
 			} while (!isTileEmpty(tileIndex));
 			
 			addTile(tileIndex, randomTile());
+		}
+	}
+	
+	/**
+	 * Reset the tile to -1
+	 * 
+	 * @param index of the tile spot to remove
+	 */
+	public void removeTile(int tileIndex){
+		if(tileIndex==16){
+			this.inventory=-1;
+		} else {
+			this.tiles[tileIndex]=-1;
 		}
 	}
 	
@@ -133,6 +168,21 @@ public class Grid {
 	public boolean isTileEmpty(int tileIndex) {
 		return (this.tiles[tileIndex] == -1);
 	}
+
+	/**
+	 * Check if the grid is empty
+	 * 
+	 * @return true if the grid is empty
+	 */
+	public boolean isGridEmpty(){
+		boolean isEmpty=true;
+		for(int i=0; i<16; i++){
+			if(!isTileEmpty(i)){
+				isEmpty=false;
+			}
+		}
+		return isEmpty;
+	}
 	
 	/**
 	 * Select an empty tile spot at the right side of the tile array
@@ -151,6 +201,85 @@ public class Grid {
 		return tileIndex;
 	}
 	
+	
+	/**
+	 * Returns the highest tile
+	 * 
+	 * @return the index of the highest tile
+	 */
+	public int selectHighest() {
+		int highest=0;
+		for(int i=0;i<16;i++) {
+			if (tiles[i]>tiles[highest]) {
+				highest=i;
+			}
+		}
+		return highest;
+	}
+	
+	/**
+	 * Swap two tiles
+	 * 
+	 * @param indexTileA the index of the first tile
+	 * @param indexTileB the index of the second tile
+	 */
+	public void switchTiles(int indexTileA, int indexTileB) {
+		int tmp;
+		tmp = indexTileA;
+		indexTileA = indexTileB;
+		indexTileB = tmp;
+	}
+	
+	/**
+	 * counterclockwise rotation of one of the 4 areas
+	 * @param area
+	 */
+	public void rotateLeft(int area){
+		int tmp;
+		int start = 0;
+		switch (area) {
+		case 1:
+			start = 2;
+			break;
+		case 2:
+			start = 8;
+			break;
+		case 3:
+			start = 10;
+			break;
+		}
+		tmp=tiles[start];
+		tiles[start]=tiles[start+1];
+		tiles[start+1]=tiles[start+5];
+		tiles[start+5]=tiles[start+4];
+		tiles[start+4]=tmp;
+	}
+	
+	/**
+	 * counterclockwise rotation of one of the 4 areas
+	 * @param area
+	 */
+	public void rotateRight(int area){
+		int tmp;
+		int start = 0;
+		switch (area) {
+		case 1:
+			start = 2;
+			break;
+		case 2:
+			start = 8;
+			break;
+		case 3:
+			start = 10;
+			break;
+		}
+		tmp=tiles[start];
+		tiles[start]=tiles[start+4];
+		tiles[start+4]=tiles[start+5];
+		tiles[start+5]=tiles[start+1];
+		tiles[start+1]=tmp;
+	}
+	
 	/**
 	 * Check if two tiles can be merged
 	 * 
@@ -158,7 +287,7 @@ public class Grid {
 	 * @param j second tile
 	 * @return if tiles can be merged
 	 */
-	boolean isMergeable(int i, int j) {
+	private boolean isMergeable(int i, int j) {
 		return ((tiles[i]==tiles[j] && tiles[i] != 1 && tiles[i] !=2 && tiles[i]!=-1) || (tiles[i]==1 && tiles[j]==2) || (tiles[j]==1 && tiles[i]==2));
 	}
 	
@@ -191,7 +320,7 @@ public class Grid {
 			}
 			if(hasMoved) {
 				addTile(selectAnySide(), queue.getQueue().poll());
-				queue.getQueue().add(randomTile());
+				queue.getQueue().offer(randomTile());
 			}
 			break;
 		case DOWN:
