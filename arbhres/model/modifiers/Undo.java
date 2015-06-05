@@ -25,8 +25,8 @@ public class Undo extends Modifier {
 	 * @return the updated score
 	 */
 	public long apply(Grid grid, Grid backup) {
-		//TODO add when the emptyGrid grid method is implemented
-		//grid.emptyGrid(); 
+
+		grid.emptyGrid(); 
 		grid = backup;
 		backup = null;
 		

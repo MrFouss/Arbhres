@@ -25,8 +25,8 @@ public class Erase extends Modifier{
 	 * @return the updated score
 	 */
 	public long apply(Grid grid, int indexTile) {
-		//TODO add when getTile is added
-		if (indexTile >= 0 && indexTile <= 15 /*&& grid.getTile(indexTile) != -1*/) {
+
+		if (indexTile >= 0 && indexTile <= 15 && grid.getTile(indexTile) != -1) {
 
 			grid.addTile(indexTile, -1);
 			
@@ -45,8 +45,7 @@ public class Erase extends Modifier{
 	 */
 	public boolean isAvailable(long score, Grid grid) {
 		
-		//TODO replace when isEmptyGrid is implemented
-		return (super.isAvailable(score) /*&&grid.isEmptyGrid()*/ );
+		return (super.isAvailable(score) &&grid.isGridEmpty() );
 	}
 
 }

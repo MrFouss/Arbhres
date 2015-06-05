@@ -43,8 +43,8 @@ public class TurnRight extends Modifier {
 			default:
 				return 0;
 		}
-		//TODO change when rotateRight(int area) is implemented
-		//grid.rotateRight(area);
+
+		grid.rotateRight(area);
 		return updateScore();
 	}
 }

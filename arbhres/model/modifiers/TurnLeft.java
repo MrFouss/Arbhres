@@ -42,8 +42,8 @@ public class TurnLeft extends Modifier {
 			default:
 				return 0;
 		}
-		//TODO change when rotateLeft(int area) is implemented
-		//grid.rotateLeft(area);
+
+		grid.rotateLeft(area);
 		return updateScore();
 	}
 }
