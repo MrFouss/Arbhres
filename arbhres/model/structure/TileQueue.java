@@ -2,8 +2,6 @@ package arbhres.model.structure;
 
 import java.util.*;
 
-import arbhres.model.Grid;
-
 /**
  * @author	Pierre Brunet <pierre.brunet@krophil.fr>
  * @version	1.0

@@ -1,6 +1,6 @@
 package arbhres.model.modifiers;
 
-import arbhres.model.Grid;
+import arbhres.model.structure.Grid;
 
 /**
  * @author Stéphane Perrez <stephane.perrez@utbm.fr>

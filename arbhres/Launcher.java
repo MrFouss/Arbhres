@@ -4,7 +4,7 @@ import java.io.IOException;
 
 import arbhres.view.View;
 import arbhres.controller.Controller;
-import arbhres.model.structure.Model;
+import arbhres.model.Model;
 
 /**
  * @author	Maxime Brodat <maxime.brodat@fouss.fr>

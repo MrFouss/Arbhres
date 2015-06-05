@@ -1,9 +1,8 @@
-package arbhres.model;
+package arbhres.model.structure;
 
 import java.util.Random;
 
 import arbhres.controller.events.MovementEvent.Direction;
-import arbhres.model.structure.TileQueue;
 
 /**
  * @author	Pierre Brunet <pierre.brunet@krophil.fr>
