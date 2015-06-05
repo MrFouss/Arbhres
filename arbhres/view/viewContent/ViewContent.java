@@ -6,7 +6,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Point;
-import java.util.Collection;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.swing.JPanel;
@@ -25,8 +25,8 @@ public class ViewContent extends JPanel {
 	
 	private HashMap<ButtonType, ButtonSprite> buttons;
 	
-	private HashMap<TileType, TileSprite[]> grid;
-	private HashMap<TileType, TileSprite[]> next;
+	private HashMap<TileType, ArrayList<TileSprite>> grid;
+	private HashMap<TileType, ArrayList<TileSprite>> next;
 	private HashMap<TileType, TileSprite> store;
 	
 	public ViewContent() {
@@ -66,20 +66,20 @@ public class ViewContent extends JPanel {
 	private void initGrid() {
 		TileType[] tType = TileType.getTiles();
 		
-		grid = new HashMap<TileType, TileSprite[]>(tType.length);
+		grid = new HashMap<TileType, ArrayList<TileSprite>>(tType.length);
 		
 		for (int i = 0; i < tType.length; i++) {
-			grid.put(tType[i], new TileSprite[4*4]);
+			grid.put(tType[i], new ArrayList<TileSprite>(4*4));
 		}
 	}
 	
 	private void initNext() {
 		TileType[] tType = TileType.getTiles();
 		
-		next = new HashMap<TileType, TileSprite[]>(tType.length);
+		next = new HashMap<TileType, ArrayList<TileSprite>>(tType.length);
 		
 		for (int i = 0; i < tType.length; i++) {
-			next.put(tType[i], new TileSprite[3]);
+			next.put(tType[i],new ArrayList<TileSprite>(3));
 		}
 	}
 	
@@ -99,7 +99,7 @@ public class ViewContent extends JPanel {
 		case GRID:
 			x = Math.min(3, x);
 			y = Math.min(3, x);
-			grid.get(tType)[4 * y + x] = new TileSprite(tLoc, tType, value, x, y);
+			grid.get(tType).set(index, element)get(y*4 + x) = new TileSprite(tLoc, tType, value, x, y);
 			break;
 		case NEXT:
 			y = Math.min(y, 2);
@@ -173,7 +173,7 @@ public class ViewContent extends JPanel {
 		}*/
 	}
 	
-	private void paintIteration(Graphics g, Collection<T extends Sprite> sl)
+	private void paintIteration(Graphics g, Sprite[] sl)
 	{
 		for (Sprite s : sl)
 		{
@@ -186,7 +186,39 @@ public class ViewContent extends JPanel {
 
 	public void paint(Graphics g)
 	{    
-		paintIteration((g, background.values());
+		for (GeneralSprite s : background.values()) {
+			if (s != null) {
+				s.paint(g);
+			}
+		}
 		
+		for (ButtonSprite s : buttons.values()) {
+			if (s != null) {
+				s.paint(g);
+			}
+		}
+		
+		for	(TileType t : grid.keySet()) {
+			for (TileSprite s : grid.get(t)) {
+				if (s != null) {
+					s.paint(g);
+				}
+			}
+		}
+		
+		for	(TileType t : next.keySet()) {
+			for (TileSprite s : next.get(t)) {
+				if (s != null) {
+					s.paint(g);
+				}
+			}
+		}
+		
+		for	(TileSprite t : store.values()) {
+			if (t != null) {
+				t.paint(g);
+			}
+			
+		}
 	}
 }
