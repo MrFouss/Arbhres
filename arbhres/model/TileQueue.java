@@ -21,18 +21,8 @@ public class TileQueue {
 		
 		// initialize the queue with three tiles
 		for (int i=0; i<3; i++) {
-			this.queue.offer(randomTile());
+			this.queue.offer(Grid.randomTile());
 		}
-	}
-
-	/**
-	 * Generate a random number
-	 * 
-	 * @return an integer between 1 and 3
-	 */
-	public int randomTile() {
-		Random rnd = new Random();
-		return rnd.nextInt(3) + 1;
 	}
 
 	/**
