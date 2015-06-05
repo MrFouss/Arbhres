@@ -24,6 +24,18 @@ public class TileQueue {
 			this.queue.offer(Grid.randomTile());
 		}
 	}
+	
+	public void offer(int integer) {
+		this.queue.offer(integer);
+	}
+	
+	public int peek() {
+		return this.queue.peek();
+	}
+	
+	public int poll() {
+		return this.queue.poll();
+	}
 
 	/**
 	 * Queue getter
