@@ -9,6 +9,9 @@ import java.util.Random;
  */
 public class RandomModifier extends Modifier {
 	
+	/**
+	 * Create the modifier without price, which is generated each time the 
+	 */
 	public RandomModifier() {
 		super(0);
 	}

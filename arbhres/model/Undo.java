@@ -7,6 +7,9 @@ package arbhres.model;
  */
 public class Undo extends Modifier {
 	
+	/**
+	 * Create the modifier with its defined price
+	 */
 	public Undo(){
 		super(5000);
 	}

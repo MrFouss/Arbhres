@@ -12,6 +12,11 @@ public abstract class Modifier {
 	 */
 	private long price;
 	
+	/**
+	 * Generate a modifier, setting its price
+	 * 
+	 * @param price
+	 */
 	protected Modifier(long price) {
 		this.price = price;
 	}

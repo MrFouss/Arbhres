@@ -7,6 +7,9 @@ package arbhres.model;
  */
 public class Erase extends Modifier{
 	
+	/**
+	 * Create the modifier with its defined price
+	 */
 	public Erase() {
 		super(6000);
 	}

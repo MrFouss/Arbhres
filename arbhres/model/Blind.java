@@ -7,6 +7,9 @@ package arbhres.model;
  */
 public class Blind extends Modifier {
 	
+	/**
+	 * Create the modifier with its defined price
+	 */
 	public Blind() {
 		super(-5000);
 	}

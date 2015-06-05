@@ -6,7 +6,10 @@ package arbhres.model;
  * @since	06/05/2015
  */
 public class Swap extends Modifier {
-
+	
+	/**
+	 * Create the modifier with its defined price
+	 */
 	public Swap() {
 		super(8000);
 	}

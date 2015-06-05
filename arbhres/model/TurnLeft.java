@@ -7,6 +7,9 @@ package arbhres.model;
  */
 public class TurnLeft extends Modifier {
 
+	/**
+	 * Create the modifier with its defined price
+	 */
 	public TurnLeft() {
 		super(4000);
 	}

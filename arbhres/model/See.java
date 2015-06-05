@@ -2,6 +2,9 @@ package arbhres.model;
 
 public class See extends Modifier {
 	
+	/**
+	 * Create the modifier with its defined price
+	 */
 	public See() {
 		super(4000);
 	}

@@ -2,6 +2,9 @@ package arbhres.model;
 
 public class Target extends Modifier{
 	
+	/**
+	 * Create the modifier with its defined price
+	 */
 	public Target() {
 		super(-8000);
 	}
