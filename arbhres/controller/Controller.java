@@ -7,12 +7,10 @@ import javax.swing.event.EventListenerList;
 
 import arbhres.controller.events.MovementEvent;
 import arbhres.controller.events.MovementEvent.Direction;
-import arbhres.controller.listeners.MovementListener;
 import arbhres.controller.events.TileClickEvent;
-import arbhres.controller.listeners.TileClickListener;
 import arbhres.controller.events.ButtonClickEvent;
 import arbhres.controller.events.ButtonClickEvent.Button;
-import arbhres.controller.listeners.ButtonClickListener;
+import arbhres.controller.listeners.ControllerListener;
 
 /**
  * @author	Maxime Brodat <maxime.brodat@fouss.fr>
@@ -46,86 +44,32 @@ public class Controller extends InputAdapter {
 	/* LISTENER METHODS */
 
 	/**
-	 * Add a new movement listener to the list of listeners
+	 * Add a new controller listener to the list of listeners
 	 * 
 	 * @param listener Listener to add to the list
 	 */
-	public void addMovementListener(MovementListener listener) {
-		listeners.add(MovementListener.class, listener);
+	public void addControllerListener(ControllerListener listener) {
+		listeners.add(ControllerListener.class, listener);
 	}
 
 	/**
-	 * Remove a movement listener of the list of listeners
+	 * Remove a controller listener of the list of listeners
 	 * 
 	 * @param listener Listener to remove of the list
 	 */
-	public void removeMovementListener(MovementListener listener) {
-		listeners.remove(MovementListener.class, listener);
+	public void removeControllerListener(ControllerListener listener) {
+		listeners.remove(ControllerListener.class, listener);
 	}
 
 	/**
-	 * Get the list of listeners actually listening to the movements
+	 * Get the list of listeners actually listening to the controller
 	 * 
 	 * @return List of listeners
 	 */
-	public MovementListener[] getMovementListeners() {
-		return listeners.getListeners(MovementListener.class);
+	public ControllerListener[] getControllerListeners() {
+		return listeners.getListeners(ControllerListener.class);
 	}
 	
-	/**
-	 * Add a new tile click listener to the list of listeners
-	 * 
-	 * @param listener Listener to add to the list
-	 */
-	public void addTileClickListener(TileClickListener listener) {
-		listeners.add(TileClickListener.class, listener);
-	}
-
-	/**
-	 * Remove a tile click listener of the list of listeners
-	 * 
-	 * @param listener Listener to remove of the list
-	 */
-	public void removeTileClickListener(TileClickListener listener) {
-		listeners.remove(TileClickListener.class, listener);
-	}
-
-	/**
-	 * Get the list of listeners actually listening to the tile clicks
-	 * 
-	 * @return List of listeners
-	 */
-	public TileClickListener[] getTileClickListeners() {
-		return listeners.getListeners(TileClickListener.class);
-	}
-	
-	/**
-	 * Add a new button click listener to the list of listeners
-	 * 
-	 * @param listener Listener to add to the list
-	 */
-	public void addButtonClickListener(ButtonClickListener listener) {
-		listeners.add(ButtonClickListener.class, listener);
-	}
-
-	/**
-	 * Remove a button click listener of the list of listeners
-	 * 
-	 * @param listener Listener to remove of the list
-	 */
-	public void removeButtonClickListener(ButtonClickListener listener) {
-		listeners.remove(ButtonClickListener.class, listener);
-	}
-
-	/**
-	 * Get the list of listeners actually listening to the button clicks
-	 * 
-	 * @return List of listeners
-	 */
-	public ButtonClickListener[] getButtonClickListeners() {
-		return listeners.getListeners(ButtonClickListener.class);
-	}
-
 	/* LISTENERS FIRE METHODS */
 
 	/**
@@ -135,7 +79,7 @@ public class Controller extends InputAdapter {
 	 */
 	protected void fireKeyPressed(KeyEvent keyTyped) {
 		MovementEvent event = null;
-		for (MovementListener listener : getMovementListeners()) {
+		for (ControllerListener listener : getControllerListeners()) {
 			if (event == null) {
 				switch (keyTyped.getKeyCode()) {
 				case KeyEvent.VK_UP:
@@ -163,7 +107,7 @@ public class Controller extends InputAdapter {
 	 */
 	protected void fireButtonClicked(Button button) {
 		ButtonClickEvent event = null;
-		for (ButtonClickListener listener : getButtonClickListeners()) {
+		for (ControllerListener listener : getControllerListeners()) {
 			if (event == null) {
 				event = new ButtonClickEvent(button);
 			}
@@ -178,7 +122,7 @@ public class Controller extends InputAdapter {
 	 */
 	protected void fireTileClicked(int tileIndex) {
 		TileClickEvent event = null;
-		for (TileClickListener listener : getTileClickListeners()) {
+		for (ControllerListener listener : getControllerListeners()) {
 			if (event == null) {
 				event = new TileClickEvent(tileIndex);
 			}
