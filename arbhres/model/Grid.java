@@ -152,14 +152,47 @@ public class Grid {
 	}
 	
 	/**
+	 * Check if two tiles can be merged
+	 * 
+	 * @param i first tile
+	 * @param j second tile
+	 * @return if tiles can be merged
+	 */
+	boolean isMergeable(int i, int j) {
+		return ((tiles[i]==tiles[j] && tiles[i] != 1 && tiles[i] !=2 && tiles[i]!=-1) || (tiles[i]==1 && tiles[j]==2) || (tiles[j]==1 && tiles[i]==2));
+	}
+	
+	/**
 	 * Moves the grid in a direction
 	 * 
 	 * @param direction the direction where the tiles are going
+	 * @return resulting score during this move
 	 */
-	public void move(Direction direction) {
+	public int move(Direction direction) {
+		int score = 0;
 		switch (direction) {
 		case LEFT:
-			// TODO move left (move and merge all tiles, add a new tile with selectAnySide)
+			boolean hasMoved=false;
+			for(int j=0; j<4; j++) {
+				for(int i=0; i<3; i++) {
+					if(isMergeable(i+j*4, i+1+j*4)) {
+						tiles[i+j*4]+=tiles[i+1+j*4]; // merges Tile[i] and Tile[i+1]
+						tiles[i+1+j*4]=-1;
+						score += tiles[i+j*4]*100;
+						hasMoved=true;
+					} else {
+						if(isTileEmpty(i+j*4)){ // checks if the tile is empty
+							tiles[i+j*4]=tiles[i+1+j*4]; // moves the previous tile to the empty one
+							tiles[i+1+j*4]=-1; // empty the previous tile
+							hasMoved=true;
+						} 
+					}
+				}
+			}
+			if(hasMoved) {
+				addTile(selectAnySide(), queue.getQueue().poll());
+				queue.getQueue().add(randomTile());
+			}
 			break;
 		case DOWN:
 			rotate(1);
@@ -177,6 +210,7 @@ public class Grid {
 			rotate(1);
 			break;
 		}
+		return score;
 	}
 
 	/**
