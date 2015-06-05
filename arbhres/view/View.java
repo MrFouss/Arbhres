@@ -17,7 +17,6 @@ import javax.swing.JPanel;
 
 import arbhres.view.graphicObject.*;
 import arbhres.view.viewContent.ViewContent;
-import arbhres.view.viewContent.sprite.TileSprite;
 
 public class View extends JFrame {
     	ViewContent content;

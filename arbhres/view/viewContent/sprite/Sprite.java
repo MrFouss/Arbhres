@@ -1,4 +1,4 @@
-package arbhres.view.viewContent;
+package arbhres.view.viewContent.sprite;
 
 import java.awt.Graphics;
 

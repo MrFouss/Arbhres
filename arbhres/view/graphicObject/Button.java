@@ -23,16 +23,19 @@ public class Button extends GraphicObject{
 	
 	public void paint(Graphics g)
 	{
-		switch (status)
-		{
-			case PRESSED :
-				pressed.paint(g);
-				break;
-			case UNPRESSED :
-				unpressed.paint(g);
-				break;
-			default :
-				break;
+		if (visibility) {
+			switch (status)
+			{
+				case PRESSED :
+					pressed.paint(g);
+					break;
+				case UNPRESSED :
+					unpressed.paint(g);
+					break;
+				default :
+					break;
+			}
 		}
+		
 	}
 }

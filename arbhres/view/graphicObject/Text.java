@@ -13,7 +13,7 @@ public class Text extends GraphicObject{
 	private String content;
 	private Font font;
 	
-	public Text(Rectangle2D box, String content, Font font)
+	public Text(Rectangle2D box, String content)
 	{
 		super(box);
 		try {
@@ -21,12 +21,9 @@ public class Text extends GraphicObject{
 		} catch (NullPointerException e) {
 			this.content = "";
 		}
-		
-		if (font == null) {
+
 			this.font = new Font("Arial", Font.PLAIN, 50);
-		} else {
-			this.font = new Font(font.getFontName(), font.getStyle(), font.getSize());
-		}
+
 	}
 	
 	private void adaptFont(Graphics2D g2)
@@ -65,15 +62,17 @@ public class Text extends GraphicObject{
 	
 	public void paint(Graphics g)
 	{
-		Graphics2D g2 = (Graphics2D) g;
-		
-		adaptFont(g2);
-		
-		Point2D point = centerText(g2);
+		if (visibility) {
+			Graphics2D g2 = (Graphics2D) g;
+			
+			adaptFont(g2);
+			
+			Point2D point = centerText(g2);
 
-		g2.setFont(font);
-		g2.setColor(Color.black);
-		g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING , RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
-		g2.drawString(content, (float) point.getX(), (float) point.getY());
+			g2.setFont(font);
+			g2.setColor(Color.black);
+			g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING , RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+			g2.drawString(content, (float) point.getX(), (float) point.getY());			
+		}
 	}
 }

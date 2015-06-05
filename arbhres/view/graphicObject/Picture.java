@@ -1,18 +1,13 @@
 package arbhres.view.graphicObject;
 
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
-import java.awt.RenderingHints;
-import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
-import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import java.awt.image.RescaleOp;
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.DirectoryStream.Filter;
 
 import javax.imageio.ImageIO;
 
@@ -103,7 +98,7 @@ public class Picture extends GraphicObject
 	@Override
 	public void paint(Graphics g)
 	{
-		if (image != null && opacity != 0) {
+		if (image != null && opacity != 0 && visibility) {
 			Graphics2D g2 = (Graphics2D) g;
 			g2.drawImage(image, (int)box.getX(), (int)box.getY(), null);
 		}

@@ -8,19 +8,22 @@ import java.awt.geom.Rectangle2D;
 public abstract class GraphicObject
 {
     protected Rectangle2D box;
+    protected boolean visibility;
 	
 	public GraphicObject()
 	{
 	    box = new Rectangle2D.Double();
+	    visibility = true;
 	}
 	
 	public GraphicObject(Rectangle2D box)
 	{
 	    if (box == null) {
-		this.box = new Rectangle2D.Double();
+	    	this.box = new Rectangle2D.Double();
 	    } else {
-		this.box = box;
+	    	this.box = box;
 	    }
+	    visibility = true;
 	}
 	
 	public Rectangle2D getBox() {
@@ -35,6 +38,10 @@ public abstract class GraphicObject
 	    } catch (NullPointerException e) {
     		return false;
 	    }
+	}
+	
+	public void setVisibility(boolean visible) {
+		visibility = visible;
 	}
 	
 	public void resize(Dimension2D dim)

@@ -1,8 +1,8 @@
-package arbhres.view.viewContent;
+package arbhres.view.viewContent.sprite;
 
 import java.awt.geom.Rectangle2D;
 
-public class RelativeSize {
+public class Scaller {
     public static final double factor = 0.15;
     
     public static Rectangle2D applyFactor(Rectangle2D rec) {
