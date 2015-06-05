@@ -9,13 +9,13 @@ public abstract class Modifier {
 	/**
 	 * Points lost if you use a bonus or earned if you survive
 	 */
-	protected int price;
+	protected long price;
 	
 	public Modifier() {
 		
 	}
 	
-	protected int getPrice() {
+	protected long getPrice() {
 		return this.price;
 	}
 	
