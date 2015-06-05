@@ -12,12 +12,13 @@ public abstract class Modifier {
 	 */
 	private long price;
 	
-	public Modifier(long price) {
+	protected Modifier(long price) {
 		this.price = price;
 	}
 	
 	/**
 	 * Checks if a modifier can be used
+	 * 
 	 * @param score The actual score
 	 * @return true if the modifier can be used, false otherwise
 	 */
@@ -27,10 +28,11 @@ public abstract class Modifier {
 	
 	/**
 	 * Update the score according to the price of the modifier
+	 * 
 	 * @param score The actual score
-	 * @return The updated score
+	 * @return The price
 	 */
-	protected long updateScore(long score) {
-		return (score - this.price);
+	protected long updateScore() {
+		return this.price;
 	}
 }

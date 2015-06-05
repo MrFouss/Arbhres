@@ -13,25 +13,28 @@ public class Undo extends Modifier {
 	
 	/**
 	 * Cancel the last movement of the player
+	 * 
 	 * @param score The actual score
 	 * @param grid The main grid
 	 * @param backup The stored grid
 	 * @return the updated score
 	 */
-	public long apply(long score, Grid grid, Grid backup) {
+	public long apply(Grid grid, Grid backup) {
 		//TODO add when the emptyGrid grid method is implemented
 		//grid.emptyGrid(); 
 		grid = backup;
 		backup = null;
 		
-		return updateScore(score);
+		return updateScore();
 	}
 	
+
 	/**
+	 * Checks if the modifier can be used
 	 * 
-	 * @param score The actual score
-	 * @param backup The backup Grid
-	 * @return true if the bonus can be bought
+	 * @param  score The actual score
+	 * @param  grid  The backup grid
+	 * @return true if the modifier can be used, false otherwise
 	 */
 	public boolean isAvailable(long score, Grid backup) {
 		return (super.isAvailable(score) && backup != null);

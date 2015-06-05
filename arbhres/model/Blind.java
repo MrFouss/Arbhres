@@ -10,11 +10,16 @@ public class Blind extends Modifier {
 	public Blind() {
 		super(-5000);
 	}
-
-	public long apply(long score) {
+	
+	/**
+	 * Conceal the value on the tiles during 3 turns
+	 * 
+	 * @return The earned points if you survive
+	 */
+	public long apply() {
 		
 		//TODO see with Esia and Maxime
 		
-		return updateScore(score);
+		return updateScore();
 	}
 }

@@ -13,8 +13,14 @@ public class RandomModifier extends Modifier {
 		super(0);
 	}
 	
+	//TODO implement the rest of the methods
 	
-	
+	/**
+	 * Generate a random price change the price, with a minimum value of 0
+	 * 
+	 * @param score The actual score of the game
+	 * @return The updated score
+	 */
 	protected long updateScore(long score) {
 		Random rnd = new Random();
 		long price;

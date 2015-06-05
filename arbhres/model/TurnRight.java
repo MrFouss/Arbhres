@@ -11,10 +11,35 @@ public class TurnRight extends Modifier {
 		super(4000);
 	}
 	
-	public long apply(long score, int area, Grid grid) {
+	/**
+	 * Make a clockwise rotation of a group of 4 tiles
+	 * 
+	 * @param tileIndex The index of one of the 4 tiles to rotate
+	 * @param grid		The main grid
+	 * @return the price
+	 */
+	public long apply(int tileIndex, Grid grid) {
 
-		//TODO Ask about rotate function in grid
-		
-		return updateScore(score);
+		int area;
+
+		switch (tileIndex) {
+		case 0: case 1: case 4: case 5:
+			area = 0;
+			break;
+		case 2: case 3: case 6: case 7:
+			area = 1;
+			break;
+		case 8: case 9: case 12: case 13:
+			area = 2;
+			break;
+		case 10: case 11: case 14: case 15:
+			area = 3;
+			break;
+			default:
+				return 0;
+		}
+		//TODO change when rotateRight(int area) is implemented
+		//grid.rotateRight(area);
+		return updateScore();
 	}
 }

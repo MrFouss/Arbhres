@@ -13,27 +13,35 @@ public class Erase extends Modifier{
 	
 	/**
 	 * Erase the tile chosen by the player
-	 * @param score the score be updated
-	 * @param grid
-	 * @param indexTile
+	 * 
+	 * @param  score 	 The score be updated
+	 * @param  grid		 The main grid of the game
+	 * @param  indexTile The index of the tile to Erase (from 0 to 15)
 	 * @return the updated score
 	 */
-	public long apply(long score, Grid grid, int indexTile) {
+	public long apply(Grid grid, int indexTile) {
 		//TODO add when getTile is added
-		/*if (grid.getTile(indexTile) != -1) {
+		if (indexTile >= 0 && indexTile <= 15 /*&& grid.getTile(indexTile) != -1*/) {
 
 			grid.addTile(indexTile, -1);
 			
-			return updateScore(score);
-		}*/
-		return score;
+			return updateScore();
+		}
+		return 0;
 	}
 	
+
+	/**
+	 * Checks if a modifier can be used
+	 * 
+	 * @param  score The actual score
+	 * @param  grid  The main grid
+	 * @return true if the modifier can be used, false otherwise
+	 */
 	public boolean isAvailable(long score, Grid grid) {
 		
 		//TODO replace when isEmptyGrid is implemented
-		//return (grid.isEmptyGrid() && super.isAvailable(score));
-		return true;
+		return (super.isAvailable(score) /*&&grid.isEmptyGrid()*/ );
 	}
 
 }
