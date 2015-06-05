@@ -30,10 +30,9 @@ public class View extends JFrame {
 	    pack();
 	    setVisible(true);
 	}
-	
-	public static void main(String[] args) throws IOException {
-		View v = new View();
-		v.content.move();
+
+	public ViewContent getContent() {
+		return this.content;
 	}
 	
 	//TODO get obj from coordinate

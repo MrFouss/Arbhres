@@ -1,5 +1,11 @@
 package arbhres;
 
+import java.io.IOException;
+
+import arbhres.view.View;
+import arbhres.controller.Controller;
+import arbhres.model.Model;
+
 /**
  * @author	Maxime Brodat <maxime.brodat@fouss.fr>
  * @version	1.0
@@ -7,7 +13,10 @@ package arbhres;
  */
 
 public class Launcher {
-    public static void main(String[] args) {
-
-    }
+	public static void main(String[] args) throws IOException {
+		Controller controller = new Controller();
+		Model model = new Model();
+		View view = new View();
+		view.getContent().move();
+	}
 }
