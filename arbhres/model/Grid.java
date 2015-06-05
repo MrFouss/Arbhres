@@ -105,6 +105,10 @@ public class Grid {
 		return this.tiles[tileIndex];
 	}
 	
+	/**
+	 * Reinitialize the reference to the tiles
+	 * 
+	 */
 	public void emptyGrid(){
 		this.tiles = null;
 	}
