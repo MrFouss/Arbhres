@@ -81,19 +81,24 @@ public class Controller extends InputAdapter {
 				switch (keyTyped.getKeyCode()) {
 				case KeyEvent.VK_UP:
 					event = new MovementEvent(Direction.UP);
+					listener.gridMoved(event);
 					break;
 				case KeyEvent.VK_LEFT:
 					event = new MovementEvent(Direction.LEFT);
+					listener.gridMoved(event);
 					break;
 				case KeyEvent.VK_RIGHT:
 					event = new MovementEvent(Direction.RIGHT);
+					listener.gridMoved(event);
 					break;
 				case KeyEvent.VK_DOWN:
 					event = new MovementEvent(Direction.DOWN);
+					listener.gridMoved(event);
+					break;
+				default:
 					break;
 				}
 			}
-			listener.gridMoved(event);
 		}
 	}
 

@@ -24,21 +24,55 @@ public class Model implements ControllerListener {
 
 	@Override
 	public void buttonClicked(ButtonClickEvent e) {
-		if (normalMode) {
-			
+		if (this.normalMode) {
+			switch (e.getButton()) {
+			case NEW_GAME:
+				this.score = 0;
+				this.grid = new Grid();
+				break;
+			case BONUS_ERASE:
+				
+				break;
+			case BONUS_PAUSE:
+				Pause pause = new Pause(grid.getQueue());
+				if (pause.isAvailable(this.score)) {
+					pause.apply();
+				}
+				break;
+			case BONUS_RANDOM:
+				
+				break;
+			case BONUS_SEE:
+				
+				break;
+			case BONUS_SWAP:
+				
+				break;
+			case BONUS_TURNLEFT:
+				
+				break;
+			case BONUS_TURNRIGHT:
+				
+				break;
+			case BONUS_UNDO:
+				
+				break;
+			default:
+				break;
+			}
 		}
 	}
-
+	
 	@Override
 	public void gridMoved(MovementEvent e) {
-		if (normalMode) {
-			
+		if (this.normalMode) {
+			grid.move(e.getDirection());
 		}
 	}
 
 	@Override
 	public void tileClicked(TileClickEvent e) {
-		if (!normalMode) {
+		if (!this.normalMode) {
 			
 		}
 	}

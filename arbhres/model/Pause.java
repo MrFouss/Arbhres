@@ -7,23 +7,26 @@ package arbhres.model;
  */
 public class Pause extends Modifier {
 	
+	private TileQueue queue;
+	
 	/**
 	 * Create the modifier with its defined price
 	 */
-	public Pause() {
+	public Pause(TileQueue queue) {
 		super(10000);
+		this.queue = queue;
 	}
 	
 	/**
 	 * Prevents new tiles from being added to the grid for three turns
 	 * 
-	 * @param score The actual score
-	 * @param queue The queue of the main Grid
 	 * @return the price
 	 */
-	public long apply(TileQueue queue) {
-		
-		//TODO add when TileQueue is done
+	public long apply() {
+		for (int i=0; i<3; i++) {
+			queue.poll();
+			queue.offer(-1);
+		}
 		
 		return updateScore();
 	}
@@ -35,21 +38,7 @@ public class Pause extends Modifier {
 	 * @param tile  The head of queue
 	 * @return the price
 	 */
-	public boolean isAvailable(long score, int tile) {
-		
-		return (super.isAvailable(score) && tile != -1);
-	}
-	
-
-	/**
-	 * Checks if a modifier can be used
-	 * 
-	 * @param score The actual score
-	 * @param queue The queue of the main Grid
-	 * @return true if the modifier can be used, false otherwise
-	 */
-	public boolean isAvailable(long score, TileQueue queue) {
-		//TODO see when TileQueue is done
-		return (super.isAvailable(score) && queue.getQueue().element() != -1);
+	public boolean isAvailable(long score) {
+		return (super.isAvailable(score) && queue.peek() != -1);
 	}
 }
