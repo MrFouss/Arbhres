@@ -1,6 +1,5 @@
 package arbhres.model;
 
-import arbhres.controller.Controller;
 import arbhres.controller.events.ButtonClickEvent;
 import arbhres.controller.events.MovementEvent;
 import arbhres.controller.events.TileClickEvent;
@@ -19,7 +18,7 @@ public class Model implements ControllerListener {
 	private Grid grid;
 	private Boolean normalMode;
 	
-	public Model (Controller controller) {
+	public Model () {
 		this.score = 0;
 		this.grid = new Grid();
 	}
