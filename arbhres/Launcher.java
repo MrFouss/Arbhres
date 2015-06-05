@@ -17,6 +17,5 @@ public class Launcher {
 		Controller controller = new Controller();
 		Model model = new Model();
 		View view = new View();
-		view.getContent().move();
 	}
 }
