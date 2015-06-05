@@ -13,10 +13,20 @@ public class ButtonClickEvent {
 	
 	private Button button;
 
+	/**
+	 * Constructor for ButtonClickEvent
+	 * 
+	 * @param button the button that has been clicked
+	 */
 	public ButtonClickEvent(Button button) {
 		this.button = button;
 	}
 
+	/**
+	 * Getter for the clicked button
+	 * 
+	 * @return the button that has been clicked
+	 */
 	public Button getButton() {
 		return this.button;
 	}

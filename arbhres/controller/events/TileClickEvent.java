@@ -14,10 +14,21 @@ public class TileClickEvent {
 	 */
 	private int tileIndex;
 
+	/**
+	 * Constructor for TileClickEvent
+	 * 
+	 * @param tileIndex the index of the clicked tile (0-15 for common tiles,
+	 * 16 for the inventory tile)
+	 */
 	public TileClickEvent(int tileIndex) {
 		this.tileIndex = tileIndex;
 	}
 
+	/**
+	 * Getter for the tile index
+	 * 
+	 * @return the index of the clicked tile
+	 */
 	public int getTileIndex() {
 		return this.tileIndex;
 	}

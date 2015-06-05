@@ -13,10 +13,20 @@ public class MovementEvent {
 	
 	private Direction direction;
 
+	/**
+	 * Constructor for MovementEvent
+	 * 
+	 * @param direction the direction of the movement
+	 */
 	public MovementEvent(Direction direction) {
 		this.direction = direction;
 	}
 
+	/**
+	 * Getter for the direction of the movement
+	 * 
+	 * @return the direction of the movement
+	 */
 	public Direction getDirection() {
 		return this.direction;
 	}

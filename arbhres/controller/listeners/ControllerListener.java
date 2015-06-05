@@ -18,21 +18,21 @@ public interface ControllerListener extends EventListener {
 	/**
 	 * Notice that a button has been clicked
 	 * 
-	 * @param e Event containing the information about which button has been clicked
+	 * @param e the event containing the information about which button has been clicked
 	 */
 	public void buttonClicked(ButtonClickEvent e);
 	
 	/**
 	 * Notice that the tiles of the grid have to be moved following a direction
 	 * 
-	 * @param e Event containing the direction of the movement
+	 * @param e the event containing the direction of the movement
 	 */
 	public void gridMoved(MovementEvent e);
 	
 	/**
 	 * Notice that a tile has been clicked
 	 * 
-	 * @param e Event containing the index of the clicked tile
+	 * @param e the event containing the index of the clicked tile
 	 */
 	public void tileClicked(TileClickEvent e);
 }

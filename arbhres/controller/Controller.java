@@ -46,7 +46,7 @@ public class Controller extends InputAdapter {
 	/**
 	 * Add a new controller listener to the list of listeners
 	 * 
-	 * @param listener Listener to add to the list
+	 * @param listener the listener to add to the list
 	 */
 	public void addControllerListener(ControllerListener listener) {
 		listeners.add(ControllerListener.class, listener);
@@ -55,7 +55,7 @@ public class Controller extends InputAdapter {
 	/**
 	 * Remove a controller listener of the list of listeners
 	 * 
-	 * @param listener Listener to remove of the list
+	 * @param listener the listener to remove of the list
 	 */
 	public void removeControllerListener(ControllerListener listener) {
 		listeners.remove(ControllerListener.class, listener);
@@ -64,7 +64,7 @@ public class Controller extends InputAdapter {
 	/**
 	 * Get the list of listeners actually listening to the controller
 	 * 
-	 * @return List of listeners
+	 * @return the list of listeners
 	 */
 	public ControllerListener[] getControllerListeners() {
 		return listeners.getListeners(ControllerListener.class);
@@ -75,7 +75,7 @@ public class Controller extends InputAdapter {
 	/**
 	 * Notifies the listeners a key has been pressed
 	 * 
-	 * @param keyTyped Event linked to the typed key
+	 * @param keyTyped the event linked to the typed key
 	 */
 	protected void fireKeyPressed(KeyEvent keyTyped) {
 		MovementEvent event = null;
@@ -103,7 +103,7 @@ public class Controller extends InputAdapter {
 	/**
 	 * Notifies the listeners a button has been clicked
 	 * 
-	 * @param action Event containing which button has been clicked
+	 * @param action the event containing which button has been clicked
 	 */
 	protected void fireButtonClicked(Button button) {
 		ButtonClickEvent event = null;
@@ -118,7 +118,7 @@ public class Controller extends InputAdapter {
 	/**
 	 * Notifies the listeners a tile has been clicked
 	 * 
-	 * @param action Event containing which tile has been clicked
+	 * @param action the event containing which tile has been clicked
 	 */
 	protected void fireTileClicked(int tileIndex) {
 		TileClickEvent event = null;
