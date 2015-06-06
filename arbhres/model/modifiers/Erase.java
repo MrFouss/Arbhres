@@ -27,9 +27,9 @@ public class Erase extends Modifier{
 	 */
 	public long apply(int indexTile) {
 
-		if (indexTile >= 0 && grid.getTile(indexTile) != -1) {
+		if (grid.getTile(indexTile) != -1) {
 
-			grid.addTile(indexTile, -1);
+			grid.removeTile(indexTile);
 			
 			return updateScore();
 		}
