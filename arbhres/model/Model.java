@@ -39,7 +39,13 @@ public class Model implements ControllerListener {
 				Erase erase = new Erase(grid);
 				if (erase.isAvailable(score) ) {
 					normalMode = false;
-					while (normalMode);
+					while (!normalMode) {
+						try {
+							Thread.sleep(100);
+						} catch (InterruptedException e1) {
+							
+						}
+					}
 					score-=erase.apply(this.tileIndex);
 				}
 				break;
@@ -61,10 +67,22 @@ public class Model implements ControllerListener {
 				
 				if (swap.isAvailable(score) ) {
 					normalMode = false;
-					while (normalMode);
+					while (!normalMode) {
+						try {
+							Thread.sleep(100);
+						} catch (InterruptedException e1) {
+							
+						}
+					}
 					tileIndex1 = this.tileIndex;
 					normalMode = false;
-					while (normalMode);
+					while (!normalMode) {
+						try {
+							Thread.sleep(100);
+						} catch (InterruptedException e1) {
+							
+						}
+					}
 					tileIndex2 = this.tileIndex;
 					score-=swap.apply(tileIndex1, tileIndex2);
 				}
@@ -74,7 +92,13 @@ public class Model implements ControllerListener {
 				
 				if (turnLeft.isAvailable(score) ) {
 					normalMode = false;
-					while (normalMode);
+					while (!normalMode) {
+						try {
+							Thread.sleep(100);
+						} catch (InterruptedException e1) {
+							
+						}
+					}
 					score-=turnLeft.apply(this.tileIndex);
 				}
 				break;
@@ -83,7 +107,13 @@ public class Model implements ControllerListener {
 				
 				if (turnRight.isAvailable(score) ) {
 					normalMode = false;
-					while (normalMode);
+					while (!normalMode) {
+						try {
+							Thread.sleep(100);
+						} catch (InterruptedException e1) {
+							
+						}
+					}
 					score-=turnRight.apply(this.tileIndex);
 				}
 				break;
