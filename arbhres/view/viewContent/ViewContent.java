@@ -211,6 +211,7 @@ public class ViewContent extends JPanel {
 	
 	public void paint(Graphics g)
 	{    
+		//cfgkdjfg kjsd fksj fs
 		for (GeneralSprite s : background.values()) {
 			if (s != null) {
 				s.paint(g);
