@@ -2,6 +2,10 @@ package arbhres.model.modifiers;
 
 import java.util.Random;
 
+import arbhres.controller.events.ButtonClickEvent;
+import arbhres.controller.events.MovementEvent;
+import arbhres.controller.events.TileClickEvent;
+import arbhres.controller.listeners.ControllerListener;
 import arbhres.model.structure.Grid;
 
 /**
@@ -9,13 +13,15 @@ import arbhres.model.structure.Grid;
  * @version	1.0
  * @since	06/05/2015
  */
-public class RandomModifier extends Modifier {
+public class RandomModifier implements ControllerListener{
 	private Grid grid;
+	private boolean clickTile;
+	private int tileIndex;
+	
 	/**
-	 * Create the modifier without price, which is generated each time the 
+	 * Create the modifier without price, which is generated each time the bonus is used
 	 */
 	public RandomModifier(Grid grid) {
-		super(0);
 		this.grid = grid;
 	}
 	
@@ -43,20 +49,81 @@ public class RandomModifier extends Modifier {
 			}
 		} else {
 			//bonuses
-			switch (rnd.nextInt(1)) {
+			switch (rnd.nextInt(6)) {
 			case 0:
-				Pause pause = new Pause(grid.getQueue());
-				pause.apply();
+				Erase erase = new Erase(grid);
+				if (erase.isAvailable(erase.updateScore()) ) {
+					this.clickTile = true;
+					while (this.clickTile) {
+						try {
+							Thread.sleep(100);
+						} catch (InterruptedException e1) {
+							
+						}
+					}
+					erase.apply(this.tileIndex);
+				}
 				break;
 			case 1:
 				//TODO See
 				break;
 			case 2:
-				//TODO TurnLeft
+				Pause pause = new Pause(grid.getQueue());
+				pause.apply();
 				break;
 			case 3:
-				//TODO TurnRight
+				TurnLeft turnLeft = new TurnLeft(grid);
+
+				this.clickTile = true;
+				while (this.clickTile) {
+					try {
+						Thread.sleep(100);
+					} catch (InterruptedException e1) {
+						
+					}
+				}
+				turnLeft.apply(this.tileIndex);
 				break;
+			case 4:
+				TurnRight turnRight = new TurnRight(grid);
+				
+				this.clickTile = true;
+				while (this.clickTile) {
+					try {
+						Thread.sleep(100);
+					} catch (InterruptedException e1) {
+						
+					}
+				}
+				turnRight.apply(this.tileIndex);
+				break;
+			case 5:
+				Swap swap = new Swap(grid);
+				int tileIndex1, tileIndex2;
+				
+				if (swap.isAvailable(swap.updateScore()) ) {
+					this.clickTile = true;
+					while (this.clickTile) {
+						try {
+							Thread.sleep(100);
+						} catch (InterruptedException e1) {
+							
+						}
+					}
+					tileIndex1 = this.tileIndex;
+					this.clickTile = true;
+					while (this.clickTile) {
+						try {
+							Thread.sleep(100);
+						} catch (InterruptedException e1) {
+							
+						}
+					}
+					tileIndex2 = this.tileIndex;
+					swap.apply(tileIndex1, tileIndex2);
+				}
+				default:
+					return score;
 			}
 		}
 		
@@ -84,5 +151,22 @@ public class RandomModifier extends Modifier {
 			}
 		}
 		return Math.max(score - price, 0);
+	}
+
+	@Override
+	public void buttonClicked(ButtonClickEvent e) {
+	}
+
+	@Override
+	public void gridMoved(MovementEvent e) {	
+	}
+
+	@Override
+	public void tileClicked(TileClickEvent e) {
+		if (this.clickTile) {
+			this.tileIndex = e.getTileIndex();
+			this.clickTile = false;
+		}
+		
 	}
 }
