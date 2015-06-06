@@ -18,18 +18,24 @@ public class Model implements ControllerListener {
 	private long score;
 	private Grid grid;
 	private GridBackup backup;
-	private Boolean normalMode;
+	private Boolean pressButton;
+	private Boolean moveGrid;
+	private Boolean clickTile;
 	private int tileIndex;
 	
 	public Model () {
 		this.score = 0;
 		this.grid = new Grid();
-		this.normalMode = true;
+		this.pressButton = true;
+		this.moveGrid = true;
+		this.clickTile = false;
 	}
 
 	@Override
 	public void buttonClicked(ButtonClickEvent e) {
-		if (this.normalMode) {
+		if (this.pressButton) {
+			this.moveGrid = false;
+			this.pressButton = false;
 			switch (e.getButton()) {
 			case NEW_GAME:
 				this.score = 0;
@@ -38,8 +44,8 @@ public class Model implements ControllerListener {
 			case BONUS_ERASE:
 				Erase erase = new Erase(grid);
 				if (erase.isAvailable(score) ) {
-					normalMode = false;
-					while (!normalMode) {
+					this.clickTile = true;
+					while (this.clickTile) {
 						try {
 							Thread.sleep(100);
 						} catch (InterruptedException e1) {
@@ -67,8 +73,8 @@ public class Model implements ControllerListener {
 				int tileIndex1, tileIndex2;
 				
 				if (swap.isAvailable(score) ) {
-					normalMode = false;
-					while (!normalMode) {
+					this.clickTile = true;
+					while (this.clickTile) {
 						try {
 							Thread.sleep(100);
 						} catch (InterruptedException e1) {
@@ -76,8 +82,8 @@ public class Model implements ControllerListener {
 						}
 					}
 					tileIndex1 = this.tileIndex;
-					normalMode = false;
-					while (!normalMode) {
+					this.clickTile = true;
+					while (this.clickTile) {
 						try {
 							Thread.sleep(100);
 						} catch (InterruptedException e1) {
@@ -92,8 +98,8 @@ public class Model implements ControllerListener {
 				TurnLeft turnLeft = new TurnLeft(grid);
 				
 				if (turnLeft.isAvailable(score) ) {
-					normalMode = false;
-					while (!normalMode) {
+					this.clickTile = true;
+					while (this.clickTile) {
 						try {
 							Thread.sleep(100);
 						} catch (InterruptedException e1) {
@@ -107,8 +113,8 @@ public class Model implements ControllerListener {
 				TurnRight turnRight = new TurnRight(grid);
 				
 				if (turnRight.isAvailable(score) ) {
-					normalMode = false;
-					while (!normalMode) {
+					this.clickTile = true;
+					while (this.clickTile) {
 						try {
 							Thread.sleep(100);
 						} catch (InterruptedException e1) {
@@ -127,21 +133,27 @@ public class Model implements ControllerListener {
 			default:
 				break;
 			}
+			this.moveGrid = true;
+			this.pressButton = true;
 		}
 	}
 	
 	@Override
 	public void gridMoved(MovementEvent e) {
-		if (this.normalMode) {
+		if (this.moveGrid) {
+			this.moveGrid = false;
+			this.pressButton = false;
 			grid.move(e.getDirection(), backup, score);
+			this.moveGrid = true;
+			this.pressButton = true;
 		}
 	}
 
 	@Override
 	public void tileClicked(TileClickEvent e) {
-		if (!this.normalMode) {
+		if (this.clickTile) {
 			this.tileIndex = e.getTileIndex();
-			normalMode = true;
+			this.clickTile = false;
 		}
 	}
 }
