@@ -56,7 +56,8 @@ public class Model implements ControllerListener {
 				}
 				break;
 			case BONUS_RANDOM:
-				
+				RandomModifier rndMod = new RandomModifier(grid);
+				score = rndMod.apply(score);
 				break;
 			case BONUS_SEE:
 				
