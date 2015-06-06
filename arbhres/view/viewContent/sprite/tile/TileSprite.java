@@ -32,9 +32,15 @@ public class TileSprite implements Sprite {
     	sprite.setLocation(dest);
     }
     
+    
+    
     public void paint(Graphics g) {
 	sprite.paint(g);
     }
+
+	public void setVisible(boolean visible) {
+		sprite.setVisibility(visible);
+	}
 	
 
 }

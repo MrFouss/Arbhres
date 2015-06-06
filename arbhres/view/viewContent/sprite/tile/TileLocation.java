@@ -42,7 +42,11 @@ public enum TileLocation {
 		break;
 	    }
 	    
-	    return Scaller.applyFactor(new Rectangle2D.Double(position.getX()+x*step+x*position.getWidth(),
-			position.getY()+y*step+y*position.getHeight(), position.getWidth(), position.getHeight()));
+	    return Scaller.applyFactor(new Rectangle2D.Double(
+	    		position.getX()+x*step+x*position.getWidth(),
+				position.getY()+y*step+y*position.getHeight(),
+				position.getWidth(),
+				position.getHeight()
+			));
 	}
 }

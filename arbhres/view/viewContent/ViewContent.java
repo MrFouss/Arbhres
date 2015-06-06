@@ -95,6 +95,12 @@ public class ViewContent extends JPanel {
 		}
 	}
 	
+	//background
+	
+	public GeneralSprite getBackground(GeneralType type) {
+		return background.get(type);
+	}
+	
 	//buttons
 	
 	public ButtonSprite getButton(ButtonType bt) {
@@ -162,56 +168,47 @@ public class ViewContent extends JPanel {
 			t = null;
 			break;
 		}
-		
+
 		return t;
 	}
 	
-	public void moveTiles( TileType type) {
-		/*TileSprite t;
-		switch (srcLoc) {
+	public void moveTile(TileType type, TileLocation loc1, int x1, int y1,
+			TileLocation loc2, int x2, int y2) {
+		TileSprite ts = getTile(loc1, type, x1, y1);
+		switch (loc2) {
 		case GRID:
-			t = grid.get(type)[(int) (p1.getX() + 4* p1.getY())];
+			grid.get(type)[y2*4 + x2] = ts;
 			break;
 		case NEXT:
-			t = next.get(type)[(int)p1.getY()];
+			next.get(type)[y2] = ts;
 			break;
 		case STORE:
-			t = store.get(type);
+			store.put(type, ts);
 			break;
 		default:
 			break;
-		}*/
+		}
+		removeTile(loc1, type, x1, y1);
 	}
 
-	public void move() {
-		try {
-			Thread.sleep(1000);
-		} catch (InterruptedException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		addTile(TileLocation.GRID, TileType.TILE, 0, 0, 1);
-		TileSprite ts = getTile(TileLocation.GRID, TileType.TILE, 0, 0);
-		Point2D o = new Point2D.Double(ts.getBox().getX(), ts.getBox().getY());
-		Rectangle2D r = TileLocation.STORE.getBoxOfTile(0, 0);
-		Point2D d = new Point2D.Double(r.getX(), r.getY());
-		repaint();
-		TileMovement tmv = new TileMovement(getTile(TileLocation.GRID, TileType.TILE, 0, 0),
-				o, d);
-		tmv.initMovement();
-		repaint();
-
-		while (!tmv.stepForward()) {
-			repaint();
-			try {
-				Thread.sleep(50);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+	public void setVisible(TileType type, boolean visible) {
+		for (TileSprite[] g : grid.values()) {
+			for (TileSprite ts : g) {
+				ts.setVisible(false);
 			}
 		}
+		
+		for (TileSprite[] g : next.values()) {
+			for (TileSprite ts : g) {
+				ts.setVisible(false);
+			}
+		}
+		
+		for (TileSprite g : store.values()) {
+			g.setVisible(false);
+		}
 	}
-
+	
 	public void paint(Graphics g)
 	{    
 		for (GeneralSprite s : background.values()) {

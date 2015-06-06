@@ -29,6 +29,13 @@ public class GeneralSprite implements Sprite
 		sprite.setVisibility(visible);
 	}
 	
+	public void setValue(String val) {
+		if (sprite instanceof Text) {
+			Text t = (Text) sprite;
+			t.setContent(val);
+		}
+	}
+	
 	public void paint(Graphics g)
 	{
 	    sprite.paint(g);

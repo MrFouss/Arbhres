@@ -26,6 +26,10 @@ public class Text extends GraphicObject{
 
 	}
 	
+	public void setContent(String s) {
+		this.content = s;
+	}
+	
 	private void adaptFont(Graphics2D g2)
 	{
 		FontMetrics fm = g2.getFontMetrics(font);

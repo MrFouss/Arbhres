@@ -36,9 +36,9 @@ public enum GeneralType implements SpriteType{
 	public static GeneralType[] getGeneralSprites()
 	{
 		GeneralType[] g = {
-				BACKGROUND,
 				SCORE,
-				EXTENDED_NEXT_MENU
+				EXTENDED_NEXT_MENU,
+				BACKGROUND
 		};
 		
 		return g;
