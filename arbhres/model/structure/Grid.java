@@ -323,7 +323,7 @@ public class Grid {
 				}
 			}
 		}
-		if(hasMoved) {
+		if(hasMoved || this.isGridEmpty()) {
 			addTile(selectAnySide(), queue.getQueue().poll());
 			queue.getQueue().offer(randomTile());
 			backup = tmpBackup;
