@@ -4,8 +4,9 @@ import arbhres.controller.events.ButtonClickEvent;
 import arbhres.controller.events.MovementEvent;
 import arbhres.controller.events.TileClickEvent;
 import arbhres.controller.listeners.ControllerListener;
-import arbhres.model.modifiers.Pause;
+import arbhres.model.modifiers.*;
 import arbhres.model.structure.Grid;
+import arbhres.model.structure.GridBackup;
 
 /**
  * @author	Pierre Brunet <pierre.brunet@krophil.fr>
@@ -16,11 +17,14 @@ import arbhres.model.structure.Grid;
 public class Model implements ControllerListener {
 	private long score;
 	private Grid grid;
+	private GridBackup backup;
 	private Boolean normalMode;
+	private int tileIndex;
 	
 	public Model () {
 		this.score = 0;
 		this.grid = new Grid();
+		this.normalMode = true;
 	}
 
 	@Override
@@ -32,12 +36,17 @@ public class Model implements ControllerListener {
 				this.grid = new Grid();
 				break;
 			case BONUS_ERASE:
-				
+				Erase erase = new Erase(grid);
+				if (erase.isAvailable(score) ) {
+					normalMode = false;
+					while (normalMode);
+					score-=erase.apply(this.tileIndex);
+				}
 				break;
 			case BONUS_PAUSE:
 				Pause pause = new Pause(grid.getQueue());
 				if (pause.isAvailable(this.score)) {
-					pause.apply();
+					score-=pause.apply();
 				}
 				break;
 			case BONUS_RANDOM:
@@ -47,16 +56,42 @@ public class Model implements ControllerListener {
 				
 				break;
 			case BONUS_SWAP:
+				Swap swap = new Swap(grid);
+				int tileIndex1, tileIndex2;
 				
+				if (swap.isAvailable(score) ) {
+					normalMode = false;
+					while (normalMode);
+					tileIndex1 = this.tileIndex;
+					normalMode = false;
+					while (normalMode);
+					tileIndex2 = this.tileIndex;
+					score-=swap.apply(tileIndex1, tileIndex2);
+				}
 				break;
 			case BONUS_TURNLEFT:
+				TurnLeft turnLeft = new TurnLeft(grid);
 				
+				if (turnLeft.isAvailable(score) ) {
+					normalMode = false;
+					while (normalMode);
+					score-=turnLeft.apply(this.tileIndex);
+				}
 				break;
 			case BONUS_TURNRIGHT:
+				TurnRight turnRight = new TurnRight(grid);
 				
+				if (turnRight.isAvailable(score) ) {
+					normalMode = false;
+					while (normalMode);
+					score-=turnRight.apply(this.tileIndex);
+				}
 				break;
 			case BONUS_UNDO:
-				
+				Undo undo = new Undo();
+				if (undo.isAvailable(score)) {
+					score-=undo.apply(grid, backup);
+				}
 				break;
 			default:
 				break;
@@ -67,14 +102,15 @@ public class Model implements ControllerListener {
 	@Override
 	public void gridMoved(MovementEvent e) {
 		if (this.normalMode) {
-			grid.move(e.getDirection());
+			grid.move(e.getDirection(), backup, score);
 		}
 	}
 
 	@Override
 	public void tileClicked(TileClickEvent e) {
 		if (!this.normalMode) {
-			
+			this.tileIndex = e.getTileIndex();
+			normalMode = true;
 		}
 	}
 }

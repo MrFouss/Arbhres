@@ -9,24 +9,25 @@ import arbhres.model.structure.Grid;
  */
 public class Erase extends Modifier{
 	
+	private Grid grid;
+	
 	/**
 	 * Create the modifier with its defined price
 	 */
-	public Erase() {
+	public Erase(Grid grid) {
 		super(6000);
+		this.grid = grid;
 	}
 	
 	/**
 	 * Erase the tile chosen by the player
 	 * 
-	 * @param  score 	 The score be updated
-	 * @param  grid		 The main grid of the game
 	 * @param  indexTile The index of the tile to Erase (from 0 to 15)
 	 * @return the updated score
 	 */
-	public long apply(Grid grid, int indexTile) {
+	public long apply(int indexTile) {
 
-		if (indexTile >= 0 && indexTile <= 15 && grid.getTile(indexTile) != -1) {
+		if (indexTile >= 0 && grid.getTile(indexTile) != -1) {
 
 			grid.addTile(indexTile, -1);
 			
@@ -40,12 +41,11 @@ public class Erase extends Modifier{
 	 * Checks if a modifier can be used
 	 * 
 	 * @param  score The actual score
-	 * @param  grid  The main grid
 	 * @return true if the modifier can be used, false otherwise
 	 */
-	public boolean isAvailable(long score, Grid grid) {
+	public boolean isAvailable(long score) {
 		
-		return (super.isAvailable(score) &&grid.isGridEmpty() );
+		return (super.isAvailable(score) && !grid.isGridEmpty() );
 	}
 
 }

@@ -222,19 +222,6 @@ public class Grid {
 	}
 	
 	/**
-	 * Swap two tiles
-	 * 
-	 * @param indexTileA the index of the first tile
-	 * @param indexTileB the index of the second tile
-	 */
-	public void switchTiles(int indexTileA, int indexTileB) {
-		int tmp;
-		tmp = indexTileA;
-		indexTileA = indexTileB;
-		indexTileB = tmp;
-	}
-	
-	/**
 	 * counterclockwise rotation of one of the 4 areas
 	 * @param area
 	 */
@@ -253,10 +240,10 @@ public class Grid {
 			break;
 		}
 		tmp=tiles[start];
-		tiles[start]=tiles[start+1];
-		tiles[start+1]=tiles[start+5];
-		tiles[start+5]=tiles[start+4];
-		tiles[start+4]=tmp;
+		this.addTile(start, tiles[start+1]);
+		this.addTile(start+1, tiles[start+5]);
+		this.addTile(start+5, tiles[start+4]);
+		this.addTile(start+4, tmp);
 	}
 	
 	/**
@@ -301,49 +288,60 @@ public class Grid {
 	 * @param direction the direction where the tiles are going
 	 * @return resulting score during this move
 	 */
-	public int move(Direction direction) {
-		int score = 0;
+	public void move(Direction direction, GridBackup backup, long score) {
+
+		GridBackup tmpBackup = new GridBackup(this, score);
+		
 		switch (direction) {
-		case LEFT:
-			boolean hasMoved=false;
-			for(int j=0; j<4; j++) {
-				for(int i=0; i<3; i++) {
-					if(isMergeable(i+j*4, i+1+j*4)) {
-						tiles[i+j*4]+=tiles[i+1+j*4]; // merges Tile[i] and Tile[i+1]
-						tiles[i+1+j*4]=-1;
-						score += tiles[i+j*4]*100;
-						hasMoved=true;
-					} else {
-						if(isTileEmpty(i+j*4)){ // checks if the tile is empty
-							tiles[i+j*4]=tiles[i+1+j*4]; // moves the previous tile to the empty one
-							tiles[i+1+j*4]=-1; // empty the previous tile
-							hasMoved=true;
-						} 
-					}
-				}
-			}
-			if(hasMoved) {
-				addTile(selectAnySide(), queue.getQueue().poll());
-				queue.getQueue().offer(randomTile());
-			}
-			break;
 		case DOWN:
 			rotate(1);
-			move(Direction.LEFT);
-			rotate(3);
 			break;
 		case RIGHT:
-			rotate(2);
-			move(Direction.LEFT);
 			rotate(2);
 			break;
 		case UP:
 			rotate(3);
-			move(Direction.LEFT);
-			rotate(1);
+			break;
+		default:
 			break;
 		}
-		return score;
+		
+		boolean hasMoved=false;
+		for(int j=0; j<4; j++) {
+			for(int i=0; i<3; i++) {
+				if(isMergeable(i+j*4, i+1+j*4)) {
+					tiles[i+j*4]+=tiles[i+1+j*4]; // merges Tile[i] and Tile[i+1]
+					tiles[i+1+j*4]=-1;
+					score += tiles[i+j*4]*100;
+					hasMoved=true;
+				} else {
+					if(isTileEmpty(i+j*4)){ // checks if the tile is empty
+						tiles[i+j*4]=tiles[i+1+j*4]; // moves the previous tile to the empty one
+						tiles[i+1+j*4]=-1; // empty the previous tile
+						hasMoved=true;
+					} 
+				}
+			}
+		}
+		if(hasMoved) {
+			addTile(selectAnySide(), queue.getQueue().poll());
+			queue.getQueue().offer(randomTile());
+			backup = tmpBackup;
+		}		
+		
+		switch (direction) {
+		case DOWN:
+			rotate(3);
+			break;
+		case RIGHT:
+			rotate(2);
+			break;
+		case UP:
+			rotate(1);
+			break;
+		default:
+			break;
+		}
 	}
 
 	/**
@@ -380,6 +378,15 @@ public class Grid {
 			}
 			this.tiles=newTiles;
 			break;
+		}
+	}
+	
+	public void copyGrid(Grid grid) {
+		this.inventory = grid.inventory;
+		this.tiles = grid.tiles.clone();
+		for(int i = 0; i < 3; i++) {
+			this.queue.offer(grid.queue.peek());
+			grid.queue.offer(grid.queue.poll());
 		}
 	}
 }

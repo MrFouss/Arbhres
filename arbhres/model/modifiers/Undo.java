@@ -1,6 +1,7 @@
 package arbhres.model.modifiers;
 
 import arbhres.model.structure.Grid;
+import arbhres.model.structure.GridBackup;
 
 /**
  * @author Stéphane Perrez <stephane.perrez@utbm.fr>
@@ -24,13 +25,13 @@ public class Undo extends Modifier {
 	 * @param backup The stored grid
 	 * @return the updated score
 	 */
-	public long apply(Grid grid, Grid backup) {
-
+	public long apply(Grid grid, GridBackup backup) {
+		long oldScore = backup.getScore();
 		grid.emptyGrid(); 
-		grid = backup;
+		grid.copyGrid(backup);
 		backup = null;
 		
-		return updateScore();
+		return oldScore - updateScore();
 	}
 	
 
@@ -41,7 +42,7 @@ public class Undo extends Modifier {
 	 * @param  grid  The backup grid
 	 * @return true if the modifier can be used, false otherwise
 	 */
-	public boolean isAvailable(long score, Grid backup) {
-		return (super.isAvailable(score) && backup != null);
+	public boolean isAvailable(long score, GridBackup backup) {
+		return (super.isAvailable(backup.getScore()) && backup != null);
 	}
 }

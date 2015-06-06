@@ -9,11 +9,14 @@ import arbhres.model.structure.Grid;
  */
 public class Swap extends Modifier {
 	
+	private Grid grid;
+	
 	/**
 	 * Create the modifier with its defined price
 	 */
-	public Swap() {
+	public Swap(Grid grid) {
 		super(8000);
+		this.grid = grid;		
 	}
 	
 	/**
@@ -24,7 +27,7 @@ public class Swap extends Modifier {
 	 * @param indexTile2 The index of the second tile
 	 * @return The price
 	 */
-	public long apply( Grid grid, int indexTile1, int indexTile2) {
+	public long apply(int indexTile1, int indexTile2) {
 		if (indexTile1 != indexTile2) {
 
 			int value1 = (indexTile1 == 16 ? grid.getInventory() : grid.getTile(indexTile1));
@@ -55,7 +58,7 @@ public class Swap extends Modifier {
 	 * @param  grid  The main grid
 	 * @return true if the modifier can be used, false otherwise
 	 */
-	public boolean isAvailable(long score, Grid grid) {
+	public boolean isAvailable(long score) {
 
 		return (super.isAvailable(score) && grid.isGridEmpty());
 	}

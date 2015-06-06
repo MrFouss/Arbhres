@@ -8,12 +8,13 @@ import arbhres.model.structure.Grid;
  * @since	06/05/2015
  */
 public class TurnRight extends Modifier {
-
+	private Grid grid;
 	/**
 	 * Create the modifier with its defined price
 	 */
-	public TurnRight() {
+	public TurnRight(Grid grid) {
 		super(4000);
+		this.grid = grid;
 	}
 	
 	/**
@@ -23,7 +24,7 @@ public class TurnRight extends Modifier {
 	 * @param grid		The main grid
 	 * @return the price
 	 */
-	public long apply(int tileIndex, Grid grid) {
+	public long apply(int tileIndex) {
 
 		int area;
 
