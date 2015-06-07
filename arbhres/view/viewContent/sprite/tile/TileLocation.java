@@ -19,6 +19,35 @@ public enum TileLocation {
 	    this.position = (new Rectangle2D.Double(rec.getX(), rec.getY(), width, width));
 	}
 	
+	public Point2D getCoordinateofTile(int X, int Y) {
+	    int x;
+	    int y;
+	    
+	    switch (this) {
+	    case GRID:
+		x = Math.min(X, 3);
+		y = Math.min(Y, 3);
+		break;
+	    case NEXT:
+		x = 0;
+		y = Math.min(Y, 2);
+		break;
+	    case STORE:
+		x = 0;
+		y = 0;
+		break;
+	    default:
+		x = 0;
+		y = 0;
+		break;
+	    }
+	    
+	    return Scaller.applyFactor(new Point2D.Double(
+	    		position.getX()+x*step+x*position.getWidth(),
+				position.getY()+y*step+y*position.getHeight()
+			));
+	}
+	
 	public Rectangle2D getBoxOfTile(int X, int Y) {
 	    int x;
 	    int y;

@@ -13,7 +13,7 @@ public class TileSprite implements Sprite {
     private final Picture sprite;
     
     public TileSprite(TileLocation loc, TileType type, int value, int x, int y) {
-    	if (type == TileType.TILE) {
+     	if (type == TileType.TILE) {
 			sprite = new Picture(loc.getBoxOfTile(x, y),
 					path + type.getname() + value + extension);
 		} else {
@@ -23,7 +23,7 @@ public class TileSprite implements Sprite {
 		}
     	this.value = value;
     }
-
+    
     public Rectangle2D getBox() {
     	return sprite.getBox();
     }
@@ -32,15 +32,15 @@ public class TileSprite implements Sprite {
     	sprite.setLocation(dest);
     }
     
-    
-    
     public void paint(Graphics g) {
 	sprite.paint(g);
     }
 
+	public int getValue() {
+		return value;
+	}
+
 	public void setVisible(boolean visible) {
 		sprite.setVisibility(visible);
 	}
-	
-
 }

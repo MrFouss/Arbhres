@@ -3,13 +3,14 @@ package arbhres.view.viewContent.sprite.tile;
 import arbhres.view.viewContent.sprite.SpriteType;
 
 public enum TileType implements SpriteType{
-	TILE		("tile", 1f),
-    HIGHLIGHT 	("tileFilter", 0.8f),
-    BLIND 		("blindTile", 1f),
-    TARGET 		("target", 0.5f);
+	TILE		("tile", 1f, 0),
+    HIGHLIGHT 	("tileFilter", 0.8f, -1),
+    BLIND 		("blindTile", 1f, -2),
+    TARGET 		("target", 0.5f, -3);
 	
     private String name;
     private float opacity;
+    private int value;
     
     public static TileType[] getTiles() {
     	TileType[] t = {
@@ -22,9 +23,14 @@ public enum TileType implements SpriteType{
     	return t;
     }
     
-    private TileType(String name, float opacity) {
+    public static int getValue(TileType t) {
+    	return t.value;
+    }
+    
+    private TileType(String name, float opacity, int value) {
     	this.name = name;
     	this.opacity = opacity;
+    	this.value = value;
     }
 
 	public String getname() {
@@ -33,5 +39,9 @@ public enum TileType implements SpriteType{
 
 	public float getOpacity() {
 		return opacity;
+	}
+	
+	public int getValue() {
+		return value;
 	}
 }

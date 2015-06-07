@@ -109,78 +109,41 @@ public class ViewContent extends JPanel {
 	
 	//tiles
 	
-	public void addTile(TileLocation tLoc, TileType tType, int x, int y, int value)
+	public TileSprite getTile(TileLocation loc, TileType type, int x, int y)
 	{
-	    switch (tLoc) {
-		case GRID:
-			x = Math.min(3, x);
-			y = Math.min(3, x);
-			grid.get(tType)[y * 4 + x] = new TileSprite(tLoc, tType, value, x, y);
-			break;
-		case NEXT:
-			y = Math.min(y, 2);
-			next.get(tType)[y] = new TileSprite(tLoc, tType, value, x, y);
-			break;
-		case STORE:
-			store.put(tType, new TileSprite(tLoc, tType, value, x, y));
-			break;
-		default:
-			break;
-		}
-	}
-	
-	public void removeTile(TileLocation tLoc, TileType tType, int x, int y)
-	{
-		switch (tLoc) {
-		case GRID:
-			x = Math.min(3, x);
-			y = Math.min(3, x);
-			grid.get(tType)[4 * y + x] = null;
-			break;
-		case NEXT:
-			y = Math.min(y, 2);
-			next.get(tType)[y] = null;
-			break;
-		case STORE:
-			store.put(tType, null);
-			break;
-		default:
-			break;
-		}
-	}
-	
-	public TileSprite getTile(TileLocation tLoc, TileType tType, int x, int y)
-	{
-		TileSprite t;
+		TileSprite ts;
 		
-		switch (tLoc) {
-		case GRID:
-			t = grid.get(tType)[4 * y + x];
-			break;
-		case NEXT:
-			y = Math.min(y, 2);
-			t = next.get(tType)[y];
-			break;
-		case STORE:
-			t = store.get(tType);
-			break;
-		default:
-			t = null;
-			break;
-		}
+		switch (loc) {
+			case GRID:
+				x = Math.min(3, Math.max(x, 0));
+				y = Math.min(3, Math.max(y, 0));
+				ts = grid.get(type)[y * 4 + x];
+				break;
+			case NEXT:
+				y = Math.min(2, Math.max(y, 0));
+				ts = next.get(type)[y];
+				break;
+			case STORE:
+				ts = store.get(type);
+				break;
+			default:
+				ts = null;
+				break;
+		 }
 
-		return t;
+		 return ts;
 	}
 	
-	public void moveTile(TileType type, TileLocation loc1, int x1, int y1,
-			TileLocation loc2, int x2, int y2) {
-		TileSprite ts = getTile(loc1, type, x1, y1);
-		switch (loc2) {
+	private void setTile(TileLocation loc, TileType type, int x, int y, TileSprite ts) {
+		switch (loc) {
 		case GRID:
-			grid.get(type)[y2*4 + x2] = ts;
+			x = Math.min(3, Math.max(x, 0));
+			y = Math.min(3, Math.max(y, 0));
+			grid.get(type)[y * 4 + x] = ts;
 			break;
 		case NEXT:
-			next.get(type)[y2] = ts;
+			y = Math.min(2, Math.max(y, 0));
+			next.get(type)[y] = ts;
 			break;
 		case STORE:
 			store.put(type, ts);
@@ -188,7 +151,26 @@ public class ViewContent extends JPanel {
 		default:
 			break;
 		}
-		removeTile(loc1, type, x1, y1);
+	}
+	
+	public void addTile(TileLocation loc, TileType type, int x, int y, int value) {
+		setTile(loc, type, x, y, new TileSprite(loc, type, value, x, y));
+	}
+	
+	public void removeTile(TileLocation loc, TileType type, int x, int y)
+	{
+		setTile(loc, type, x, y, null);
+	}
+	
+	public void moveTile(TileType type, TileLocation loc1, int x1, int y1,
+			TileLocation loc2, int x2, int y2) {
+		TileSprite ts = getTile(loc1, type, x1, y1);
+		ts.setPosition(loc2.getCoordinateofTile(x2, y2));
+		if (ts != null) {
+			setTile(loc2, type, x2, y2, ts);
+			removeTile(loc1, type, x1, y1);
+		}
+
 	}
 
 	public void setVisible(TileType type, boolean visible) {
@@ -210,24 +192,26 @@ public class ViewContent extends JPanel {
 	}
 	
 	public void paint(Graphics g)
-	{    
-		//cfgkdjfg kjsd fksj fs
+	{
+		addTile(TileLocation.GRID, TileType.TILE, 0, 0, 6);
+		moveTile(TileType.TILE, TileLocation.GRID, 0, 0, TileLocation.GRID, 0, 1);
+		
 		for (GeneralSprite s : background.values()) {
 			if (s != null) {
 				s.paint(g);
 			}
 		}
 		
-		for (ButtonSprite s : buttons.values()) {
-			if (s != null) {
-				s.paint(g);
+		for (ButtonSprite b : buttons.values()) {
+			if (b != null) {
+				b.paint(g);
 			}
 		}
 		
 		for	(TileType t : grid.keySet()) {
-			for (TileSprite s : grid.get(t)) {
-				if (s != null) {
-					s.paint(g);
+			for (TileSprite z : grid.get(t)) {
+				if (z != null) {
+					z.paint(g);
 				}
 			}
 		}
