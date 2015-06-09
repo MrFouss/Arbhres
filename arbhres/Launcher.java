@@ -7,7 +7,7 @@ import arbhres.controller.Controller;
 import arbhres.model.Model;
 
 /**
- * @author	Maxime Brodat <maxime.brodat@fouss.fr>
+ * @author	Maxime Brodat "maxime.brodat@fouss.fr"
  * @version	1.0
  * @since	05/21/2015
  */

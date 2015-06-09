@@ -13,7 +13,7 @@ import arbhres.controller.events.ButtonClickEvent.Button;
 import arbhres.controller.listeners.ControllerListener;
 
 /**
- * @author	Maxime Brodat <maxime.brodat@fouss.fr>
+ * @author	Maxime Brodat "maxime.brodat@fouss.fr"
  * @version	1.0
  * @since	05/21/2015
  */

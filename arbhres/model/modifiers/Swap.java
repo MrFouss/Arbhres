@@ -3,7 +3,7 @@ package arbhres.model.modifiers;
 import arbhres.model.structure.Grid;
 
 /**
- * @author Stéphane Perrez <stephane.perrez@utbm.fr>
+ * @author Stéphane Perrez "stephane.perrez@utbm.fr"
  * @version	1.0
  * @since	06/05/2015
  */
@@ -13,6 +13,8 @@ public class Swap extends Modifier {
 	
 	/**
 	 * Create the modifier with its defined price
+	 * 
+	 * @param grid The main grid
 	 */
 	public Swap(Grid grid) {
 		super(8000);
@@ -22,7 +24,6 @@ public class Swap extends Modifier {
 	/**
 	 * Swaps two tiles of the grid, or a tile of the grid with the tile in the inventory
 	 *  
-	 * @param grid		 The main grid of the game
 	 * @param indexTile1 The index of the first tile
 	 * @param indexTile2 The index of the second tile
 	 * @return The price
@@ -55,7 +56,6 @@ public class Swap extends Modifier {
 	 * Checks if a modifier can be used
 	 * 
 	 * @param  score The actual score
-	 * @param  grid  The main grid
 	 * @return true if the modifier can be used, false otherwise
 	 */
 	public boolean isAvailable(long score) {

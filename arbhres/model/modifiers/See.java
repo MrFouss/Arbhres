@@ -1,5 +1,10 @@
 package arbhres.model.modifiers;
 
+/**
+ * @author Stéphane Perrez "stephane.perrez@utbm.fr"
+ * @version	1.0
+ * @since	06/05/2015
+ */
 public class See extends Modifier {
 	
 	/**

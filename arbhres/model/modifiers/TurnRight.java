@@ -3,14 +3,17 @@ package arbhres.model.modifiers;
 import arbhres.model.structure.Grid;
 
 /**
- * @author Stéphane Perrez <stephane.perrez@utbm.fr>
+ * @author Stéphane Perrez "stephane.perrez@utbm.fr"
  * @version	1.0
  * @since	06/05/2015
  */
 public class TurnRight extends Modifier {
 	private Grid grid;
+	
 	/**
 	 * Create the modifier with its defined price
+	 * 
+	 * @param grid The main grid
 	 */
 	public TurnRight(Grid grid) {
 		super(4000);
@@ -21,7 +24,6 @@ public class TurnRight extends Modifier {
 	 * Make a clockwise rotation of a group of 4 tiles
 	 * 
 	 * @param tileIndex The index of one of the 4 tiles to rotate
-	 * @param grid		The main grid
 	 * @return the price
 	 */
 	public long apply(int tileIndex) {

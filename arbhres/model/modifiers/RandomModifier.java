@@ -9,7 +9,7 @@ import arbhres.controller.listeners.ControllerListener;
 import arbhres.model.structure.Grid;
 
 /**
- * @author Stéphane Perrez <stephane.perrez@utbm.fr>
+ * @author Stéphane Perrez "stephane.perrez@utbm.fr"
  * @version	1.0
  * @since	06/05/2015
  */
@@ -20,6 +20,8 @@ public class RandomModifier implements ControllerListener{
 	
 	/**
 	 * Create the modifier without price, which is generated each time the bonus is used
+	 * 
+	 * @param grid The main grid
 	 */
 	public RandomModifier(Grid grid) {
 		this.grid = grid;

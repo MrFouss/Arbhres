@@ -9,7 +9,7 @@ import arbhres.model.structure.Grid;
 import arbhres.model.structure.GridBackup;
 
 /**
- * @author	Pierre Brunet <pierre.brunet@krophil.fr>
+ * @author	Pierre Brunet "pierre.brunet@krophil.fr"
  * @version	1.0
  * @since	05/21/2015
  */
