@@ -4,8 +4,6 @@ import java.awt.Point;
 
 import javax.swing.JFrame;
 
-import com.sun.xml.internal.bind.v2.runtime.Coordinator;
-
 import arbhres.events.ButtonClickEvent;
 import arbhres.events.ButtonClickEvent.Button;
 import arbhres.events.MovementTileEvent;

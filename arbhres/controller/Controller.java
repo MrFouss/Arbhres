@@ -29,8 +29,9 @@ public class Controller extends InputAdapter {
 	/* NEEDED OVERRIDEN METHODS */
 
 	@Override
-	public void keyTyped(KeyEvent e) {
-		fireKeyPressed(e);
+	public void keyPressed(KeyEvent e) {
+		fireKeyPressed(e.getKeyCode());
+		System.out.println("Key typed: " +KeyEvent.getKeyText(e.getKeyCode()));
 	}
 
 	@Override
@@ -78,30 +79,29 @@ public class Controller extends InputAdapter {
 	 * 
 	 * @param keyTyped the event linked to the typed key
 	 */
-	protected void fireKeyPressed(KeyEvent keyTyped) {
+	protected void fireKeyPressed(int keyCode) {
 		MovementEvent event = null;
 		for (ControllerListener listener : getControllerListeners()) {
-			if (event == null) {
-				switch (keyTyped.getKeyCode()) {
-				case KeyEvent.VK_UP:
-					event = new MovementEvent(Direction.UP);
-					listener.gridMoved(event);
-					break;
-				case KeyEvent.VK_LEFT:
-					event = new MovementEvent(Direction.LEFT);
-					listener.gridMoved(event);
-					break;
-				case KeyEvent.VK_RIGHT:
-					event = new MovementEvent(Direction.RIGHT);
-					listener.gridMoved(event);
-					break;
-				case KeyEvent.VK_DOWN:
-					event = new MovementEvent(Direction.DOWN);
-					listener.gridMoved(event);
-					break;
-				default:
-					break;
-				}
+			switch (keyCode) {
+			case KeyEvent.VK_UP:
+				event = new MovementEvent(Direction.UP);
+				listener.gridMoved(event);
+				break;
+			case KeyEvent.VK_LEFT:
+				event = new MovementEvent(Direction.LEFT);
+				listener.gridMoved(event);
+				break;
+			case KeyEvent.VK_RIGHT:
+				event = new MovementEvent(Direction.RIGHT);
+				listener.gridMoved(event);
+				break;
+			case KeyEvent.VK_DOWN:
+				event = new MovementEvent(Direction.DOWN);
+				listener.gridMoved(event);
+				break;
+			default:
+				System.out.println("Error");
+				break;
 			}
 		}
 	}
