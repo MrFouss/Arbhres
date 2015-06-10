@@ -1,9 +1,12 @@
 package arbhres.model;
 
+import javax.swing.event.EventListenerList;
+
 import arbhres.controller.listeners.ControllerListener;
 import arbhres.events.ButtonClickEvent;
 import arbhres.events.MovementEvent;
 import arbhres.events.TileClickEvent;
+import arbhres.model.listeners.ModelListener;
 import arbhres.model.modifiers.*;
 import arbhres.model.structure.Grid;
 import arbhres.model.structure.GridBackup;
@@ -24,6 +27,7 @@ public class Model implements ControllerListener {
 	private int tileIndex;
 	private int blindTurn;
 	private int seeTurn;
+	private final EventListenerList listeners = new EventListenerList();
 	
 	public Model () {
 		this.score = 0;
@@ -34,7 +38,38 @@ public class Model implements ControllerListener {
 		this.blindTurn = 0;
 		this.seeTurn = 0;
 	}
+	
+	/* LISTENER METHODS */
 
+	/**
+	 * Add a new model listener to the list of listeners
+	 * 
+	 * @param listener the listener to add to the list
+	 */
+	public void addModelListener(ModelListener listener) {
+		listeners.add(ModelListener.class, listener);
+	}
+
+	/**
+	 * Remove a model listener of the list of listeners
+	 * 
+	 * @param listener the listener to remove of the list
+	 */
+	public void removeModelListener(ModelListener listener) {
+		listeners.remove(ModelListener.class, listener);
+	}
+
+	/**
+	 * Get the list of listeners actually listening to the controller
+	 * 
+	 * @return the list of listeners
+	 */
+	public ModelListener[] getModelListeners() {
+		return listeners.getListeners(ModelListener.class);
+	}
+
+	/* OVERRIDEN METHODS */
+	
 	@Override
 	public void buttonClicked(ButtonClickEvent e) {
 		if (this.pressButton) {

@@ -19,8 +19,6 @@ import arbhres.events.MovementEvent.Direction;
  */
 public class Controller extends InputAdapter {
 	private final EventListenerList listeners = new EventListenerList();
-	
-	public Controller () {}
 
 	/* NEEDED OVERRIDEN METHODS */
 
