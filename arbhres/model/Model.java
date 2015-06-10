@@ -74,6 +74,8 @@ public class Model implements ControllerListener {
 	
 	@Override
 	public void buttonClicked(ButtonClickEvent e) {
+		System.out.println("Button clicked: " +e.getButton());
+		
 		if (this.pressButton) {
 			this.moveGrid = false;
 			this.pressButton = false;
@@ -216,6 +218,7 @@ public class Model implements ControllerListener {
 
 	@Override
 	public void tileClicked(TileClickEvent e) {
+		System.out.println("Tile clicked (index: " +e.getTileIndex()+ " ; value: " +e.getTileValue());
 		if (this.clickTile) {
 			this.tileIndex = e.getTileIndex();
 			this.clickTile = false;
