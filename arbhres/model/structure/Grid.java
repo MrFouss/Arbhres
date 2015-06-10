@@ -289,9 +289,11 @@ public class Grid {
 	 * @param direction The direction where the tiles are going
 	 * @param backup The backup grid
 	 * @param score The score to change
+	 * @return the points to add to the score
 	 */
-	public void move(Direction direction, GridBackup backup, long score) {
-
+	public long move(Direction direction, GridBackup backup, long score) {
+		
+		long scoreChange = 0;
 		GridBackup tmpBackup = new GridBackup(this, score);
 		
 		switch (direction) {
@@ -314,7 +316,7 @@ public class Grid {
 				if(isMergeable(i+j*4, i+1+j*4)) {
 					tiles[i+j*4]+=tiles[i+1+j*4]; // merges Tile[i] and Tile[i+1]
 					tiles[i+1+j*4]=-1;
-					score += tiles[i+j*4]*100;
+					scoreChange += tiles[i+j*4]*100;
 					hasMoved=true;
 				} else {
 					if(isTileEmpty(i+j*4)){ // checks if the tile is empty
@@ -344,6 +346,7 @@ public class Grid {
 		default:
 			break;
 		}
+		return scoreChange + (hasMoved ? 0 : - 1) ;
 	}
 
 	/**

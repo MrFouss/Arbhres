@@ -12,9 +12,9 @@ public class Blind extends Modifier {
 	/**
 	 * Create the modifier with its defined price
 	 */
-	public Blind(int blindTurn) {
+	public Blind() {
 		super(-5000);
-		this.blindTurn = blindTurn;
+		this.blindTurn = 3;
 	}
 	
 	/**

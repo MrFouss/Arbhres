@@ -2,10 +2,10 @@ package arbhres.model.modifiers;
 
 import java.util.Random;
 
-import arbhres.controller.listeners.ControllerListener;
 import arbhres.events.ButtonClickEvent;
 import arbhres.events.MovementEvent;
 import arbhres.events.TileClickEvent;
+import arbhres.controller.listeners.ControllerListener;
 import arbhres.model.structure.Grid;
 
 /**
@@ -17,7 +17,8 @@ public class RandomModifier implements ControllerListener{
 	private Grid grid;
 	private boolean clickTile;
 	private int tileIndex;
-	private int blindTurn;
+	private int seeTurns;
+	private int blindTurns;
 	
 	/**
 	 * Create the modifier without price, which is generated each time the bonus is used
@@ -26,6 +27,8 @@ public class RandomModifier implements ControllerListener{
 	 */
 	public RandomModifier(Grid grid) {
 		this.grid = grid;
+		this.seeTurns = 0;
+		this.blindTurns = 0;
 	}
 	
 	public long apply(long score) {
@@ -37,7 +40,9 @@ public class RandomModifier implements ControllerListener{
 				//TODO Target
 				break;
 			case 1:
-				// TODO Blind
+				Blind blind = new Blind();
+				score-=blind.apply();
+				blindTurns += blind.getBlindTurns();
 				break;
 			case 2:
 				TurnLeft turnLeft = new TurnLeft(grid);
@@ -67,7 +72,9 @@ public class RandomModifier implements ControllerListener{
 				}
 				break;
 			case 1:
-				//TODO See
+				See see = new See();
+				score -= see.apply();
+				this.seeTurns += see.getSeeTurns();
 				break;
 			case 2:
 				Pause pause = new Pause(grid.getQueue());
@@ -171,4 +178,13 @@ public class RandomModifier implements ControllerListener{
 		}
 		
 	}
+
+	public int getSeeTurns() {
+		return this.seeTurns;
+	}
+
+	public int getBlindTurns() {
+		return this.blindTurns;
+	}
+	
 }

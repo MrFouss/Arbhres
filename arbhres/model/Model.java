@@ -108,12 +108,14 @@ public class Model implements ControllerListener {
 			case BONUS_RANDOM:
 				RandomModifier rndMod = new RandomModifier(grid);
 				score = rndMod.apply(score);
+				this.blindTurn+=rndMod.getBlindTurns();
+				this.seeTurn+=rndMod.getSeeTurns();
 				break;
 			case BONUS_SEE:
-				See see = new See(this.seeTurn);
+				See see = new See();
 				if(see.isAvailable(this.score)) {
 					score -= see.apply();
-					this.seeTurn = see.getSeeTurns();
+					this.seeTurn += see.getSeeTurns();
 				}
 				break;
 			case BONUS_SWAP:
@@ -189,9 +191,15 @@ public class Model implements ControllerListener {
 	@Override
 	public void gridMoved(MovementEvent e) {
 		if (this.moveGrid) {
+			long scoreChange;
 			this.moveGrid = false;
 			this.pressButton = false;
-			grid.move(e.getDirection(), backup, score);
+			scoreChange = grid.move(e.getDirection(), backup, score);
+			if (scoreChange != -1) {
+				score+=scoreChange;
+				blindTurn = Math.max(blindTurn - 1, -1);
+				seeTurn = Math.max(seeTurn - 1, -1);
+			}
 			this.moveGrid = true;
 			this.pressButton = true;
 		}
