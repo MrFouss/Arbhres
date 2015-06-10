@@ -195,19 +195,28 @@ public class ViewContent extends JPanel {
 		switch (loc) {
 		case GRID:
 			while (i < grid.get(TileType.TILE).length) {
-				if (grid.get(TileType.TILE)[i] != null && grid.get(TileType.TILE)[i].contains(p)) {
+				if (grid.get(TileType.TILE)[i] != null) {
+					if (grid.get(TileType.TILE)[i].contains(p)) {
+						
+					}
 					point = new Point(i%4, i/4);
 				}
 				i++;
 			}
 			break;
 		case STORE:
-			if (store.get(TileType.TILE) != null && store.get(TileType.TILE).contains(p)) {
+			if (store.get(TileType.TILE) != null) {
+				if (store.get(TileType.TILE).contains(p)) {
+					
+				}
 				point = new Point(0, 0);
 			}
 		case NEXT:
 			while (i < next.get(TileType.TILE).length) {
-				if (next.get(TileType.TILE) != null && next.get(TileType.TILE)[i].contains(p)) {
+				if (next.get(TileType.TILE)[i] != null) {
+					if (next.get(TileType.TILE)[i].contains(p)) {
+						
+					}
 					point = new Point(0, i);
 				}
 				i++;

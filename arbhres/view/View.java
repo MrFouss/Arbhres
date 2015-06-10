@@ -28,9 +28,6 @@ public class View extends JFrame implements ModelListener {
 	}
 
 	public boolean isButton(int x, int y) {
-		System.out.println(content.getButtonPosition(x, y)!=null);
-		
-		
 		return (content.getButtonPosition(x, y)!=null);
 	}
 	
