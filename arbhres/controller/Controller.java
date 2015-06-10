@@ -11,6 +11,7 @@ import arbhres.events.MovementEvent;
 import arbhres.events.TileClickEvent;
 import arbhres.events.ButtonClickEvent.Button;
 import arbhres.events.MovementEvent.Direction;
+import arbhres.view.View;
 
 /**
  * @author	Maxime Brodat "maxime.brodat@fouss.fr"
@@ -19,7 +20,12 @@ import arbhres.events.MovementEvent.Direction;
  */
 public class Controller extends InputAdapter {
 	private final EventListenerList listeners = new EventListenerList();
+	private View view;
 
+	public Controller (View view) {
+		this.view = view;
+	}
+	
 	/* NEEDED OVERRIDEN METHODS */
 
 	@Override
@@ -29,10 +35,10 @@ public class Controller extends InputAdapter {
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		if (isButton(e.getX(), e.getY())) {
-			fireButtonClicked(getButton(e.getX(), e.getY()));
-		} else if (isTile(e.getX(), e.getY())) {
-			fireTileClicked(getTileIndex(e.getX(), e.getY()));
+		if (view.isButton(e.getX(), e.getY())) {
+			fireButtonClicked(view.getButton(e.getX(), e.getY()));
+		} else if (view.isTile(e.getX(), e.getY())) {
+			fireTileClicked(view.getTileIndex(e.getX(), e.getY()));
 		}
 	}
 

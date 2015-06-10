@@ -14,9 +14,9 @@ import arbhres.model.Model;
 
 public class Launcher {
 	public static void main(String[] args) throws IOException, InterruptedException {
-		Controller controller = new Controller();
 		Model model = new Model();
 		View view = new View();
+		Controller controller = new Controller(view);
 		controller.addControllerListener(model);
 		model.addModelListener(view);
 	}
