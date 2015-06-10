@@ -3,6 +3,7 @@ package arbhres.model.structure;
 import java.util.Random;
 
 import arbhres.events.MovementEvent.Direction;
+import arbhres.model.Model;
 
 /**
  * @author	Pierre Brunet "pierre.brunet@krophil.fr"
@@ -15,6 +16,7 @@ public class Grid {
 	private int[] tiles;
 	private TileQueue queue;
 	private int inventory;
+	private Model model;
 
 	/**
 	 * Grid constructor with no parameters
@@ -22,15 +24,18 @@ public class Grid {
 	 * Simply initialize the tiles array (with empty tiles),
 	 * the queue with 3 tiles in it and the inventory with an empty tile.
 	 */
-	public Grid() {
+	public Grid(Model model) {
 		this.tiles = new int[16]; // new tile array
 		this.queue = new TileQueue(); // new queue
 		this.inventory = -1; // new inventory tile
+		this.model = model;
 		
 		// initialize the tiles array with empty tiles
 		for(int i=0; i<16; i++) {
 			this.tiles[i] = -1;
 		}
+		
+		this.initTiles();
 	}
 
 	/**
@@ -92,6 +97,7 @@ public class Grid {
 	 */
 	public void setInventory(int inventory) {
 		this.inventory=inventory;
+		model.fireAddTile(16, inventory);
 	}
 	
 	/**
@@ -110,6 +116,7 @@ public class Grid {
 	 */
 	public void emptyGrid(){
 		this.tiles = null;
+		model.fireRestartGUI();
 	}
 	/**
 	 * Initialize the tile array with 9 random tiles between 1 and 3
@@ -141,6 +148,7 @@ public class Grid {
 		} else {
 			this.tiles[tileIndex]=-1;
 		}
+		model.fireRemoveTile(tileIndex);
 	}
 	
 	/**
@@ -161,6 +169,8 @@ public class Grid {
 	 */
 	public void addTile(int coord, int value) {
 		this.tiles[coord] = value;
+		model.fireAddTile(coord, value);
+		model.fireRefreshGUI();
 	}
 	
 	/**
@@ -294,7 +304,7 @@ public class Grid {
 	public long move(Direction direction, GridBackup backup, long score) {
 		
 		long scoreChange = 0;
-		GridBackup tmpBackup = new GridBackup(this, score);
+		GridBackup tmpBackup = new GridBackup(this, score, this.model);
 		
 		switch (direction) {
 		case DOWN:

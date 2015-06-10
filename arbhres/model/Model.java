@@ -35,7 +35,7 @@ public class Model implements ControllerListener {
 	
 	public Model () {
 		this.score = 0;
-		this.grid = new Grid();
+		this.grid = new Grid(this);
 		this.pressButton = true;
 		this.moveGrid = true;
 		this.clickTile = false;
@@ -85,7 +85,7 @@ public class Model implements ControllerListener {
 			switch (e.getButton()) {
 			case NEW_GAME:
 				this.score = 0;
-				this.grid = new Grid();
+				this.grid = new Grid(this);
 				this.pressButton = true;
 				this.moveGrid = true;
 				this.clickTile = false;
@@ -235,7 +235,7 @@ public class Model implements ControllerListener {
 	 * 
 	 * @param state the new state of the blind mode
 	 */
-	protected void fireSwitchBlindMode(boolean state) {
+	public void fireSwitchBlindMode(boolean state) {
 		StateEvent event = null;
 		for (ModelListener listener : getModelListeners()) {
 			if (event == null) {
@@ -282,7 +282,7 @@ public class Model implements ControllerListener {
 	 * 
 	 * @param tileIndex the index of the removed tile
 	 */
-	protected void removeTile(int tileIndex) {
+	public void fireRemoveTile(int tileIndex) {
 		TileClickEvent event = null;
 		for (ModelListener listener : getModelListeners()) {
 			if (event == null) {
@@ -314,7 +314,7 @@ public class Model implements ControllerListener {
 	 * 
 	 * @param button the event containing which button has been clicked
 	 */
-	protected void firePressButton(Button button) {
+	public void firePressButton(Button button) {
 		ButtonClickEvent event = null;
 		for (ModelListener listener : getModelListeners()) {
 			if (event == null) {
@@ -329,7 +329,7 @@ public class Model implements ControllerListener {
 	 * 
 	 * @param button the event containing which button has been released
 	 */
-	protected void fireReleaseButton(Button button) {
+	public void fireReleaseButton(Button button) {
 		ButtonClickEvent event = null;
 		for (ModelListener listener : getModelListeners()) {
 			if (event == null) {
@@ -344,7 +344,7 @@ public class Model implements ControllerListener {
 	 * 
 	 * @param index The index of the tile
 	 */
-	protected void fireHighlightTile(int index) {		
+	public void fireHighlightTile(int index) {		
 		TileClickEvent event = null;
 		for (ModelListener listener : getModelListeners()) {
 			if (event == null) {
@@ -359,7 +359,7 @@ public class Model implements ControllerListener {
 	 * 
 	 * @param index The index of the tile
 	 */
-	protected void fireUnhighlightTile(int index) {		
+	public void fireUnhighlightTile(int index) {		
 		TileClickEvent event = null;
 		for (ModelListener listener : getModelListeners()) {
 			if (event == null) {
