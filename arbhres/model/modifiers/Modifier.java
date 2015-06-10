@@ -1,7 +1,7 @@
 package arbhres.model.modifiers;
 
 /**
- * @author Stéphane Perrez <stephane.perrez@utbm.fr>
+ * @author Stéphane Perrez "stephane.perrez@utbm.fr"
  * @version	1.0
  * @since	06/04/2015
  */

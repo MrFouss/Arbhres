@@ -5,15 +5,15 @@ import java.awt.event.MouseEvent;
 
 import javax.swing.event.EventListenerList;
 
-import arbhres.controller.events.MovementEvent;
-import arbhres.controller.events.MovementEvent.Direction;
-import arbhres.controller.events.TileClickEvent;
-import arbhres.controller.events.ButtonClickEvent;
-import arbhres.controller.events.ButtonClickEvent.Button;
 import arbhres.controller.listeners.ControllerListener;
+import arbhres.events.ButtonClickEvent;
+import arbhres.events.MovementEvent;
+import arbhres.events.TileClickEvent;
+import arbhres.events.ButtonClickEvent.Button;
+import arbhres.events.MovementEvent.Direction;
 
 /**
- * @author	Maxime Brodat <maxime.brodat@fouss.fr>
+ * @author	Maxime Brodat "maxime.brodat@fouss.fr"
  * @version	1.0
  * @since	05/21/2015
  */

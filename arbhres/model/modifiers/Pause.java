@@ -3,7 +3,7 @@ package arbhres.model.modifiers;
 import arbhres.model.structure.TileQueue;
 
 /**
- * @author Stéphane Perrez <stephane.perrez@utbm.fr>
+ * @author Stéphane Perrez "stephane.perrez@utbm.fr"
  * @version	1.0
  * @since	06/05/2015
  */
@@ -13,6 +13,8 @@ public class Pause extends Modifier {
 	
 	/**
 	 * Create the modifier with its defined price
+	 * 
+	 * @param queue The next tiles to appear
 	 */
 	public Pause(TileQueue queue) {
 		super(10000);
@@ -37,7 +39,6 @@ public class Pause extends Modifier {
 	 * Update the score according to the price of the modifier
 	 * 
 	 * @param score The actual score
-	 * @param tile  The head of queue
 	 * @return the price
 	 */
 	public boolean isAvailable(long score) {

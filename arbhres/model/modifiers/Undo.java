@@ -4,7 +4,7 @@ import arbhres.model.structure.Grid;
 import arbhres.model.structure.GridBackup;
 
 /**
- * @author Stéphane Perrez <stephane.perrez@utbm.fr>
+ * @author Stéphane Perrez "stephane.perrez@utbm.fr"
  * @version	1.0
  * @since	06/04/2015
  */
@@ -20,7 +20,6 @@ public class Undo extends Modifier {
 	/**
 	 * Cancel the last movement of the player
 	 * 
-	 * @param score The actual score
 	 * @param grid The main grid
 	 * @param backup The stored grid
 	 * @return the updated score
@@ -39,7 +38,7 @@ public class Undo extends Modifier {
 	 * Checks if the modifier can be used
 	 * 
 	 * @param  score The actual score
-	 * @param  grid  The backup grid
+	 * @param  backup The backup 
 	 * @return true if the modifier can be used, false otherwise
 	 */
 	public boolean isAvailable(long score, GridBackup backup) {

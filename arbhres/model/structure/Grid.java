@@ -2,10 +2,10 @@ package arbhres.model.structure;
 
 import java.util.Random;
 
-import arbhres.controller.events.MovementEvent.Direction;
+import arbhres.events.MovementEvent.Direction;
 
 /**
- * @author	Pierre Brunet <pierre.brunet@krophil.fr>
+ * @author	Pierre Brunet "pierre.brunet@krophil.fr"
  * @version	1.0
  * @since	05/21/2015
  * 
@@ -88,7 +88,7 @@ public class Grid {
 	/**
 	 * Inventory tile setter
 	 * 
-	 * @param inventory
+	 * @param inventory The new value to set
 	 */
 	public void setInventory(int inventory) {
 		this.inventory=inventory;
@@ -97,7 +97,7 @@ public class Grid {
 	/**
 	 * Return the value of the selected tile
 	 * 
-	 * @param tileIndex 
+	 * @param tileIndex The index of the tile you want
 	 * @return the value contained in the tile
 	 */
 	public int getTile(int tileIndex) {
@@ -133,7 +133,7 @@ public class Grid {
 	/**
 	 * Reset the tile to -1
 	 * 
-	 * @param index of the tile spot to remove
+	 * @param tileIndex Index of the tile spot to remove
 	 */
 	public void removeTile(int tileIndex){
 		if(tileIndex==16){
@@ -223,7 +223,7 @@ public class Grid {
 	
 	/**
 	 * counterclockwise rotation of one of the 4 areas
-	 * @param area
+	 * @param area The index of the area (from 0 to 3)
 	 */
 	public void rotateLeft(int area){
 		int tmp;
@@ -248,7 +248,7 @@ public class Grid {
 	
 	/**
 	 * counterclockwise rotation of one of the 4 areas
-	 * @param area
+	 * @param area he index of the area (from 0 to 3)
 	 */
 	public void rotateRight(int area){
 		int tmp;
@@ -282,11 +282,13 @@ public class Grid {
 		return ((tiles[i]==tiles[j] && tiles[i] != 1 && tiles[i] !=2 && tiles[i]!=-1) || (tiles[i]==1 && tiles[j]==2) || (tiles[j]==1 && tiles[i]==2));
 	}
 	
+
 	/**
 	 * Moves the grid in a direction
 	 * 
-	 * @param direction the direction where the tiles are going
-	 * @return resulting score during this move
+	 * @param direction The direction where the tiles are going
+	 * @param backup The backup grid
+	 * @param score The score to change
 	 */
 	public void move(Direction direction, GridBackup backup, long score) {
 
