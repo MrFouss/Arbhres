@@ -408,7 +408,13 @@ public class Grid {
 			break;
 		}
 	}
-	
+	/**
+	 * Returns the index before any rotation done
+	 * 
+	 * @param rotation how the tileIndex has been changed
+	 * @param tileIndex the tileIndex right now
+	 * @return the old index
+	 */
 	public int rotateTile(int rotation, int tileIndex){
 		int X, Y;
 		switch (rotation) {
