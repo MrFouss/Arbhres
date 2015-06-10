@@ -7,11 +7,14 @@ package arbhres.model.modifiers;
  */
 public class Blind extends Modifier {
 	
+	private int blindTurn;
+	
 	/**
 	 * Create the modifier with its defined price
 	 */
-	public Blind() {
+	public Blind(int blindTurn) {
 		super(-5000);
+		this.blindTurn = blindTurn;
 	}
 	
 	/**
@@ -19,10 +22,11 @@ public class Blind extends Modifier {
 	 * 
 	 * @return The earned points if you survive
 	 */
-	public long apply() {
-		
-		//TODO see with Esia and Maxime
-		
+	public long apply() {		
 		return updateScore();
+	}
+	
+	public int getBlindTurns() {
+		return this.blindTurn;
 	}
 }

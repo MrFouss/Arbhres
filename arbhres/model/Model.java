@@ -22,6 +22,8 @@ public class Model implements ControllerListener {
 	private Boolean moveGrid;
 	private Boolean clickTile;
 	private int tileIndex;
+	private int blindTurn;
+	private int seeTurn;
 	
 	public Model () {
 		this.score = 0;
@@ -29,6 +31,8 @@ public class Model implements ControllerListener {
 		this.pressButton = true;
 		this.moveGrid = true;
 		this.clickTile = false;
+		this.blindTurn = 0;
+		this.seeTurn = 0;
 	}
 
 	@Override
@@ -40,6 +44,11 @@ public class Model implements ControllerListener {
 			case NEW_GAME:
 				this.score = 0;
 				this.grid = new Grid();
+				this.pressButton = true;
+				this.moveGrid = true;
+				this.clickTile = false;
+				this.blindTurn = 0;
+				this.seeTurn = 0;
 				break;
 			case BONUS_ERASE:
 				Erase erase = new Erase(grid);
@@ -66,7 +75,11 @@ public class Model implements ControllerListener {
 				score = rndMod.apply(score);
 				break;
 			case BONUS_SEE:
-				
+				See see = new See(this.seeTurn);
+				if(see.isAvailable(this.score)) {
+					score -= see.apply();
+					this.seeTurn = see.getSeeTurns();
+				}
 				break;
 			case BONUS_SWAP:
 				Swap swap = new Swap(grid);

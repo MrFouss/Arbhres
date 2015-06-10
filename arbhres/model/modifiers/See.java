@@ -7,11 +7,14 @@ package arbhres.model.modifiers;
  */
 public class See extends Modifier {
 	
+	private int seeTurn;
+	
 	/**
 	 * Create the modifier with its defined price
 	 */
-	public See() {
+	public See(int seeTurn) {
 		super(4000);
+		this.seeTurn = seeTurn;
 	}
 	
 	/**
@@ -20,10 +23,17 @@ public class See extends Modifier {
 	 * @return the price
 	 */
 	public long apply() {
-		
-		//TODO see with Maxime
-		
+		this.seeTurn += 3;
 		return updateScore();
+	}
+	
+	/**
+	 * Getter for the amount of turns left
+	 * 
+	 * @return the number of rounds left before the "see" bonus stops
+	 */
+	public int getSeeTurns() {
+		return this.seeTurn;
 	}
 	
 	/**
@@ -33,9 +43,6 @@ public class See extends Modifier {
 	 * @return true if the modifier can be used, false otherwise
 	 */
 	public boolean isAvailable(long score) {
-		
-		//TODO see with Maxime
-		
 		return super.isAvailable(score);
 	}
 

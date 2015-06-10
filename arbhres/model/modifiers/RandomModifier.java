@@ -17,6 +17,7 @@ public class RandomModifier implements ControllerListener{
 	private Grid grid;
 	private boolean clickTile;
 	private int tileIndex;
+	private int blindTurn;
 	
 	/**
 	 * Create the modifier without price, which is generated each time the bonus is used
@@ -36,7 +37,7 @@ public class RandomModifier implements ControllerListener{
 				//TODO Target
 				break;
 			case 1:
-				//TODO Blind
+				// TODO Blind
 				break;
 			case 2:
 				TurnLeft turnLeft = new TurnLeft(grid);
@@ -46,9 +47,8 @@ public class RandomModifier implements ControllerListener{
 				TurnRight turnRight = new TurnRight(grid);
 				turnRight.apply(rnd.nextInt(16));
 				break;
-				default:
-					return score;
 			}
+			return score;
 		} else {
 			//bonuses
 			switch (rnd.nextInt(6)) {
