@@ -4,11 +4,13 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Point;
+import java.awt.geom.Rectangle2D;
 import java.util.HashMap;
 
 import javax.swing.JPanel;
 
 import arbhres.events.ButtonClickEvent.Button;
+import arbhres.view.viewContent.sprite.Scaller;
 import arbhres.view.viewContent.sprite.button.ButtonSprite;
 import arbhres.view.viewContent.sprite.button.ButtonType;
 import arbhres.view.viewContent.sprite.general.GeneralSprite;
@@ -20,23 +22,24 @@ import arbhres.view.viewContent.sprite.tile.TileType;
 public class ViewContent extends JPanel {
     
 	private HashMap<GeneralType, GeneralSprite> background;
-	
 	private HashMap<ButtonType, ButtonSprite> buttons;
-	
-	private HashMap<TileType, TileSprite[]> grid;
-	private HashMap<TileType, TileSprite[]> next;
-	private HashMap<TileType, TileSprite> store;
+	private HashMap<TileType, TileSprite[]> tiles;
+
+	private boolean blindMode;
 	
 	public ViewContent() {
 	    super();
 	    this.setBackground(Color.white);
-		this.setPreferredSize(new Dimension (800, 695));
-		
+		this.setPreferredSize(Scaller.applyFactor(new Dimension (4650, 4325)));
+		initViewContent();
+	}
+	
+	public void initViewContent() {
 		initBackground();
 		initButtons();
-		initGrid();
-		initNext();
-		initStore();
+		initTiles();
+
+		blindMode = false;
 	}
 	
 	private void initBackground() {
@@ -61,33 +64,13 @@ public class ViewContent extends JPanel {
 		}
 	}
 	
-	private void initGrid() {
-		TileType[] tType = TileType.getTiles();
+	private void initTiles() {
+		TileType[] types = TileType.getTiles();
 		
-		grid = new HashMap<TileType, TileSprite[]>(tType.length);
+		tiles = new HashMap<TileType, TileSprite[]>(types.length);
 		
-		for (int i = 0; i < tType.length; i++) {
-			grid.put(tType[i], new TileSprite[4*4]);
-		}
-	}
-	
-	private void initNext() {
-		TileType[] tType = TileType.getTiles();
-		
-		next = new HashMap<TileType, TileSprite[]>(tType.length);
-		
-		for (int i = 0; i < tType.length; i++) {
-			next.put(tType[i],new TileSprite[3]);
-		}
-	}
-	
-	private void initStore() {
-		TileType[] tType = TileType.getTiles();
-		
-		store = new HashMap<TileType, TileSprite>(tType.length);
-		
-		for (int i = 0; i < tType.length; i++) {
-			store.put(tType[i], null);
+		for (int i = 0; i < types.length; i++) {
+			tiles.put(types[i], new TileSprite[19]);
 		}
 	}
 	
@@ -105,132 +88,127 @@ public class ViewContent extends JPanel {
 	
 	//tiles
 	
-	public TileSprite getTile(TileLocation loc, TileType type, int x, int y)
+	public TileSprite getTile(TileType type, int index)
 	{
-		TileSprite ts;
-		
-		switch (loc) {
-			case GRID:
-				x = Math.min(3, Math.max(x, 0));
-				y = Math.min(3, Math.max(y, 0));
-				ts = grid.get(type)[y * 4 + x];
-				break;
-			case NEXT:
-				y = Math.min(2, Math.max(y, 0));
-				ts = next.get(type)[y];
-				break;
-			case STORE:
-				ts = store.get(type);
-				break;
-			default:
-				ts = null;
-				break;
-		 }
-
-		 return ts;
+		if (index >= 0 && index < 19) {
+			return tiles.get(type)[index];
+		}
+		return null;
 	}
 	
-	private void setTile(TileLocation loc, TileType type, int x, int y, TileSprite ts) {
-		switch (loc) {
-		case GRID:
-			x = Math.min(3, Math.max(x, 0));
-			y = Math.min(3, Math.max(y, 0));
-			grid.get(type)[y * 4 + x] = ts;
-			break;
-		case NEXT:
-			y = Math.min(2, Math.max(y, 0));
-			next.get(type)[y] = ts;
-			break;
-		case STORE:
-			store.put(type, ts);
-			break;
-		default:
-			break;
+	private void setTile(TileType type, int index, TileSprite ts) {
+		if (index >= 0 && index < 19) {
+			tiles.get(type)[index] = ts;
 		}
 	}
 	
-	public void addTile(TileLocation loc, TileType type, int x, int y, int value) {
-		setTile(loc, type, x, y, new TileSprite(loc, type, value, x, y));
+	private TileLocation getTileLocation(int index) {
+		if (index >= 0 && index < 16) {
+			return TileLocation.GRID;
+		} else if (index == 16) {
+			return TileLocation.STORE;
+		} else if (index < 19) {
+			return TileLocation.NEXT;
+		}
+		return null;
 	}
 	
-	public void removeTile(TileLocation loc, TileType type, int x, int y)
+	private Point getTilePosition(int index) {
+		if (index >= 0 && index < 16) {
+			return new Point(index%4, index/4);
+		} else if (index == 16) {
+			return new Point(0, 0);
+		} else if (index < 19) {
+			return new Point(0, index - 17);
+		}
+		return null;
+	}
+	
+	public void addTile(TileType type, int index, int value) {
+		Point p = getTilePosition(index);
+		setTile(type, index,
+				new TileSprite(getTileLocation(index), type, value, (int)p.getX(), (int)p.getY()));
+		if (type == TileType.TILE) {
+			setTile(TileType.BLIND, index,
+					new TileSprite(getTileLocation(index), TileType.BLIND, 0, (int)p.getX(), (int)p.getY()));
+		}
+		
+		if (blindMode) {
+			getTile(type, index).setVisible(false);
+		} else {
+			getTile(TileType.BLIND, index).setVisible(false);
+		}
+	}
+	
+	public void removeTile(TileType type, int index)
 	{
-		setTile(loc, type, x, y, null);
+		setTile(type, index, null);
+		if (type == TileType.TILE) {
+			setTile(TileType.BLIND, index, null);
+		}
 	}
 	
-	public void moveTile(TileType type, TileLocation loc1, int x1, int y1,
-			TileLocation loc2, int x2, int y2) {
-		TileSprite ts = getTile(loc1, type, x1, y1);
+	public void moveTile(TileType type, int i1, int i2) {
+		TileSprite ts = getTile(type, i1);
+		Point A = getTilePosition(i1);
+		Point B = getTilePosition(i2);
+		
 		if (ts != null) {
-			ts.setPosition(loc2.getCoordinateofTile(x2, y2));
-			setTile(loc2, type, x2, y2, ts);
-			removeTile(loc1, type, x1, y1);
+			ts.setPosition(getTileLocation(i2).getCoordinateofTile((int)B.getX(), (int)B.getY()));
+			setTile(type, i2, ts);
+			removeTile(type, i1);
 		}
 
+		if (type == TileType.TILE) {
+			moveTile(TileType.BLIND, i1, i2);
+		}
 	}
 
-	public void setVisible(TileType type, boolean visible) {
-		for (TileSprite[] g : grid.values()) {
-			for (TileSprite ts : g) {
-				ts.setVisible(false);
+	public void setBlindMode(boolean b) {
+		if (blindMode != b) {
+			TileType toHide;
+			TileType toShow;
+			
+			if (b) {
+				toHide = TileType.TILE;
+				toShow = TileType.BLIND;
+			} else {
+				toHide = TileType.BLIND;
+				toShow = TileType.TILE;
 			}
-		}
-		
-		for (TileSprite[] g : next.values()) {
-			for (TileSprite ts : g) {
-				ts.setVisible(false);
+				
+			for (TileSprite ts : tiles.get(toHide)) {
+				if (ts != null) {
+					ts.setVisible(false);
+				}
 			}
-		}
-		
-		for (TileSprite g : store.values()) {
-			g.setVisible(false);
+			
+			for (TileSprite ts : tiles.get(toShow)) {
+				if (ts != null) {
+					ts.setVisible(false);
+				}
+			}
 		}
 	}
 	
-	public Point getTilePosition(TileLocation loc, int x, int y) {
-		Point p = new Point(x, y);
-		Point point = null;
+	public int getContainingTileIndex(Point p) {
+		int index = -1;
 		int i = 0;
 		
-		switch (loc) {
-		case GRID:
-			while (i < grid.get(TileType.TILE).length) {
-				if (grid.get(TileType.TILE)[i] != null) {
-					if (grid.get(TileType.TILE)[i].contains(p)) {
-						
-					}
-					point = new Point(i%4, i/4);
+		while (i < tiles.get(TileType.TILE).length && index == -1) {
+			if (tiles.get(TileType.TILE)[i] != null) {
+				if (tiles.get(TileType.TILE)[i].contains(p)) {
+					index = i;
 				}
-				i++;
 			}
-			break;
-		case STORE:
-			if (store.get(TileType.TILE) != null) {
-				if (store.get(TileType.TILE).contains(p)) {
-					
-				}
-				point = new Point(0, 0);
-			}
-		case NEXT:
-			while (i < next.get(TileType.TILE).length) {
-				if (next.get(TileType.TILE)[i] != null) {
-					if (next.get(TileType.TILE)[i].contains(p)) {
-						
-					}
-					point = new Point(0, i);
-				}
-				i++;
-			}
-		default:
-			break;
+			i++;
 		}
-		
-		return point;
+
+		return index;
 	}
 	
-	public ButtonType getButtonPosition(int x, int y) {
+	public ButtonType getContainingButtonType(Point p) {
 		ButtonType bt = null;
-		Point p = new Point(x, y);
 		
 		for (ButtonType s : ButtonType.getButtonTypes()) {
 			if (buttons.get(s).contains(p)) {
@@ -244,38 +222,19 @@ public class ViewContent extends JPanel {
 	public void paint(Graphics g)
 	{
 		for (GeneralSprite s : background.values()) {
-			if (s != null) {
-				s.paint(g);
-			}
+			s.paint(g);
 		}
 		
 		for (ButtonSprite b : buttons.values()) {
-			if (b != null) {
-				b.paint(g);
-			}
+			b.paint(g);
 		}
-		
-		for	(TileType t : grid.keySet()) {
-			for (TileSprite z : grid.get(t)) {
-				if (z != null) {
-					z.paint(g);
+
+		for (TileSprite[] ts : tiles.values()) {
+			for (TileSprite a : ts) {
+				if (a != null) {
+					a.paint(g);
 				}
 			}
-		}
-		
-		for	(TileType t : next.keySet()) {
-			for (TileSprite s : next.get(t)) {
-				if (s != null) {
-					s.paint(g);
-				}
-			}
-		}
-		
-		for	(TileSprite t : store.values()) {
-			if (t != null) {
-				t.paint(g);
-			}
-			
 		}
 	}
 }

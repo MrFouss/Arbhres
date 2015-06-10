@@ -13,13 +13,14 @@ import arbhres.view.viewContent.sprite.Sprite;
  */
 public class ButtonSprite implements Sprite {   
     private Button sprite;
-    
+    private String hint;
     /**
      * Create a button from a buttonType object.
      * @param bType button type
      */
     public ButtonSprite(ButtonType bType) {
     	sprite = new Button(bType.getLocation(), bType.getSpriteUP(), bType.getSpriteP());
+    	hint = bType.getHint();
     }
 
     /**
@@ -41,6 +42,10 @@ public class ButtonSprite implements Sprite {
 		} else {
 			sprite.setStatus(ButtonStatus.UNPRESSED);
 		}
+    }
+    
+    public String getHint() {
+    	return hint;
     }
 	
     @Override

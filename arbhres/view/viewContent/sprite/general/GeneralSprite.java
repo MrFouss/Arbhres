@@ -37,8 +37,7 @@ public class GeneralSprite implements Sprite
 	
 	public void setValue(String val) {
 		if (sprite instanceof Text) {
-			Text t = (Text) sprite;
-			t.setContent(val);
+			((Text) sprite).setContent(val);
 		}
 	}
 	

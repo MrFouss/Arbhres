@@ -59,7 +59,7 @@ public class Text extends GraphicObject {
 	}
 	
 	public void paint(Graphics g) {
-		if (visible) {
+		if (visible && content != null && content != "") {
 			Graphics2D g2 = (Graphics2D) g;
 			
 			adaptFont(g2);

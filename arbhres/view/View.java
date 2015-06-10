@@ -4,6 +4,8 @@ import java.awt.Point;
 
 import javax.swing.JFrame;
 
+import com.sun.xml.internal.bind.v2.runtime.Coordinator;
+
 import arbhres.events.ButtonClickEvent;
 import arbhres.events.ButtonClickEvent.Button;
 import arbhres.events.MovementTileEvent;
@@ -12,6 +14,7 @@ import arbhres.events.TileClickEvent;
 import arbhres.model.listeners.ModelListener;
 import arbhres.view.viewContent.ViewContent;
 import arbhres.view.viewContent.sprite.button.ButtonType;
+import arbhres.view.viewContent.sprite.general.GeneralType;
 import arbhres.view.viewContent.sprite.tile.TileLocation;
 import arbhres.view.viewContent.sprite.tile.TileType;
 
@@ -28,98 +31,73 @@ public class View extends JFrame implements ModelListener {
 	}
 
 	public boolean isButton(int x, int y) {
-		return (content.getButtonPosition(x, y)!=null);
+		return (content.getContainingButtonType(new Point(x, y)) != null);
 	}
 	
 	public boolean isTile(int x, int y) {
-		return (content.getTilePosition(TileLocation.GRID, x, y) != null 
-				|| content.getTilePosition(TileLocation.STORE, x, y) != null 
-				|| content.getTilePosition(TileLocation.NEXT, x, y) != null);
+		return (content.getContainingTileIndex(new Point(x, y)) != -1);
 	}
 	
 	public int getTileIndex(int x, int y) {
-		Point p = content.getTilePosition(TileLocation.GRID, x, y);
-		
-		if (p != null) {
-			return (int) (p.getY()*4 + p.getX());
-		}
-		
-		p = content.getTilePosition(TileLocation.STORE, x, y);
-		
-		if (p != null) {
-			return 16;
-		}
-		
-		p = content.getTilePosition(TileLocation.NEXT, x, y);
-		
-		if (p != null) {
-			return (int) (p.getY()+17);
-		}
-		
-		return -1;
+		return content.getContainingTileIndex(new Point(x, y));
 	}
 	
 	public Button getButton(int x, int y) {
-		return Correspondance.getButton(content.getButtonPosition(x, y));
-	}
-	
-	public ViewContent getContent() {
-		return this.content;
+		return Correspondance.ButtonTypeToButton(content.getContainingButtonType(new Point(x, y)));
 	}
 
 	@Override
 	public void switchBlindMode(StateEvent e) {
-		
+		content.setBlindMode(true);
 	}
 
 	@Override
 	public void switchSeeMode(StateEvent e) {
-
+		content.setBlindMode(false);
 	}
 
 	@Override
 	public void addTile(TileClickEvent e) {
-
+		content.addTile(TileType.TILE, e.getTileIndex(), e.getTileValue());
 	}
 
 	@Override
 	public void removeTile(TileClickEvent e) {
-
+		content.removeTile(TileType.TILE, e.getTileIndex());
 	}
 
 	@Override
 	public void pressButton(ButtonClickEvent e) {
-		content.getButton(Correspondance.getButtonType(e)).setPressed(true);
-		content.repaint();
+		ButtonType bt = Correspondance.ButtonToButtonType(e.getButton());
+		content.getButton(bt).setPressed(true);
+		content.getBackground(GeneralType.HINT).setValue(bt.getHint());
 	}
 
 	@Override
 	public void releaseButton(ButtonClickEvent e) {
-		content.getButton(Correspondance.getButtonType(e)).setPressed(false);		
+		ButtonType bt = Correspondance.ButtonToButtonType(e.getButton());
+		content.getButton(bt).setPressed(false);
+		content.getBackground(GeneralType.HINT).setValue("");
 	}
 
 	@Override
 	public void highlightTile(TileClickEvent e) {
-		// TODO Auto-generated method stub
-		
+		content.addTile(TileType.HIGHLIGHT, e.getTileIndex(), e.getTileValue());		
 	}
 
 	@Override
 	public void unhighlightTile(TileClickEvent e) {
-		// TODO Auto-generated method stub
-		
+		content.removeTile(TileType.HIGHLIGHT, e.getTileIndex());		
 	}
 
 	@Override
 	public void addTarget(TileClickEvent e) {
-		// TODO Auto-generated method stub
-		
+		content.addTile(TileType.TARGET, e.getTileIndex(), e.getTileValue());
 	}
 
 	@Override
 	public void removeTarget(TileClickEvent e) {
-		// TODO Auto-generated method stub
-		
+		content.removeTile(TileType.TARGET, e.getTileIndex());	
 	}
 
 	@Override
@@ -129,52 +107,19 @@ public class View extends JFrame implements ModelListener {
 
 	@Override
 	public void restartGUI() {
-		// TODO Auto-generated method stub
-		
+		content.initViewContent();
 	}
 	
-
 	@Override
 	public void moveTile(MovementTileEvent e) {
-		// TODO Auto-generated method stub
-		
+		content.moveTile(TileType.TILE, e.getOldIndex(), e.getNewIndex());
 	}
-	//TODO get obj from coordinate
-	
+
 	public static class Correspondance {
-		public static TileLocation getTileLocation(TileClickEvent e) {
-			if(e.getTileIndex() > 16) {
-				return TileLocation.NEXT;
-			} else if (e.getTileIndex() == 16) {
-				return TileLocation.STORE;
-			}
-			return TileLocation.GRID;
-		}
-		
-		public static Point getCoordinate(TileClickEvent e) {
-			Point p;
-			switch (getTileLocation(e)) {
-			case NEXT:
-				p = new Point((e.getTileIndex()-16)%4, (e.getTileIndex()-16)/4);
-				break;
-			case GRID:
-				p = new Point(e.getTileIndex()%4, e.getTileIndex()/4);
-				 break;				
-			case STORE:
-				p = new Point(0, (e.getTileIndex()-17));
-				break;
-			default:
-				p = null;
-				break;
-			}
-			
-			return p;
-		}
-		
-		public static ButtonType getButtonType(ButtonClickEvent e) {
+		public static ButtonType ButtonToButtonType(Button e) {
 			ButtonType b;
 			
-			switch (e.getButton()) {
+			switch (e) {
 			case BONUS_ERASE:
 				b = ButtonType.ERASE;
 				break;
@@ -209,7 +154,7 @@ public class View extends JFrame implements ModelListener {
 			return b;
 		}
 		
-		public static Button getButton(ButtonType t) {
+		public static Button ButtonTypeToButton(ButtonType t) {
 			Button b;
 			
 			switch (t) {
