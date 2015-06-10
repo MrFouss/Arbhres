@@ -131,13 +131,14 @@ public class ViewContent extends JPanel {
 		if (type == TileType.TILE) {
 			setTile(TileType.BLIND, index,
 					new TileSprite(getTileLocation(index), TileType.BLIND, 0, (int)p.getX(), (int)p.getY()));
+			if (blindMode) {
+				getTile(type, index).setVisible(false);
+			} else {
+				getTile(TileType.BLIND, index).setVisible(false);
+			}
 		}
 		
-		if (blindMode) {
-			getTile(type, index).setVisible(false);
-		} else {
-			getTile(TileType.BLIND, index).setVisible(false);
-		}
+
 	}
 	
 	public void removeTile(TileType type, int index)
