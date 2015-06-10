@@ -17,7 +17,10 @@ public class Launcher {
 		Model model = new Model();
 		View view = new View();
 		Controller controller = new Controller(view);
+		view.addKeyListener(controller);
+		view.addMouseListener(controller);
 		controller.addControllerListener(model);
 		model.addModelListener(view);
+		
 	}
 }
