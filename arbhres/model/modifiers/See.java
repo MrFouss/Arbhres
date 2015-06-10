@@ -12,9 +12,9 @@ public class See extends Modifier {
 	/**
 	 * Create the modifier with its defined price
 	 */
-	public See(int seeTurn) {
+	public See() {
 		super(4000);
-		this.seeTurn = seeTurn;
+		this.seeTurn = 3;
 	}
 	
 	/**
@@ -23,7 +23,6 @@ public class See extends Modifier {
 	 * @return the price
 	 */
 	public long apply() {
-		this.seeTurn += 3;
 		return updateScore();
 	}
 	
