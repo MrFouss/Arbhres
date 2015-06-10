@@ -91,10 +91,11 @@ public class Model implements ControllerListener {
 				this.clickTile = false;
 				this.blindTurn = 0;
 				this.seeTurn = 0;
+				this.targetIndex = -1;
+				grid.initTiles();
 				break;
 			case BONUS_ERASE:
-				grid.move(MovementEvent.Direction.LEFT, backup, score);
-				/*Erase erase = new Erase(grid);
+				Erase erase = new Erase(grid);
 				if (erase.isAvailable(score) ) {
 					this.clickTile = true;
 					while (this.clickTile) {
@@ -105,7 +106,7 @@ public class Model implements ControllerListener {
 						}
 					}
 					score-=erase.apply(this.tileIndex);
-				}*/
+				}
 				break;
 			case BONUS_PAUSE:
 				Pause pause = new Pause(this.grid.getQueue());
@@ -211,13 +212,15 @@ public class Model implements ControllerListener {
 				blindTurn = Math.max(blindTurn - 1, -1);
 				seeTurn = Math.max(seeTurn - 1, -1);
 			}
-			this.moveGrid = true;
-			this.pressButton = true;
+			
 			if (this.targetIndex != -1) {
 				this.grid.removeTile(this.targetIndex);
 				this.targetIndex = -1;
 				//TODO fire target ?
 			}
+			this.fireRefreshGUI();
+			this.moveGrid = true;
+			this.pressButton = true;
 		}
 	}
 

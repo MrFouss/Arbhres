@@ -121,7 +121,6 @@ public class Grid {
 	 */
 	public void initTiles() {
 		Random rnd = new Random();
-		int rndTile;
 		
 		// while 9 tiles have not been filled
 		for (int i=0; i<9; i++) {
@@ -132,10 +131,7 @@ public class Grid {
 				tileIndex = rnd.nextInt(16); // look for another random spot
 			} while (!isTileEmpty(tileIndex));
 			
-			rndTile = randomTile();
-			addTile(tileIndex, rndTile);
-			model.fireAddTile(tileIndex, rndTile);
-			model.fireRefreshGUI();
+			addTile(tileIndex, randomTile());
 		}
 	}
 	
@@ -328,7 +324,7 @@ public class Grid {
 			for(int i=0; i<3; i++) {
 				if(this.isMergeable(i+j*4, i+1+j*4)) {
 					tiles[i+j*4]+=tiles[i+1+j*4]; // merges Tile[i] and Tile[i+1]
-					model.fireRemoveTile(this.rotateTile(nbRotate, i+j*4));
+					model.fireRemoveTile(rotateTile(nbRotate, i+j*4));
 					model.fireAddTile(this.rotateTile(nbRotate, i+j*4), tiles[i+j*4]);
 					tiles[i+1+j*4]=-1;
 					model.fireRemoveTile(rotateTile(nbRotate, i+1+j*4));
@@ -345,10 +341,7 @@ public class Grid {
 			}
 		}
 		if(hasMoved || this.isGridEmpty()) {
-			int side = selectAnySide();
-			int valueNew = queue.getQueue().poll();
-			addTile(side, valueNew);
-			model.fireAddTile(rotateTile(nbRotate, side), valueNew);
+			addTile(selectAnySide(), queue.getQueue().poll());
 			queue.getQueue().offer(randomTile());
 			backup = tmpBackup;
 		}		
@@ -423,7 +416,7 @@ public class Grid {
 		case 1:
 			X=tileIndex%4;
 			Y=tileIndex/4;
-			tileIndex = Y+4*(3-X);
+			tileIndex = 3-Y+4*X;
 			break;
 		case 2:
 			X=tileIndex%4;
@@ -433,7 +426,7 @@ public class Grid {
 		case 3:
 				X=tileIndex%4;
 				Y=tileIndex/4;
-				tileIndex = 3-Y+(4*X);
+				tileIndex = Y + 4*(3-X);
 			break;
 		default:
 			break;
