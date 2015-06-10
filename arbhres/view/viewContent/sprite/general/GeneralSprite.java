@@ -4,6 +4,12 @@ import java.awt.Graphics;
 import arbhres.view.viewContent.sprite.Sprite;
 import arbhres.view.graphicObject.*;
 
+/** 
+ * @author Esia Belbachir
+ * @version 1.0
+ * @since 06/10/15
+ * Contains all the necessary methods to manage a GeneralSprite.
+ */
 public class GeneralSprite implements Sprite
 {	
 	private GraphicObject sprite;
@@ -26,7 +32,7 @@ public class GeneralSprite implements Sprite
     }
 	
 	public void setVisible(boolean visible) {
-		sprite.setVisibility(visible);
+		sprite.setVisible(visible);
 	}
 	
 	public void setValue(String val) {

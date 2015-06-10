@@ -5,17 +5,36 @@ import java.awt.geom.Point2D;
 import arbhres.view.graphicObject.*;
 import arbhres.view.viewContent.sprite.Sprite;
 
+/** 
+ * @author Esia Belbachir
+ * @version 1.0
+ * @since 06/10/15
+ * Contains all the needed functionnality to safely manage a button.
+ */
 public class ButtonSprite implements Sprite {   
     private Button sprite;
     
+    /**
+     * Create a button from a buttonType object.
+     * @param bType button type
+     */
     public ButtonSprite(ButtonType bType) {
     	sprite = new Button(bType.getLocation(), bType.getSpriteUP(), bType.getSpriteP());
     }
 
+    /**
+     * Return if a given point is in the button box.
+     * @param point the point to test
+     * @return TRUE if it does, FALSE otherwise
+     */
     public boolean contains(Point2D point) {
     	return sprite.contains(point);
     }
     
+    /**
+     * Sets the button status
+     * @param pressed the new status
+     */
     public void setPressed(boolean pressed) {
     	if (pressed) {
 			sprite.setStatus(ButtonStatus.PRESSED);
@@ -24,6 +43,7 @@ public class ButtonSprite implements Sprite {
 		}
     }
 	
+    @Override
     public void paint(Graphics g) {
     	sprite.paint(g);
     }

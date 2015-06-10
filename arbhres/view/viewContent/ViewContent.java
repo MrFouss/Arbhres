@@ -1,14 +1,8 @@
 package arbhres.view.viewContent;
 
-import arbhres.view.viewContent.sprite.*;
-
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.Point;
-import java.awt.geom.Point2D;
-import java.awt.geom.Rectangle2D;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.swing.JPanel;
@@ -165,8 +159,8 @@ public class ViewContent extends JPanel {
 	public void moveTile(TileType type, TileLocation loc1, int x1, int y1,
 			TileLocation loc2, int x2, int y2) {
 		TileSprite ts = getTile(loc1, type, x1, y1);
-		ts.setPosition(loc2.getCoordinateofTile(x2, y2));
 		if (ts != null) {
+			ts.setPosition(loc2.getCoordinateofTile(x2, y2));
 			setTile(loc2, type, x2, y2, ts);
 			removeTile(loc1, type, x1, y1);
 		}
@@ -193,9 +187,6 @@ public class ViewContent extends JPanel {
 	
 	public void paint(Graphics g)
 	{
-		addTile(TileLocation.GRID, TileType.TILE, 0, 0, 6);
-		moveTile(TileType.TILE, TileLocation.GRID, 0, 0, TileLocation.GRID, 0, 1);
-		
 		for (GeneralSprite s : background.values()) {
 			if (s != null) {
 				s.paint(g);

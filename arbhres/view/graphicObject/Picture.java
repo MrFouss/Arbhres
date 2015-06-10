@@ -11,46 +11,47 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-public class Picture extends GraphicObject
-{
+public class Picture extends GraphicObject {
 	private BufferedImage image;
 	private float opacity;
 	
-	public Picture()
-	{
-		super();
-		image = null;
-		opacity = 0;
-	}
-	
-	public Picture(Rectangle2D box, String path)
-	{
+	/**
+	 * Build a Picture instance from a file
+	 * @param box the box of the object
+	 * @param path the path of the file
+	 */
+	public Picture(Rectangle2D box, String path) {
 		super(box);
 		this.image = scale(readFile(path));
 		this.opacity = 1;
 	}
 	
-	private BufferedImage readFile(String path)
-	{
+	/**
+	 * Read a file from its path
+	 * @param path the file path
+	 * @return The file if it could be correctly read, NULL otherwise
+	 */
+	private BufferedImage readFile(String path) {
 		File file;
 		
-		try
-		{
+		try {
 			file = new File(path);
 		} catch (NullPointerException e) {
 			return null;
 		}
 
-		try
-		{
+		try {
 			return ImageIO.read(file);
 		} catch (IOException e) {
 			return null;
 		}
 	}
 
-	public void setOpacity(float value)
-	{
+	/**
+	 * Set the opacity
+	 * @param value new value ofthe opacity
+	 */
+	public void setOpacity(float value) {
 		if (value < 0)
 		{
 			opacity = 0;
@@ -64,8 +65,12 @@ public class Picture extends GraphicObject
 		}
 	}
 	
-	private BufferedImage opacify(BufferedImage src)
-	{
+	/**
+	 * Apply the opacity to the picture
+	 * @param src source BufferedImage
+	 * @return The opacified bufferedImage
+	 */
+	private BufferedImage opacify(BufferedImage src) {
 		if (opacity != 0 && src != null) {
 			BufferedImage bi = new BufferedImage(src.getWidth(), src.getHeight(), BufferedImage.TYPE_INT_ARGB);
 			float[] factors = {1, 1, 1, opacity};
@@ -78,11 +83,13 @@ public class Picture extends GraphicObject
 		}
 		return src;
 	}
-	
-	//TODO override scale
-	
-	private BufferedImage scale(BufferedImage src)
-	{
+
+	/**
+	 * Apply dimensions to an image
+	 * @param src source Image
+	 * @return dimensionned image
+	 */
+	private BufferedImage scale(BufferedImage src) {
 	    if (src != null) {
 		BufferedImage bi = new BufferedImage((int)box.getWidth(), (int)box.getHeight(), BufferedImage.TYPE_INT_ARGB); 
 		Image i = src.getScaledInstance((int)box.getWidth(), (int)box.getHeight(), Image.SCALE_SMOOTH);	
@@ -96,9 +103,8 @@ public class Picture extends GraphicObject
 	}
 	
 	@Override
-	public void paint(Graphics g)
-	{
-		if (image != null && opacity != 0 && visibility) {
+	public void paint(Graphics g) {
+		if (image != null && opacity != 0 && visible) {
 			Graphics2D g2 = (Graphics2D) g;
 			g2.drawImage(image, (int)box.getX(), (int)box.getY(), null);
 		}

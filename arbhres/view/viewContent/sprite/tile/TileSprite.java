@@ -41,6 +41,6 @@ public class TileSprite implements Sprite {
 	}
 
 	public void setVisible(boolean visible) {
-		sprite.setVisibility(visible);
+		sprite.setVisible(visible);
 	}
 }
