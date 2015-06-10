@@ -109,7 +109,7 @@ public class Controller extends InputAdapter {
 	/**
 	 * Notifies the listeners a button has been clicked
 	 * 
-	 * @param action the event containing which button has been clicked
+	 * @param button the clicked button
 	 */
 	protected void fireButtonClicked(Button button) {
 		ButtonClickEvent event = null;
@@ -124,7 +124,7 @@ public class Controller extends InputAdapter {
 	/**
 	 * Notifies the listeners a tile has been clicked
 	 * 
-	 * @param action the event containing which tile has been clicked
+	 * @param tileIndex the index of the clicked tile
 	 */
 	protected void fireTileClicked(int tileIndex) {
 		TileClickEvent event = null;
