@@ -289,7 +289,7 @@ public class Grid {
 	 * @param direction The direction where the tiles are going
 	 * @param backup The backup grid
 	 * @param score The score to change
-	 * @return the points to add to the score
+	 * @return the points to add to the score, or -1 if there was no moves
 	 */
 	public long move(Direction direction, GridBackup backup, long score) {
 		
