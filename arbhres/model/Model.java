@@ -4,7 +4,10 @@ import javax.swing.event.EventListenerList;
 
 import arbhres.controller.listeners.ControllerListener;
 import arbhres.events.ButtonClickEvent;
+import arbhres.events.ButtonClickEvent.Button;
 import arbhres.events.MovementEvent;
+import arbhres.events.MovementTileEvent;
+import arbhres.events.StateEvent;
 import arbhres.events.TileClickEvent;
 import arbhres.model.listeners.ModelListener;
 import arbhres.model.modifiers.*;
@@ -224,4 +227,194 @@ public class Model implements ControllerListener {
 			this.clickTile = false;
 		}
 	}
+	
+	/* LISTENERS FIRE METHODS */
+	
+	/**
+	 * Notifies the listeners about the start or the end of blind mode
+	 * 
+	 * @param state the new state of the blind mode
+	 */
+	protected void fireSwitchBlindMode(boolean state) {
+		StateEvent event = null;
+		for (ModelListener listener : getModelListeners()) {
+			if (event == null) {
+				event = new StateEvent(state);
+			}
+			listener.switchBlindMode(event);
+		}
+	}
+	
+	/**
+	 * Notifies the listeners about the start or the end of see mode
+	 * 
+	 * @param state the new state of the see mode
+	 */
+	protected void fireSwitchSeeMode(boolean state) {
+		StateEvent event = null;
+		for (ModelListener listener : getModelListeners()) {
+			if (event == null) {
+				event = new StateEvent(state);
+			}
+			listener.switchSeeMode(event);
+		}
+	}
+	
+
+	/**
+	 * Notifies the listeners that a new tile has been added
+	 * 
+	 * @param tileIndex the index of the added tile
+	 * @param tileValue the value of the added tile
+	 */
+	public void fireAddTile(int tileIndex,int tileValue) {
+		TileClickEvent event = null;
+		for (ModelListener listener : getModelListeners()) {
+			if (event == null) {
+				event = new TileClickEvent(tileIndex, tileValue);
+			}
+			listener.addTile(event);
+		}
+	}
+	
+	/**
+	 * Notifies the listeners that a new tile has been removed
+	 * 
+	 * @param tileIndex the index of the removed tile
+	 */
+	protected void removeTile(int tileIndex) {
+		TileClickEvent event = null;
+		for (ModelListener listener : getModelListeners()) {
+			if (event == null) {
+				event = new TileClickEvent(tileIndex);
+			}
+			listener.addTile(event);
+		}
+	}
+	
+	/**
+	 * Notifies the listeners that a move has been moved
+	 * @param indexStart  the index of the previous place of the tile
+	 * @param indexFinish the index of the new place of the tile
+	 */
+	public void fireMoveTile(int indexStart, int indexFinish) {
+		MovementTileEvent event = null;
+		for (ModelListener listener : getModelListeners()) {
+			if (event == null) {
+				event = new MovementTileEvent(indexStart, indexFinish);
+			}
+			listener.moveTile(event);
+		}
+	}
+	
+	
+	
+	/**
+	 * Notifies the listeners about when a button is clicked
+	 * 
+	 * @param button the event containing which button has been clicked
+	 */
+	protected void firePressButton(Button button) {
+		ButtonClickEvent event = null;
+		for (ModelListener listener : getModelListeners()) {
+			if (event == null) {
+				event = new ButtonClickEvent(button);
+			}
+			listener.pressButton(event);
+		}
+	}
+	
+	/**
+	 * Notifies the listeners about when a button is released
+	 * 
+	 * @param button the event containing which button has been released
+	 */
+	protected void fireReleaseButton(Button button) {
+		ButtonClickEvent event = null;
+		for (ModelListener listener : getModelListeners()) {
+			if (event == null) {
+				event = new ButtonClickEvent(button);
+			}
+			listener.releaseButton(event);
+		}
+	}
+	
+	/**
+	 * Notifies the listeners about when a tile has to be highlighted
+	 * 
+	 * @param index The index of the tile
+	 */
+	protected void fireHighlightTile(int index) {		
+		TileClickEvent event = null;
+		for (ModelListener listener : getModelListeners()) {
+			if (event == null) {
+				event = new TileClickEvent(index);
+			}
+			listener.highlightTile(event);
+		}
+	}
+	
+	/**
+	 * Notifies the listeners about when a tile has to be unhighlighted
+	 * 
+	 * @param index The index of the tile
+	 */
+	protected void fireUnhighlightTile(int index) {		
+		TileClickEvent event = null;
+		for (ModelListener listener : getModelListeners()) {
+			if (event == null) {
+				event = new TileClickEvent(index);
+			}
+			listener.unhighlightTile(event);
+		}
+	}
+	
+	/**
+	 * Notifies the listeners about when a tile has to be targeted
+	 * 
+	 * @param index The index of the tile
+	 */
+	public void fireAddTarget(int index) {
+		TileClickEvent event = null;
+		for (ModelListener listener : getModelListeners()) {
+			if (event == null) {
+				event = new TileClickEvent(index);
+			}
+			listener.addTarget(event);
+		}
+	}
+	
+	/**
+	 * Notifies the listeners about when a tile has no longer to be targeted
+	 * 
+	 * @param index The index of the tile
+	 */
+	public void fireRemoveTarget(int index) {
+		TileClickEvent event = null;
+		for (ModelListener listener : getModelListeners()) {
+			if (event == null) {
+				event = new TileClickEvent(index);
+			}
+			listener.removeTarget(event);
+		}
+	}
+	
+	/**
+	 * Notifies the listeners the frame has to be refreshed
+	 */
+	public void fireRefreshGUI() {
+		for (ModelListener listener : getModelListeners()) {
+			listener.refreshGUI();
+		}
+	}
+	
+	/**
+	 * Notifies the listeners the frame has to be restarted
+	 */
+	public void fireRestartGUI() {
+		for (ModelListener listener : getModelListeners()) {
+			listener.restartGUI();
+		}
+	}
+	
 }
