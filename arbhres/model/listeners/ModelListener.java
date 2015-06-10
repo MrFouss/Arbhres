@@ -93,5 +93,5 @@ public interface ModelListener extends EventListener {
 	/**
 	 * Notice the frame has to be restarted
 	 */
-	public void removeTarget();
+	public void restartGUI();
 }
