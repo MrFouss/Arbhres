@@ -409,6 +409,29 @@ public class Grid {
 		}
 	}
 	
+	public int rotateTile(int rotation, int tileIndex){
+		int X, Y;
+		switch (rotation) {
+		case 1:
+			X=tileIndex%4;
+			Y=tileIndex/4;
+			tileIndex = 3-Y+4*X;
+			break;
+		case 2:
+			X=tileIndex%4;
+			Y=tileIndex/4;
+			tileIndex = 3-X+4*(3-Y);
+			break;
+		case 3:
+				X=tileIndex%4;
+				Y=tileIndex/4;
+				tileIndex = Y + 4*(3-X);
+			break;
+		default:
+			break;
+		}
+		return tileIndex;
+	}
 	public void copyGrid(Grid grid) {
 		this.inventory = grid.inventory;
 		this.tiles = grid.tiles.clone();
