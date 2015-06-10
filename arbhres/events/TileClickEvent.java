@@ -13,15 +13,28 @@ public class TileClickEvent {
 	 * grid and 16 corresponds to the inventory tile
 	 */
 	private int tileIndex;
+	private int tileValue;
 
 	/**
-	 * Constructor for TileClickEvent
+	 * Constructor for TileClickEvent with one parameter
 	 * 
 	 * @param tileIndex the index of the clicked tile (0-15 for common tiles,
 	 * 16 for the inventory tile)
 	 */
 	public TileClickEvent(int tileIndex) {
 		this.tileIndex = tileIndex;
+		this.tileValue = -1;
+	}
+	
+	/**
+	 * Constructor for TileClickEvent with two parameters
+	 * 
+	 * @param tileIndex the index of the clicked tile (0-15 for common tiles,
+	 * 16 for the inventory tile)
+	 */
+	public TileClickEvent(int tileIndex, int tileValue) {
+		this.tileIndex = tileIndex;
+		this.tileValue = tileValue;
 	}
 
 	/**
@@ -31,5 +44,14 @@ public class TileClickEvent {
 	 */
 	public int getTileIndex() {
 		return this.tileIndex;
+	}
+	
+	/**
+	 * Getter for the tile value
+	 * 
+	 * @return the value of the clicked tile
+	 */
+	public int getTileValue() {
+		return this.tileValue;
 	}
 }
