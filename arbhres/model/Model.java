@@ -93,7 +93,8 @@ public class Model implements ControllerListener {
 				this.seeTurn = 0;
 				break;
 			case BONUS_ERASE:
-				Erase erase = new Erase(grid);
+				grid.move(MovementEvent.Direction.LEFT, backup, score);
+				/*Erase erase = new Erase(grid);
 				if (erase.isAvailable(score) ) {
 					this.clickTile = true;
 					while (this.clickTile) {
@@ -104,7 +105,7 @@ public class Model implements ControllerListener {
 						}
 					}
 					score-=erase.apply(this.tileIndex);
-				}
+				}*/
 				break;
 			case BONUS_PAUSE:
 				Pause pause = new Pause(this.grid.getQueue());
@@ -199,6 +200,7 @@ public class Model implements ControllerListener {
 	
 	@Override
 	public void gridMoved(MovementEvent e) {
+		System.out.println("Arrow used : " + e.getDirection());
 		if (this.moveGrid) {
 			long scoreChange;
 			this.moveGrid = false;
@@ -221,7 +223,7 @@ public class Model implements ControllerListener {
 
 	@Override
 	public void tileClicked(TileClickEvent e) {
-		System.out.println("Tile clicked (index: " +e.getTileIndex()+ " ; value: " +e.getTileValue());
+		System.out.println("Tile clicked (index: " +e.getTileIndex()+ " ; value: " +e.getTileValue() + ")");
 		if (this.clickTile) {
 			this.tileIndex = e.getTileIndex();
 			this.clickTile = false;

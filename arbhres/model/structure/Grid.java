@@ -98,6 +98,7 @@ public class Grid {
 	public void setInventory(int inventory) {
 		this.inventory=inventory;
 		model.fireAddTile(16, inventory);
+		model.fireRefreshGUI();
 	}
 	
 	/**
@@ -117,6 +118,7 @@ public class Grid {
 	public void emptyGrid(){
 		this.tiles = null;
 		model.fireRestartGUI();
+		model.fireRefreshGUI();
 	}
 	/**
 	 * Initialize the tile array with 9 random tiles between 1 and 3
@@ -149,6 +151,7 @@ public class Grid {
 			this.tiles[tileIndex]=-1;
 		}
 		model.fireRemoveTile(tileIndex);
+		model.fireRefreshGUI();
 	}
 	
 	/**
@@ -275,10 +278,10 @@ public class Grid {
 			break;
 		}
 		tmp=tiles[start];
-		tiles[start]=tiles[start+4];
-		tiles[start+4]=tiles[start+5];
-		tiles[start+5]=tiles[start+1];
-		tiles[start+1]=tmp;
+		this.addTile(start,tiles[start+4]);
+		this.addTile(start+4,tiles[start+5]);
+		this.addTile(start+5,tiles[start+1]);
+		this.addTile(start+1,tmp);
 	}
 	
 	/**
@@ -356,6 +359,16 @@ public class Grid {
 		default:
 			break;
 		}
+		
+		for(int i=0; i<4; i++) {
+			if (tiles[i] == -1) {
+				model.fireRemoveTile(i);
+			} else {
+				model.fireAddTile(i, tiles[i]);
+			}
+		}
+		model.fireRefreshGUI();
+		
 		return scoreChange + (hasMoved ? 0 : - 1) ;
 	}
 
