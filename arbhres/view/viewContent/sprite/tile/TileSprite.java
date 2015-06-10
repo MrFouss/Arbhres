@@ -40,6 +40,10 @@ public class TileSprite implements Sprite {
 		return value;
 	}
 
+	public boolean contains(Point2D p) {
+		return sprite.contains(p);
+	}
+	
 	public void setVisible(boolean visible) {
 		sprite.setVisible(visible);
 	}

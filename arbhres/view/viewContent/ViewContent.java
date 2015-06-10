@@ -3,10 +3,12 @@ package arbhres.view.viewContent;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Point;
 import java.util.HashMap;
 
 import javax.swing.JPanel;
 
+import arbhres.events.ButtonClickEvent.Button;
 import arbhres.view.viewContent.sprite.button.ButtonSprite;
 import arbhres.view.viewContent.sprite.button.ButtonType;
 import arbhres.view.viewContent.sprite.general.GeneralSprite;
@@ -183,6 +185,51 @@ public class ViewContent extends JPanel {
 		for (TileSprite g : store.values()) {
 			g.setVisible(false);
 		}
+	}
+	
+	public Point getTilePosition(TileLocation loc, int x, int y) {
+		Point p = new Point(x, y);
+		Point point = null;
+		int i = 0;
+		
+		switch (loc) {
+		case GRID:
+			while (i < grid.get(TileType.TILE).length) {
+				if (grid.get(TileType.TILE)[i] != null && grid.get(TileType.TILE)[i].contains(p)) {
+					point = new Point(i%4, i/4);
+				}
+				i++;
+			}
+			break;
+		case STORE:
+			if (store.get(TileType.TILE) != null && store.get(TileType.TILE).contains(p)) {
+				point = new Point(0, 0);
+			}
+		case NEXT:
+			while (i < next.get(TileType.TILE).length) {
+				if (next.get(TileType.TILE) != null && next.get(TileType.TILE)[i].contains(p)) {
+					point = new Point(0, i);
+				}
+				i++;
+			}
+		default:
+			break;
+		}
+		
+		return point;
+	}
+	
+	public ButtonType getButtonPosition(int x, int y) {
+		ButtonType bt = null;
+		Point p = new Point(x, y);
+		
+		for (ButtonType s : ButtonType.getButtonTypes()) {
+			if (buttons.get(s).contains(p)) {
+				bt = s;
+			}
+		}
+		
+		return bt;
 	}
 	
 	public void paint(Graphics g)
