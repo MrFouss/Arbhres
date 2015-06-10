@@ -3,6 +3,7 @@ package arbhres.model.listeners;
 import java.util.EventListener;
 
 import arbhres.events.ButtonClickEvent;
+import arbhres.events.MovementTileEvent;
 import arbhres.events.TileClickEvent;
 import arbhres.events.StateEvent;
 
@@ -42,6 +43,13 @@ public interface ModelListener extends EventListener {
 	 * @param e the event containing the position of the removed tile
 	 */
 	public void removeTile(TileClickEvent e);
+	
+	/**
+	 * Notice a tile has moved
+	 * 
+	 * @param e the event containing the position of the moved tile
+	 */
+	public void moveTile(MovementTileEvent e);
 	
 	/**
 	 * Notice that a button has been pressed
