@@ -1,5 +1,7 @@
 package arbhres.model.modifiers;
 
+import arbhres.model.structure.Grid;
+
 /**
  * @author Stéphane Perrez "stephane.perrez@utbm.fr"
  * @version	1.0
@@ -7,11 +9,17 @@ package arbhres.model.modifiers;
  */
 public class Target extends Modifier{
 	
+	private Grid grid;
+	private int index;
 	/**
 	 * Create the modifier with its defined price
+	 * 
+	 * @param grid the main grid
 	 */
-	public Target() {
+	public Target(Grid grid, int targetIndex) {
 		super(-8000);
+		this.grid = grid;
+		this.index = targetIndex;
 	}
 	
 	/**
@@ -21,9 +29,17 @@ public class Target extends Modifier{
 	 */
 	public long apply() {
 		
-		//TODO see with Maxime
+		index = grid.selectHighest();
 		
 		return updateScore();
+	}
+
+	public int getIndex() {
+		return index;
+	}
+	
+	public boolean isAvailable() {
+		return (index == -1);
 	}
 
 }

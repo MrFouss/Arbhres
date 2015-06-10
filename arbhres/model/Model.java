@@ -28,6 +28,7 @@ public class Model implements ControllerListener {
 	private int blindTurn;
 	private int seeTurn;
 	private final EventListenerList listeners = new EventListenerList();
+	private int targetIndex;
 	
 	public Model () {
 		this.score = 0;
@@ -37,6 +38,7 @@ public class Model implements ControllerListener {
 		this.clickTile = false;
 		this.blindTurn = 0;
 		this.seeTurn = 0;
+		this.targetIndex = -1;
 	}
 	
 	/* LISTENER METHODS */
@@ -100,16 +102,18 @@ public class Model implements ControllerListener {
 				}
 				break;
 			case BONUS_PAUSE:
-				Pause pause = new Pause(grid.getQueue());
+				Pause pause = new Pause(this.grid.getQueue());
 				if (pause.isAvailable(this.score)) {
 					score-=pause.apply();
 				}
 				break;
 			case BONUS_RANDOM:
-				RandomModifier rndMod = new RandomModifier(grid);
+				RandomModifier rndMod = new RandomModifier(this.grid, this.targetIndex);
 				score = rndMod.apply(score);
 				this.blindTurn+=rndMod.getBlindTurns();
 				this.seeTurn+=rndMod.getSeeTurns();
+				this.targetIndex=rndMod.getTargetIndex();
+				//TODO add fire target
 				break;
 			case BONUS_SEE:
 				See see = new See();
@@ -202,6 +206,11 @@ public class Model implements ControllerListener {
 			}
 			this.moveGrid = true;
 			this.pressButton = true;
+			if (this.targetIndex != -1) {
+				this.grid.removeTile(this.targetIndex);
+				this.targetIndex = -1;
+				//TODO fire target ?
+			}
 		}
 	}
 

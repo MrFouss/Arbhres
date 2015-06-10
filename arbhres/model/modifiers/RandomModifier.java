@@ -19,25 +19,31 @@ public class RandomModifier implements ControllerListener{
 	private int tileIndex;
 	private int seeTurns;
 	private int blindTurns;
+	private int targetIndex;
 	
 	/**
 	 * Create the modifier without price, which is generated each time the bonus is used
 	 * 
 	 * @param grid The main grid
 	 */
-	public RandomModifier(Grid grid) {
+	public RandomModifier(Grid grid, int targetIndex) {
 		this.grid = grid;
 		this.seeTurns = 0;
 		this.blindTurns = 0;
+		this.targetIndex = targetIndex;
 	}
 	
 	public long apply(long score) {
 		Random rnd = new Random();
-		if (rnd.nextBoolean()) { //1 chance over two to have a malus
+		if (rnd.nextBoolean()) { //1 chance over 2 to have a malus
 			//maluses
 			switch (rnd.nextInt(4)) {
 			case 0:
-				//TODO Target
+				Target target = new Target(this.grid, this.targetIndex );
+				if(target.isAvailable()) {
+					score = target.apply();
+					this.targetIndex = target.getIndex();
+				}
 				break;
 			case 1:
 				Blind blind = new Blind();
@@ -185,6 +191,10 @@ public class RandomModifier implements ControllerListener{
 
 	public int getBlindTurns() {
 		return this.blindTurns;
+	}
+
+	public int getTargetIndex() {
+		return this.targetIndex;
 	}
 	
 }
