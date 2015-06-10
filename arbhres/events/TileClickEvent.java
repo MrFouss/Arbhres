@@ -10,7 +10,8 @@ public class TileClickEvent {
 
 	/**
 	 * Tile index, between 0 and 16: [0-15] corresponds to the tiles within the
-	 * grid and 16 corresponds to the inventory tile
+	 * grid, 16 corresponds to the inventory tile, [17-19] corresponds to the tiles
+	 * in the queue (17 = next coming tile, 19 = last coming tile)
 	 */
 	private int tileIndex;
 	private int tileValue;
@@ -19,7 +20,7 @@ public class TileClickEvent {
 	 * Constructor for TileClickEvent with one parameter
 	 * 
 	 * @param tileIndex the index of the clicked tile (0-15 for common tiles,
-	 * 16 for the inventory tile)
+	 * 16 for the inventory tile, 17-19 for the queue tiles)
 	 */
 	public TileClickEvent(int tileIndex) {
 		this.tileIndex = tileIndex;
