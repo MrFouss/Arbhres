@@ -1,9 +1,9 @@
 package arbhres.model;
 
-import arbhres.controller.events.ButtonClickEvent;
-import arbhres.controller.events.MovementEvent;
-import arbhres.controller.events.TileClickEvent;
 import arbhres.controller.listeners.ControllerListener;
+import arbhres.events.ButtonClickEvent;
+import arbhres.events.MovementEvent;
+import arbhres.events.TileClickEvent;
 import arbhres.model.modifiers.*;
 import arbhres.model.structure.Grid;
 import arbhres.model.structure.GridBackup;

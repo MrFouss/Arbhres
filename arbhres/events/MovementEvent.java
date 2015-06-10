@@ -1,4 +1,4 @@
-package arbhres.controller.events;
+package arbhres.events;
 
 /**
  * @author Maxime Brodat "maxime.brodat@fouss.fr"

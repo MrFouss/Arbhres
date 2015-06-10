@@ -2,8 +2,8 @@ package arbhres.model.listeners;
 
 import java.util.EventListener;
 
-import arbhres.controller.events.ButtonClickEvent;
-import arbhres.controller.events.TileClickEvent;
+import arbhres.events.ButtonClickEvent;
+import arbhres.events.TileClickEvent;
 
 /**
  * @author	Maxime Brodat "maxime.brodat@fouss.fr"

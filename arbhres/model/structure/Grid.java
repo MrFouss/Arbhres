@@ -2,7 +2,7 @@ package arbhres.model.structure;
 
 import java.util.Random;
 
-import arbhres.controller.events.MovementEvent.Direction;
+import arbhres.events.MovementEvent.Direction;
 
 /**
  * @author	Pierre Brunet "pierre.brunet@krophil.fr"
