@@ -141,19 +141,31 @@ public class Model implements ControllerListener {
 				this.moveGrid = true;
 				break;
 			case BONUS_RANDOM:
-				RandomModifier rndModifier = new RandomModifier(this.grid);
-				rndModifier.setBlindTurns(this.blindTurn);
-				rndModifier.setSeeTurns(this.seeTurn);
+				RandomModifier rndModifier = new RandomModifier(this.grid, this);
 				rndModifier.setTargetIndex(this.targetIndex);
+				rndModifier.setBlindTurns(this.blindTurn);
+				
+				rndModifier.setSeeTurns(this.seeTurn);
+				
 				
 				score = rndModifier.apply(score);
 				this.fireScoreChange(score);
-				this.blindTurn+=rndModifier.getBlindTurns();
-				this.seeTurn+=rndModifier.getSeeTurns();
+				
 				this.targetIndex=rndModifier.getTargetIndex();
 				this.fireAddTarget(targetIndex);
+				
+				this.blindTurn+=rndModifier.getBlindTurns();
+				if (blindTurn > 0) {
+					this.fireSwitchBlindMode(true);
+				}
+				
+				this.seeTurn+=rndModifier.getSeeTurns();
+
+
+
 				this.pressButton = true;
 				this.moveGrid = true;
+				this.fireReleaseButton(Button.BONUS_RANDOM);
 				break;
 			case BONUS_SEE:
 				See see = new See();
@@ -252,6 +264,14 @@ public class Model implements ControllerListener {
 				this.fireRemoveTarget(this.targetIndex);
 				this.targetIndex = -1;
 			}
+			
+			if (this.blindTurn != 0) {
+				this.blindTurn-=1;
+				if (this.seeTurn == 0) {
+					this.fireSwitchBlindMode(false);
+				}
+			}
+			
 			this.fireRefreshGUI();
 			this.moveGrid = true;
 			this.pressButton = true;
@@ -266,7 +286,7 @@ public class Model implements ControllerListener {
 			
 			if (this.eraseBool && tileIndex <= 16) {
 				Erase erase = new Erase(this.grid);
-				this.score = erase.apply(tileIndex);
+				this.score -= erase.apply(tileIndex);
 				
 				this.fireScoreChange(score);
 				this.fireReleaseButton(Button.BONUS_ERASE);

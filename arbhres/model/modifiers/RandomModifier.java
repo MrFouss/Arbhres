@@ -7,6 +7,7 @@ import arbhres.events.MovementEvent;
 import arbhres.events.TileClickEvent;
 import arbhres.controller.listeners.ControllerListener;
 import arbhres.model.structure.Grid;
+import arbhres.model.Model;
 
 /**
  * @author Stéphane Perrez "stephane.perrez@utbm.fr"
@@ -15,6 +16,7 @@ import arbhres.model.structure.Grid;
  */
 public class RandomModifier implements ControllerListener{
 	private Grid grid;
+	private Model model;
 	private boolean clickTile;
 	private int tileIndex;
 	private int seeTurns;
@@ -26,42 +28,48 @@ public class RandomModifier implements ControllerListener{
 	 * 
 	 * @param grid The main grid
 	 */
-	public RandomModifier(Grid grid) {
+	public RandomModifier(Grid grid, Model model) {
 		this.grid = grid;
 		this.seeTurns = 0;
 		this.blindTurns = 0;
 		this.targetIndex = -1;
+		this.model = model;
 	}
 	
 	public long apply(long score) {
 		Random rnd = new Random();
-		if (rnd.nextBoolean()) { //1 chance over 2 to have a malus
+		if (/*rnd.nextBoolean()*/true) { //1 chance over 2 to have a malus
 			//maluses
 			switch (rnd.nextInt(4)) {
 			case 0:
+				System.out.println("target");
 				Target target = new Target(this.grid, this.targetIndex );
 				if(target.isAvailable()) {
-					score = target.apply();
+					score-= target.apply();
 					this.targetIndex = target.getIndex();
 				}
 				break;
 			case 1:
+				System.out.println("blind");
 				Blind blind = new Blind();
 				score-=blind.apply();
 				blindTurns += blind.getBlindTurns();
 				break;
 			case 2:
+				System.out.println("rlturn");
 				TurnLeft turnLeft = new TurnLeft(grid);
-				turnLeft.apply(rnd.nextInt(16));
+				score+=turnLeft.apply(rnd.nextInt(16));
 				break;
 			case 3:
+				System.out.println("rrturn");
 				TurnRight turnRight = new TurnRight(grid);
-				turnRight.apply(rnd.nextInt(16));
+				score+=turnRight.apply(rnd.nextInt(16));
 				break;
 			}
 			return score;
 		} else {
 			//bonuses
+			long price = 0;
 			switch (rnd.nextInt(6)) {
 			case 0:
 				Erase erase = new Erase(grid);
@@ -74,17 +82,17 @@ public class RandomModifier implements ControllerListener{
 							
 						}
 					}
-					erase.apply(this.tileIndex);
+					price = erase.apply(this.tileIndex);
 				}
 				break;
 			case 1:
 				See see = new See();
-				score -= see.apply();
+				price = see.apply();
 				this.seeTurns += see.getSeeTurns();
 				break;
 			case 2:
 				Pause pause = new Pause(grid.getQueue());
-				pause.apply();
+				price = pause.apply();
 				break;
 			case 3:
 				TurnLeft turnLeft = new TurnLeft(grid);
@@ -97,7 +105,7 @@ public class RandomModifier implements ControllerListener{
 						
 					}
 				}
-				turnLeft.apply(this.tileIndex);
+				price = turnLeft.apply(this.tileIndex);
 				break;
 			case 4:
 				TurnRight turnRight = new TurnRight(grid);
@@ -110,7 +118,7 @@ public class RandomModifier implements ControllerListener{
 						
 					}
 				}
-				turnRight.apply(this.tileIndex);
+				price = turnRight.apply(this.tileIndex);
 				break;
 			case 5:
 				Swap swap = new Swap(grid);
