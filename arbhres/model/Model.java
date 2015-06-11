@@ -29,12 +29,14 @@ public class Model implements ControllerListener {
 	private Boolean moveGrid;
 	private Boolean clickTile;
 	private int tileIndex;
+	private int tileIndex2;
 	private int blindTurn;
 	private int seeTurn;
 	private final EventListenerList listeners = new EventListenerList();
 	private int targetIndex;
 	private RandomModifier rndModifier;
 	private boolean eraseBool;
+	private int swapStep;
 	
 	public RandomModifier getRndModifier() {
 		return rndModifier;
@@ -46,11 +48,13 @@ public class Model implements ControllerListener {
 		this.pressButton = true;
 		this.moveGrid = true;
 		this.clickTile = false;
+		this.tileIndex = -1;
+		this.tileIndex2 = -1;
 		this.blindTurn = 0;
 		this.seeTurn = 0;
 		this.targetIndex = -1;
 		this.eraseBool = false;
-		
+		this.swapStep = 0;
 	}
 	
 	/* LISTENER METHODS */
@@ -108,6 +112,7 @@ public class Model implements ControllerListener {
 				this.targetIndex = -1;
 				grid.initTiles();
 				this.pressButton = true;
+				this.moveGrid = true;
 				this.fireReleaseButton(e.getButton());
 				break;
 			case BONUS_ERASE:
@@ -115,6 +120,9 @@ public class Model implements ControllerListener {
 				if (erase.isAvailable(score) ) {
 					this.eraseBool = true;
 					this.clickTile = true;
+				} else {
+					this.pressButton = true;
+					this.moveGrid = true;
 				}
 				break;
 			case BONUS_PAUSE:
@@ -125,6 +133,7 @@ public class Model implements ControllerListener {
 					this.fireReleaseButton(Button.BONUS_PAUSE);
 				}
 				this.pressButton = true;
+				this.moveGrid = true;
 				break;
 			case BONUS_RANDOM:
 				this.rndModifier.setBlindTurns(this.blindTurn);
@@ -138,6 +147,7 @@ public class Model implements ControllerListener {
 				this.targetIndex=this.rndModifier.getTargetIndex();
 				this.fireAddTarget(targetIndex);
 				this.pressButton = true;
+				this.moveGrid = true;
 				break;
 			case BONUS_SEE:
 				See see = new See();
@@ -148,34 +158,20 @@ public class Model implements ControllerListener {
 					this.seeTurn += see.getSeeTurns();
 				}
 				this.pressButton = true;
+				this.moveGrid = true;
 				break;
 			case BONUS_SWAP:
 				Swap swap = new Swap(grid);
-				int tileIndex1, tileIndex2;
+				
 				
 				if (swap.isAvailable(score) ) {
 					this.clickTile = true;
-					while (this.clickTile) {
-						try {
-							Thread.sleep(100);
-						} catch (InterruptedException e1) {
-							
-						}
-					}
-					tileIndex1 = this.tileIndex;
-					this.clickTile = true;
-					while (this.clickTile) {
-						try {
-							Thread.sleep(100);
-						} catch (InterruptedException e1) {
-							
-						}
-					}
-					tileIndex2 = this.tileIndex;
-					score-=swap.apply(tileIndex1, tileIndex2);
-					this.fireScoreChange(score);
+					this.swapStep = 1;
+				} else {
+					this.fireReleaseButton(Button.BONUS_SWAP);
+					this.pressButton = true;
+					this.moveGrid = true;
 				}
-				this.pressButton = true;
 				break;
 			case BONUS_TURNLEFT:
 				TurnLeft turnLeft = new TurnLeft(grid);
@@ -193,6 +189,7 @@ public class Model implements ControllerListener {
 					this.fireScoreChange(score);
 				}
 				this.pressButton = true;
+				this.moveGrid = true;
 				break;
 			case BONUS_TURNRIGHT:
 				TurnRight turnRight = new TurnRight(grid);
@@ -210,6 +207,7 @@ public class Model implements ControllerListener {
 					this.fireScoreChange(score);
 				}
 				this.pressButton = true;
+				this.moveGrid = true;
 				break;
 			case BONUS_UNDO:
 				Undo undo = new Undo();
@@ -218,12 +216,13 @@ public class Model implements ControllerListener {
 					this.fireScoreChange(score);
 				}
 				this.pressButton = true;
+				this.moveGrid = true;
 				break;
 			default:
 				break;
 			}
 			
-			this.moveGrid = true;
+
 		}
 	}
 	
@@ -262,7 +261,7 @@ public class Model implements ControllerListener {
 	}
 
 	@Override
-	public synchronized void tileClicked(TileClickEvent e) {
+	public void tileClicked(TileClickEvent e) {
 		System.out.println("Tile clicked (index: " +e.getTileIndex()+ " ; value: " +e.getTileValue() + ")");
 		if (this.clickTile) {
 			this.tileIndex = e.getTileIndex();
@@ -275,8 +274,33 @@ public class Model implements ControllerListener {
 				this.fireReleaseButton(Button.BONUS_ERASE);
 				this.pressButton = true;
 				this.clickTile = false;
+				this.moveGrid = true;
 			}
 			
+			if (this.swapStep > 0 && tileIndex <= 16) {
+				if (swapStep == 1) {
+					this.tileIndex2 = this.tileIndex;
+					System.out.println("et de 1");
+					this.swapStep++;
+				} else {
+					System.out.println("et de 2");
+					long chgScore;
+					Swap swap = new Swap(grid);
+	
+					chgScore=swap.apply(tileIndex, tileIndex2);
+					
+					if (chgScore != 0) {
+						this.score-=chgScore;
+						this.fireScoreChange(score);
+						
+						this.swapStep = 0;
+						this.pressButton = true;
+						this.clickTile = false;
+						this.moveGrid = true;
+						this.fireReleaseButton(Button.BONUS_SWAP);
+					}
+				}
+			}
 			
 		}
 	}

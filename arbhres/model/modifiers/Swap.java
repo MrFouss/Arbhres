@@ -30,22 +30,10 @@ public class Swap extends Modifier {
 	 */
 	public long apply(int indexTile1, int indexTile2) {
 		if (indexTile1 != indexTile2) {
-
-			int value1 = (indexTile1 == 16 ? grid.getInventory() : grid.getTile(indexTile1));
-			int value2 = (indexTile2 == 16 ? grid.getInventory() : grid.getTile(indexTile2));
 			
-
-			if (indexTile1 == 16) {
-				grid.setInventory(value2);
-			} else {
-				grid.addTile(indexTile1, value2); 
-			}
-			
-			if (indexTile2 == 16) {
-				grid.setInventory(value1);
-			} else {
-				grid.addTile(indexTile2, value1); 
-			}
+			int value = grid.getTile(indexTile2);
+			grid.addTile(indexTile2, grid.getTile(indexTile1));
+			grid.addTile(indexTile1, value);
 			
 			return updateScore();
 		}
@@ -60,7 +48,7 @@ public class Swap extends Modifier {
 	 */
 	public boolean isAvailable(long score) {
 
-		return (super.isAvailable(score) && grid.isGridEmpty());
+		return (super.isAvailable(score) && !grid.isGridEmpty());
 	}
 
 }

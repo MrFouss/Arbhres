@@ -171,6 +171,7 @@ public class Grid {
 	 */
 	public void addTile(int coord, int value) {
 		this.tiles[coord] = value;
+		model.fireRemoveTile(coord);
 		model.fireAddTile(coord, value);
 	}
 	
@@ -318,7 +319,7 @@ public class Grid {
 		
 		long scoreChange = 0;
 		int nbRotate = 0;
-		GridBackup tmpBackup = new GridBackup(this, score, this.model);
+		//GridBackup tmpBackup = new GridBackup(this, score, this.model);
 		
 		switch (direction) {
 		case DOWN:
@@ -362,14 +363,14 @@ public class Grid {
 			model.fireRemoveTile(19);
 			model.fireMoveTile(18, 19);
 			model.fireMoveTile(17, 18);
+			int rndTile = randomTile();
+			queue.offer(rndTile);
+			model.fireAddTile(17, rndTile);
 			
 			if(side != -1){
 				tiles[side] = valueNew;
 				this.model.fireAddTile(rotateTile(nbRotate,side), valueNew);
-				int rndTile = randomTile();
-				queue.offer(rndTile);
-				model.fireAddTile(17, rndTile);
-				backup = tmpBackup;
+				//backup = tmpBackup;
 			}
 		}		
 		
