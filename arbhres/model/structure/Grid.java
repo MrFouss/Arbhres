@@ -451,13 +451,13 @@ public class Grid {
 	}
 	
 	private void displayGrid() {
-		System.out.print("______________________________");
+		System.out.print("________________________________________________________________");
 		for(int j=0; j<4; j++) {
 			System.out.print("\n|");
 			for(int i=0; i<4; i++) {
-				System.out.print("  " + tiles[i+j*4] + "  |");
+				System.out.print("\t" + tiles[i+j*4] + "\t|");
 			}
 		}
-		System.out.println("\n______________________________");
+		System.out.println("\n________________________________________________________________");
 	}
 }

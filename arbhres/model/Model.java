@@ -14,6 +14,7 @@ import arbhres.model.listeners.ModelListener;
 import arbhres.model.modifiers.*;
 import arbhres.model.structure.Grid;
 import arbhres.model.structure.GridBackup;
+import arbhres.view.View;
 
 /**
  * @author	Pierre Brunet "pierre.brunet@krophil.fr"
@@ -33,6 +34,7 @@ public class Model implements ControllerListener {
 	private int seeTurn;
 	private final EventListenerList listeners = new EventListenerList();
 	private int targetIndex;
+	private RandomModifier rndModifier;
 	
 	public Model () {
 		this.score = 0;
@@ -43,6 +45,7 @@ public class Model implements ControllerListener {
 		this.blindTurn = 0;
 		this.seeTurn = 0;
 		this.targetIndex = -1;
+		
 	}
 	
 	/* LISTENER METHODS */
@@ -85,6 +88,7 @@ public class Model implements ControllerListener {
 			this.pressButton = false;
 			switch (e.getButton()) {
 			case NEW_GAME:
+				this.fireRestartGUI();
 				this.score = 0;
 				this.grid = new Grid(this);
 				this.pressButton = true;
