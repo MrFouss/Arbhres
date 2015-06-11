@@ -4,6 +4,7 @@ import java.util.EventListener;
 
 import arbhres.events.ButtonClickEvent;
 import arbhres.events.MovementTileEvent;
+import arbhres.events.ScoreChangeEvent;
 import arbhres.events.TileClickEvent;
 import arbhres.events.StateEvent;
 
@@ -102,4 +103,11 @@ public interface ModelListener extends EventListener {
 	 * Notice the frame has to be restarted
 	 */
 	public void restartGUI();
+	
+	/**
+	 * Notice the score changed
+	 * 
+	 * @param e the event containing the value of the new score
+	 */
+	public void scoreChange(ScoreChangeEvent e);
 }

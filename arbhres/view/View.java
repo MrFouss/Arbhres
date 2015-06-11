@@ -7,6 +7,7 @@ import javax.swing.JFrame;
 import arbhres.events.ButtonClickEvent;
 import arbhres.events.ButtonClickEvent.Button;
 import arbhres.events.MovementTileEvent;
+import arbhres.events.ScoreChangeEvent;
 import arbhres.events.StateEvent;
 import arbhres.events.TileClickEvent;
 import arbhres.model.listeners.ModelListener;
@@ -189,6 +190,12 @@ public class View extends JFrame implements ModelListener {
 			}
 			return b;
 		}
+	}
+
+	@Override
+	public void scoreChange(ScoreChangeEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

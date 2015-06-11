@@ -7,6 +7,7 @@ import arbhres.events.ButtonClickEvent;
 import arbhres.events.ButtonClickEvent.Button;
 import arbhres.events.MovementEvent;
 import arbhres.events.MovementTileEvent;
+import arbhres.events.ScoreChangeEvent;
 import arbhres.events.StateEvent;
 import arbhres.events.TileClickEvent;
 import arbhres.model.listeners.ModelListener;
@@ -419,6 +420,16 @@ public class Model implements ControllerListener {
 	public void fireRestartGUI() {
 		for (ModelListener listener : getModelListeners()) {
 			listener.restartGUI();
+		}
+	}
+	
+	public void fireScoreChange(long score) {
+		ScoreChangeEvent event = null;
+		for (ModelListener listener : getModelListeners()) {
+			if (event == null) {
+				event = new ScoreChangeEvent(score);
+			}
+			listener.scoreChange(event);
 		}
 	}
 	
