@@ -134,9 +134,8 @@ public class Grid {
 			
 			rndTile = randomTile();
 			addTile(tileIndex, rndTile);
-			model.fireAddTile(tileIndex, rndTile);
-			model.fireRefreshGUI();
 		}
+		model.fireRefreshGUI();
 	}
 	
 	/**
@@ -360,8 +359,8 @@ public class Grid {
 			int side = selectAnySide();
 			int valueNew = queue.getQueue().poll();
 			if(side != -1){
-				addTile(side, valueNew);
-				model.fireAddTile(rotateTile(nbRotate, side), valueNew);
+				tiles[side] = valueNew;
+				this.model.fireAddTile(rotateTile(nbRotate,side), valueNew);
 				queue.getQueue().offer(randomTile());
 				backup = tmpBackup;
 			}
@@ -381,7 +380,6 @@ public class Grid {
 			break;
 		}
 		rotate(nbRotate);
-		this.displayGrid();
 		
 		return scoreChange + (hasMoved ? 0 : - 1) ;
 	}
@@ -464,14 +462,14 @@ public class Grid {
 		}
 	}
 	
-	private void displayGrid() {
-		System.out.print("____________________________________________________________");
+	public void displayGrid() {
+		System.out.print("________________________________________________________________");
 		for(int j=0; j<4; j++) {
 			System.out.print("\n|");
 			for(int i=0; i<4; i++) {
-				System.out.print("  " + tiles[i+j*4] + "  |");
+				System.out.print("\t" + (tiles[i+j*4] != -1 ? tiles[i+j*4] : ".") + "\t|");
 			}
 		}
-		System.out.println("\n____________________________________________________________");
+		System.out.println("\n________________________________________________________________");
 	}
 }

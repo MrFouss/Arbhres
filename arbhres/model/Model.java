@@ -94,6 +94,8 @@ public class Model implements ControllerListener {
 			switch (e.getButton()) {
 			case NEW_GAME:
 				this.fireRestartGUI();
+				this.firePressButton(e.getButton());
+				this.fireRefreshGUI();
 				this.score = 0;
 				this.fireScoreChange(score);
 				this.grid = new Grid(this);
@@ -217,7 +219,7 @@ public class Model implements ControllerListener {
 			default:
 				break;
 			}
-			//this.fireReleaseButton(e.getButton());
+			this.fireReleaseButton(e.getButton());
 			this.moveGrid = true;
 			this.pressButton = true;
 		}
@@ -436,6 +438,7 @@ public class Model implements ControllerListener {
 		for (ModelListener listener : getModelListeners()) {
 			listener.refreshGUI();
 		}
+		grid.displayGrid();
 	}
 	
 	/**
