@@ -31,7 +31,6 @@ public class Controller extends InputAdapter {
 	@Override
 	public void keyPressed(KeyEvent e) {
 		fireKeyPressed(e.getKeyCode());
-		System.out.println("Key typed: " +KeyEvent.getKeyText(e.getKeyCode()));
 	}
 
 	@Override
@@ -100,7 +99,6 @@ public class Controller extends InputAdapter {
 				listener.gridMoved(event);
 				break;
 			default:
-				System.out.println("Error");
 				break;
 			}
 		}
