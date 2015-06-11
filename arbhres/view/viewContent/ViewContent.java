@@ -218,6 +218,7 @@ public class ViewContent extends JPanel {
 	public void paint(Graphics g)
 	{
 		for (GeneralSprite s : background.values()) {
+			
 			s.paint(g);
 		}
 		
