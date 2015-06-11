@@ -90,6 +90,7 @@ public class Model implements ControllerListener {
 			case NEW_GAME:
 				this.fireRestartGUI();
 				this.score = 0;
+				this.fireScoreChange(score);
 				this.grid = new Grid(this);
 				this.pressButton = true;
 				this.moveGrid = true;
@@ -111,17 +112,20 @@ public class Model implements ControllerListener {
 						}
 					}
 					score-=erase.apply(this.tileIndex);
+					this.fireScoreChange(score);
 				}
 				break;
 			case BONUS_PAUSE:
 				Pause pause = new Pause(this.grid.getQueue());
 				if (pause.isAvailable(this.score)) {
 					score-=pause.apply();
+					this.fireScoreChange(score);
 				}
 				break;
 			case BONUS_RANDOM:
 				RandomModifier rndMod = new RandomModifier(this.grid, this.targetIndex);
 				score = rndMod.apply(score);
+				this.fireScoreChange(score);
 				this.blindTurn+=rndMod.getBlindTurns();
 				this.seeTurn+=rndMod.getSeeTurns();
 				this.targetIndex=rndMod.getTargetIndex();
@@ -131,6 +135,7 @@ public class Model implements ControllerListener {
 				See see = new See();
 				if(see.isAvailable(this.score)) {
 					score -= see.apply();
+					this.fireScoreChange(score);
 					this.seeTurn += see.getSeeTurns();
 				}
 				break;
@@ -158,6 +163,7 @@ public class Model implements ControllerListener {
 					}
 					tileIndex2 = this.tileIndex;
 					score-=swap.apply(tileIndex1, tileIndex2);
+					this.fireScoreChange(score);
 				}
 				break;
 			case BONUS_TURNLEFT:
@@ -173,6 +179,7 @@ public class Model implements ControllerListener {
 						}
 					}
 					score-=turnLeft.apply(this.tileIndex);
+					this.fireScoreChange(score);
 				}
 				break;
 			case BONUS_TURNRIGHT:
@@ -188,12 +195,14 @@ public class Model implements ControllerListener {
 						}
 					}
 					score-=turnRight.apply(this.tileIndex);
+					this.fireScoreChange(score);
 				}
 				break;
 			case BONUS_UNDO:
 				Undo undo = new Undo();
 				if (undo.isAvailable(score)) {
 					score-=undo.apply(grid, backup);
+					this.fireScoreChange(score);
 				}
 				break;
 			default:
@@ -214,6 +223,7 @@ public class Model implements ControllerListener {
 			scoreChange = grid.move(e.getDirection(), backup, score);
 			if (scoreChange != -1) {
 				score+=scoreChange;
+				this.fireScoreChange(score);
 				blindTurn = Math.max(blindTurn - 1, -1);
 				seeTurn = Math.max(seeTurn - 1, -1);
 			}
