@@ -69,7 +69,7 @@ public class ViewContent extends JPanel {
 		tiles = new HashMap<TileType, TileSprite[]>(types.length);
 		
 		for (int i = 0; i < types.length; i++) {
-			tiles.put(types[i], new TileSprite[19]);
+			tiles.put(types[i], new TileSprite[20]);
 		}
 	}
 	
@@ -85,14 +85,14 @@ public class ViewContent extends JPanel {
 	
 	public TileSprite getTile(TileType type, int index)
 	{
-		if (index >= 0 && index < 19) {
+		if (index >= 0 && index <= 19) {
 			return tiles.get(type)[index];
 		}
 		return null;
 	}
 	
 	private void setTile(TileType type, int index, TileSprite ts) {
-		if (index >= 0 && index < 19) {
+		if (index >= 0 && index <= 19) {
 			tiles.get(type)[index] = ts;
 		}
 	}
@@ -102,7 +102,7 @@ public class ViewContent extends JPanel {
 			return TileLocation.GRID;
 		} else if (index == 16) {
 			return TileLocation.STORE;
-		} else if (index < 19) {
+		} else if (index <= 19) {
 			return TileLocation.NEXT;
 		}
 		return null;
@@ -113,7 +113,7 @@ public class ViewContent extends JPanel {
 			return new Point(index%4, index/4);
 		} else if (index == 16) {
 			return new Point(0, 0);
-		} else if (index < 19) {
+		} else if (index <= 19) {
 			return new Point(0, index - 17);
 		}
 		return null;

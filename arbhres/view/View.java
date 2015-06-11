@@ -30,6 +30,8 @@ public class View extends JFrame implements ModelListener {
 	}
 
 	public boolean isButton(int x, int y) {
+		content.addTile(TileType.TILE, 17, 3);
+		repaint();
 		return (content.getContainingButtonType(new Point(x, y)) != null);
 	}
 	
