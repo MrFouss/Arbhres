@@ -110,4 +110,11 @@ public interface ModelListener extends EventListener {
 	 * @param e the event containing the value of the new score
 	 */
 	public void scoreChange(ScoreChangeEvent e);
+	
+	/**
+	 * Notice the type off modifier gotten in random button
+	 * 
+	 * @param e the event containing the type of 
+	 */
+	public void randomButtonDiscovered(ButtonClickEvent e);
 }

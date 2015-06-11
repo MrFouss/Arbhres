@@ -26,7 +26,7 @@ public class Grid {
 	 */
 	public Grid(Model model) {
 		this.tiles = new int[16]; // new tile array
-		this.queue = new TileQueue(); // new queue
+		this.queue = new TileQueue(model); // new queue
 		this.inventory = -1; // new inventory tile
 		this.model = model;
 		
@@ -34,6 +34,7 @@ public class Grid {
 		for(int i=0; i<16; i++) {
 			this.tiles[i] = -1;
 		}
+
 	}
 
 	/**
@@ -46,7 +47,7 @@ public class Grid {
 	 */
 	public Grid(int[] tiles) {
 		this.tiles = tiles; // existing tile array
-		this.queue = new TileQueue(); // new queue
+		this.queue = new TileQueue(model); // new queue
 		this.inventory = -1; // new inventory tile
 	}
 
@@ -357,11 +358,17 @@ public class Grid {
 		}
 		if(hasMoved || this.isGridEmpty()) {
 			int side = selectAnySide();
-			int valueNew = queue.getQueue().poll();
+			int valueNew = queue.poll();
+			model.fireRemoveTile(17);
+			model.fireMoveTile(18, 19);
+			model.fireMoveTile(17, 18);
+			
 			if(side != -1){
 				tiles[side] = valueNew;
 				this.model.fireAddTile(rotateTile(nbRotate,side), valueNew);
-				queue.getQueue().offer(randomTile());
+				int rndTile = randomTile();
+				queue.offer(rndTile);
+				model.fireAddTile(19, rndTile);
 				backup = tmpBackup;
 			}
 		}		

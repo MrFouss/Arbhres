@@ -14,7 +14,6 @@ import arbhres.model.listeners.ModelListener;
 import arbhres.model.modifiers.*;
 import arbhres.model.structure.Grid;
 import arbhres.model.structure.GridBackup;
-import arbhres.view.View;
 
 /**
  * @author	Pierre Brunet "pierre.brunet@krophil.fr"
@@ -35,6 +34,7 @@ public class Model implements ControllerListener {
 	private final EventListenerList listeners = new EventListenerList();
 	private int targetIndex;
 	private RandomModifier rndModifier;
+	private Object lock;
 	
 	public RandomModifier getRndModifier() {
 		return rndModifier;
@@ -49,6 +49,7 @@ public class Model implements ControllerListener {
 		this.blindTurn = 0;
 		this.seeTurn = 0;
 		this.targetIndex = -1;
+		this.lock = new Object();
 		
 	}
 	
@@ -96,7 +97,7 @@ public class Model implements ControllerListener {
 				this.fireRestartGUI();
 				this.firePressButton(e.getButton());
 				this.fireRefreshGUI();
-				this.score = 0;
+				this.score = 100000000;
 				this.fireScoreChange(score);
 				this.grid = new Grid(this);
 				this.pressButton = true;
@@ -108,18 +109,10 @@ public class Model implements ControllerListener {
 				grid.initTiles();
 				break;
 			case BONUS_ERASE:
-				Erase erase = new Erase(grid);
+				Erase erase = new Erase(this.grid);
 				if (erase.isAvailable(score) ) {
-					this.clickTile = true;
-					while (this.clickTile) {
-						try {
-							Thread.sleep(500);
-						} catch (InterruptedException e1) {
-							
-						}
-					}
-					score-=erase.apply(this.tileIndex);
-					this.fireScoreChange(score);
+					//score-=erase.apply(this.tileIndex);
+					//this.fireScoreChange(score);
 				}
 				break;
 			case BONUS_PAUSE:
@@ -139,7 +132,7 @@ public class Model implements ControllerListener {
 				this.blindTurn+=this.rndModifier.getBlindTurns();
 				this.seeTurn+=this.rndModifier.getSeeTurns();
 				this.targetIndex=this.rndModifier.getTargetIndex();
-				//TODO add fire target
+				this.fireAddTarget(targetIndex);
 				break;
 			case BONUS_SEE:
 				See see = new See();
@@ -225,6 +218,7 @@ public class Model implements ControllerListener {
 		}
 	}
 	
+	
 	@Override
 	public void gridMoved(MovementEvent e) {
 		System.out.println("Arrow used : " + e.getDirection());
@@ -242,8 +236,8 @@ public class Model implements ControllerListener {
 			
 			if (this.targetIndex != -1) {
 				this.grid.removeTile(this.targetIndex);
+				this.fireRemoveTarget(this.targetIndex);
 				this.targetIndex = -1;
-				//TODO fire target ?
 			}
 			this.fireRefreshGUI();
 			this.moveGrid = true;
@@ -252,11 +246,12 @@ public class Model implements ControllerListener {
 	}
 
 	@Override
-	public void tileClicked(TileClickEvent e) {
+	public synchronized void tileClicked(TileClickEvent e) {
 		System.out.println("Tile clicked (index: " +e.getTileIndex()+ " ; value: " +e.getTileValue() + ")");
 		if (this.clickTile) {
 			this.tileIndex = e.getTileIndex();
 			this.clickTile = false;
+			this.lock.notify();
 		}
 	}
 	
@@ -450,6 +445,11 @@ public class Model implements ControllerListener {
 		}
 	}
 	
+	/**
+	 * Notifies the listeners that the score changed
+	 * 
+	 * @param score The new score
+	 */
 	public void fireScoreChange(long score) {
 		ScoreChangeEvent event = null;
 		for (ModelListener listener : getModelListeners()) {
@@ -457,6 +457,21 @@ public class Model implements ControllerListener {
 				event = new ScoreChangeEvent(score);
 			}
 			listener.scoreChange(event);
+		}
+	}
+	
+	/**
+	 * Notifies the listeners of the kind of bonus has been chosen
+	 * 
+	 * @param button The kind of bonus
+	 */
+	public void fireRandomButtonDiscovered(Button button) {
+		ButtonClickEvent event = null;
+		for (ModelListener listener : getModelListeners()) {
+			if (event == null) {
+				event = new ButtonClickEvent(button);
+			}
+			listener.randomButtonDiscovered(event);
 		}
 	}
 	

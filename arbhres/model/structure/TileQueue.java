@@ -14,23 +14,24 @@ import arbhres.model.Model;
  */
 public class TileQueue {
 	private Queue<Integer> queue;
-	private Model model;
 
 	/**
 	 * Queue constructor with no parameters
 	 */
-	public TileQueue() {
+	public TileQueue(Model model) {
 		this.queue = new LinkedList<Integer>(); // new empty queue
-		
+
+		int value;
 		// initialize the queue with three tiles
 		for (int i=0; i<3; i++) {
-			this.queue.offer(Grid.randomTile());
+			value = Grid.randomTile();
+			this.offer(value);
+			model.fireAddTile(19 - i, value);
 		}
 	}
 	
 	public void offer(int integer) {
 		this.queue.offer(integer);
-		//model.fireAddTile(19, integer);
 	}
 	
 	public int peek() {
@@ -38,9 +39,6 @@ public class TileQueue {
 	}
 	
 	public int poll() {
-		//model.fireRemoveTile(17);
-		//model.fireMoveTile(18, 17);
-		//model.fireMoveTile(19, 18);
 		return this.queue.poll();
 	}
 
