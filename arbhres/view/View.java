@@ -1,10 +1,7 @@
 package arbhres.view;
 
-import java.awt.Graphics;
 import java.awt.Point;
-
 import javax.swing.JFrame;
-
 import arbhres.events.ButtonClickEvent;
 import arbhres.events.ButtonClickEvent.Button;
 import arbhres.events.MovementTileEvent;

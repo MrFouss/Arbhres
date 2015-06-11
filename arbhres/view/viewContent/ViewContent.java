@@ -16,7 +16,6 @@ import arbhres.view.viewContent.sprite.tile.TileSprite;
 import arbhres.view.viewContent.sprite.tile.TileType;
 
 public class ViewContent extends JPanel {
-    
 	private HashMap<GeneralType, GeneralSprite> background;
 	private HashMap<ButtonType, ButtonSprite> buttons;
 	private HashMap<TileType, TileSprite[]> tiles;
@@ -97,7 +96,7 @@ public class ViewContent extends JPanel {
 	private void setTile(TileType type, int index, TileSprite ts) {
 		if (index >= 0 && index <= 19) {
 			tiles.get(type)[index] = ts;
-			if (!seeMode && (index == 18 || index == 17) && getTile(type, index) != null) {				
+			if (!seeMode && (index == 18 || index == 17) && ts != null) {				
 				getTile(type, index).setVisible(false);
 			}
 		}
@@ -127,11 +126,12 @@ public class ViewContent extends JPanel {
 	
 	public void addTile(TileType type, int index, int value) {
 		Point p = getTilePosition(index);
+		
 		setTile(type, index,
-				new TileSprite(getTileLocation(index), type, value, (int)p.getX(), (int)p.getY()));
+				new TileSprite(getTileLocation(index), type, value, p.x, p.y));
 		if (type == TileType.TILE) {
 			setTile(TileType.BLIND, index,
-					new TileSprite(getTileLocation(index), TileType.BLIND, 0, (int)p.getX(), (int)p.getY()));
+					new TileSprite(getTileLocation(index), TileType.BLIND, 0, p.x, p.y));
 			if (blindMode) {
 				getTile(type, index).setVisible(false);
 			} else {
@@ -206,6 +206,20 @@ public class ViewContent extends JPanel {
 					ts[17].setVisible(s);
 				}
 				background.get(GeneralType.EXTENDED_NEXT_MENU).setVisible(s);
+			}
+			
+			TileType toHide;
+			if (blindMode) {
+				toHide = TileType.TILE;
+			} else {
+				toHide = TileType.BLIND;
+			}
+			
+			if (getTile(toHide, 18) != null) {
+				getTile(toHide, 18).setVisible(false);
+			}
+			if (getTile(toHide, 17) != null) {
+				getTile(toHide, 17).setVisible(false);
 			}
 		}
 	}
