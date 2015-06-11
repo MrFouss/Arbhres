@@ -45,7 +45,7 @@ public class ViewContent extends JPanel {
 	}
 	
 	private void initBackground() {
-		GeneralType[] gType = GeneralType.getGeneralSprites();
+		GeneralType[] gType = GeneralType.getGeneralTypes();
 		
 		background = new HashMap<GeneralType, GeneralSprite>(gType.length);
 		
@@ -67,7 +67,7 @@ public class ViewContent extends JPanel {
 	}
 	
 	private void initTiles() {
-		TileType[] types = TileType.getTiles();
+		TileType[] types = TileType.getTileTypes();
 		
 		tiles = new HashMap<TileType, TileSprite[]>(types.length);
 		
@@ -155,7 +155,7 @@ public class ViewContent extends JPanel {
 		Point B = getTilePosition(i2);
 		
 		if (ts != null) {
-			ts.setPosition(getTileLocation(i2).getCoordinateofTile((int)B.getX(), (int)B.getY()));
+			ts.setPosition(getTileLocation(i2).getCoordinateOfTile((int)B.getX(), (int)B.getY()));
 			setTile(type, i2, ts);
 			removeTile(type, i1);
 		}
@@ -213,14 +213,31 @@ public class ViewContent extends JPanel {
 	public int getContainingTileIndex(Point p) {
 		int index = -1;
 		int i = 0;
+		int j = 0;
 		
-		while (i < tiles.get(TileType.TILE).length && index == -1) {
-			if (tiles.get(TileType.TILE)[i] != null) {
-				if (tiles.get(TileType.TILE)[i].contains(p)) {
-					index = i;
+		while (i < 4 && index == -1) {
+			while (j < 4 && index == -1) {
+				if (TileLocation.GRID.getBoxOfTile(i, j).contains(p)) {
+					index = j*4 + i;
 				}
+				j++;
 			}
 			i++;
+			j = 0;
+		}
+		
+		if (index == -1) {
+			if (TileLocation.STORE.getBoxOfTile(0, 0).contains(p)) {
+				index = 16;
+			} else {
+				i = 0;
+				while (i < 3 && index == -1) {
+					if (TileLocation.NEXT.getBoxOfTile(0, i).contains(p)) {
+						index = 17+i;
+					}
+					i++;
+				}
+			}
 		}
 
 		return index;

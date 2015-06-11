@@ -18,7 +18,7 @@ import arbhres.view.viewContent.sprite.general.GeneralType;
 import arbhres.view.viewContent.sprite.tile.TileType;
 
 public class View extends JFrame implements ModelListener {
-    	ViewContent content;
+    	private ViewContent content;
     
 	public View() {
 	    super("Arbhres!");
@@ -44,7 +44,7 @@ public class View extends JFrame implements ModelListener {
 	}
 	
 	public Button getButton(int x, int y) {
-		return Correspondance.ButtonTypeToButton(content.getContainingButtonType(new Point(x, y)));
+		return Correspondance.buttonTypeToButton(content.getContainingButtonType(new Point(x, y)));
 	}
 
 	@Override
@@ -69,14 +69,14 @@ public class View extends JFrame implements ModelListener {
 
 	@Override
 	public void pressButton(ButtonClickEvent e) {
-		ButtonType bt = Correspondance.ButtonToButtonType(e.getButton());
+		ButtonType bt = Correspondance.buttonToButtonType(e.getButton());
 		content.getButton(bt).setPressed(true);
 		content.getBackground(GeneralType.HINT).setValue(bt.getHint());
 	}
 
 	@Override
 	public void releaseButton(ButtonClickEvent e) {
-		ButtonType bt = Correspondance.ButtonToButtonType(e.getButton());
+		ButtonType bt = Correspondance.buttonToButtonType(e.getButton());
 		content.getButton(bt).setPressed(false);
 		content.getBackground(GeneralType.HINT).setValue("");
 	}
@@ -125,7 +125,7 @@ public class View extends JFrame implements ModelListener {
 	}
 	
 	public void randomButtonDiscovered(ButtonClickEvent e) {
-		ButtonType bt = Correspondance.ButtonToButtonType(e.getButton());
+		ButtonType bt = Correspondance.buttonToButtonType(e.getButton());
 		String s = content.getButton(bt).getHint();
 		content.getBackground(GeneralType.HINT).setValue(s);
 	}
@@ -133,7 +133,7 @@ public class View extends JFrame implements ModelListener {
 	
 	
 	public static class Correspondance {
-		public static ButtonType ButtonToButtonType(Button e) {
+		public static ButtonType buttonToButtonType(Button e) {
 			ButtonType b;
 			
 			switch (e) {
@@ -171,7 +171,7 @@ public class View extends JFrame implements ModelListener {
 			return b;
 		}
 		
-		public static Button ButtonTypeToButton(ButtonType t) {
+		public static Button buttonTypeToButton(ButtonType t) {
 			Button b;
 			
 			switch (t) {

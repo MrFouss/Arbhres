@@ -23,7 +23,7 @@ public enum TileLocation {
 	    this.ySize = y;
 	}
 	
-	public Point getCoordinateofTile(int X, int Y) {
+	public Point getCoordinateOfTile(int X, int Y) {
 	    int x;
 	    int y;
 

@@ -1,6 +1,7 @@
 package arbhres.view.viewContent.sprite.button;
 
 import java.awt.Rectangle;
+
 import arbhres.view.viewContent.sprite.Scaller;
 
 public enum ButtonLocation {
@@ -11,8 +12,8 @@ public enum ButtonLocation {
 	   	private final int xSize;
 	   	private final int ySize;
 	   	
-	   	private static final double xStep = 50;
-	   	private static final double yStep = 125;
+	   	private static final int xStep = 50;
+	   	private static final int yStep = 125;
 	   	
 	   	private ButtonLocation(Rectangle loc, int x, int y) {
 	   		location = loc;

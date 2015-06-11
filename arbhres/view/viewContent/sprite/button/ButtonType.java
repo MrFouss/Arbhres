@@ -2,10 +2,9 @@ package arbhres.view.viewContent.sprite.button;
 
 import java.awt.Rectangle;
 import arbhres.view.viewContent.sprite.Sprite;
-import arbhres.view.viewContent.sprite.SpriteType;
 import arbhres.view.viewContent.sprite.general.HintPhrase;
 
-public enum ButtonType implements SpriteType {
+public enum ButtonType {
     NEW_GAME	(ButtonLocation.NEW_GAME, 0, 0, "newGame", null),
     RANDOM		(ButtonLocation.STORE, 0, 0, "random", null),
     ERASE		(ButtonLocation.STORE, 1, 0, "erase", HintPhrase.HINT_ERASE),

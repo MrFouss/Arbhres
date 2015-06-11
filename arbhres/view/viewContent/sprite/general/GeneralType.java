@@ -2,9 +2,8 @@ package arbhres.view.viewContent.sprite.general;
 
 import java.awt.Rectangle;
 import arbhres.view.viewContent.sprite.Sprite;
-import arbhres.view.viewContent.sprite.SpriteType;
 
-public enum GeneralType implements SpriteType{
+public enum GeneralType {
 	BACKGROUND			(GraphicObjectType.PICTURE, new Rectangle(0, 0, 4650, 4325), "background"),
 	SCORE 				(GraphicObjectType.TEXT, new Rectangle(1490, 980, 1950, 227), "0"),
 	HINT				(GraphicObjectType.TEXT, new Rectangle(100, 3975, 4450, 200), "HINT : Will be displayed here !"),
@@ -43,7 +42,7 @@ public enum GeneralType implements SpriteType{
 		return type;
 	}
 
-	public static GeneralType[] getGeneralSprites()
+	public static GeneralType[] getGeneralTypes()
 	{
 		GeneralType[] g = {
 				BACKGROUND,
