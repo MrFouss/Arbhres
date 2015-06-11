@@ -1,5 +1,6 @@
 package arbhres.view;
 
+import java.awt.Graphics;
 import java.awt.Point;
 
 import javax.swing.JFrame;
@@ -14,7 +15,6 @@ import arbhres.model.listeners.ModelListener;
 import arbhres.view.viewContent.ViewContent;
 import arbhres.view.viewContent.sprite.button.ButtonType;
 import arbhres.view.viewContent.sprite.general.GeneralType;
-import arbhres.view.viewContent.sprite.tile.TileLocation;
 import arbhres.view.viewContent.sprite.tile.TileType;
 
 public class View extends JFrame implements ModelListener {
@@ -70,6 +70,10 @@ public class View extends JFrame implements ModelListener {
 		ButtonType bt = Correspondance.ButtonToButtonType(e.getButton());
 		content.getButton(bt).setPressed(true);
 		content.getBackground(GeneralType.HINT).setValue(bt.getHint());
+		
+		Graphics g = content.getGraphics();
+		content.getButton(bt).paint(g);
+		g.dispose();
 	}
 
 	@Override
@@ -77,6 +81,10 @@ public class View extends JFrame implements ModelListener {
 		ButtonType bt = Correspondance.ButtonToButtonType(e.getButton());
 		content.getButton(bt).setPressed(false);
 		content.getBackground(GeneralType.HINT).setValue("");
+		
+		Graphics g = content.getGraphics();
+		content.getButton(bt).paint(g);
+		g.dispose();
 	}
 
 	@Override
