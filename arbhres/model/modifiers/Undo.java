@@ -26,7 +26,6 @@ public class Undo extends Modifier {
 	 */
 	public long apply(Grid grid, GridBackup backup) {
 		long oldScore = backup.getScore();
-		grid.emptyGrid(); 
 		grid.copyGrid(backup);
 		backup = null;
 		
@@ -42,6 +41,6 @@ public class Undo extends Modifier {
 	 * @return true if the modifier can be used, false otherwise
 	 */
 	public boolean isAvailable(long score, GridBackup backup) {
-		return (super.isAvailable(backup.getScore()) && backup != null);
+		return (backup != null && super.isAvailable(backup.getScore()) );
 	}
 }

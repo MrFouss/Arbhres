@@ -115,8 +115,6 @@ public class Grid {
 	 */
 	public void emptyGrid(){
 		this.tiles = null;
-		model.fireRestartGUI();
-		model.fireRefreshGUI();
 	}
 	/**
 	 * Initialize the tile array with 9 random tiles between 1 and 3
@@ -316,11 +314,11 @@ public class Grid {
 	 * @param score The score to change
 	 * @return the points to add to the score, or -1 if there was no moves
 	 */
-	public long move(Direction direction, GridBackup backup, long score) {
+	public long move(Direction direction, long score) {
 		
 		long scoreChange = 0;
 		int nbRotate = 0;
-		//GridBackup tmpBackup = new GridBackup(this, score, this.model);
+		GridBackup tmpBackup = new GridBackup(this, score);
 		
 		switch (direction) {
 		case DOWN:
@@ -373,7 +371,7 @@ public class Grid {
 			if(side != -1){
 				tiles[side] = valueNew;
 				this.model.fireAddTile(rotateTile(nbRotate,side), valueNew);
-				//backup = tmpBackup;
+				model.setBackup(tmpBackup);
 			}
 		}		
 		
@@ -465,11 +463,14 @@ public class Grid {
 	}
 	
 	public void copyGrid(Grid grid) {
-		this.inventory = grid.inventory;
-		this.tiles = grid.tiles.clone();
+		this.setInventory(grid.inventory);
+		for (int i = 0; i <= 15; i++) {
+			this.addTile(i, grid.getTile(i));
+		}
 		for(int i = 0; i < 3; i++) {
-			this.queue.offer(grid.queue.peek());
-			grid.queue.offer(grid.queue.poll());
+			model.fireRemoveTile(17 + i);
+			model.fireAddTile(17 + i, grid.queue.peek());
+			this.queue.offer(grid.queue.poll());
 		}
 	}
 	

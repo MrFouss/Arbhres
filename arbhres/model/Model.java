@@ -43,6 +43,11 @@ public class Model implements ControllerListener {
 	public RandomModifier getRndModifier() {
 		return rndModifier;
 	}
+	
+	public void setBackup(GridBackup backup) {
+		this.backup = backup;
+	}
+
 
 	public Model () {
 		this.score = 0;
@@ -57,6 +62,7 @@ public class Model implements ControllerListener {
 		this.targetIndex = -1;
 		this.eraseBool = false;
 		this.swapStep = 0;
+		this.backup = null;
 	}
 	
 	/* LISTENER METHODS */
@@ -205,12 +211,13 @@ public class Model implements ControllerListener {
 				break;
 			case BONUS_UNDO:
 				Undo undo = new Undo();
-				if (undo.isAvailable(score)) {
-					score-=undo.apply(grid, backup);
+				if (undo.isAvailable(score, this.backup)) {
+					score-=undo.apply(grid, this.backup);
 					this.fireScoreChange(score);
 				}
 				this.pressButton = true;
 				this.moveGrid = true;
+				this.fireReleaseButton(Button.BONUS_UNDO);
 				break;
 			default:
 				break;
@@ -228,7 +235,7 @@ public class Model implements ControllerListener {
 			long scoreChange;
 			this.moveGrid = false;
 			this.pressButton = false;
-			scoreChange = grid.move(e.getDirection(), backup, score);
+			scoreChange = grid.move(e.getDirection(), score);
 			if (scoreChange != -1) {
 				score+=scoreChange;
 				this.fireScoreChange(score);

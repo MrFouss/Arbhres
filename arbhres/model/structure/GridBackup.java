@@ -11,8 +11,8 @@ public class GridBackup extends Grid{
 	
 	private long score;
 	
-	public GridBackup(Grid grid, long score, Model model) {
-		super(model);
+	public GridBackup(Grid grid, long score) {
+		super(grid);
 		this.score = score;
 	}
 
