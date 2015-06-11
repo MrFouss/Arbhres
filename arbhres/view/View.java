@@ -114,6 +114,12 @@ public class View extends JFrame implements ModelListener {
 		content.moveTile(TileType.TILE, e.getOldIndex(), e.getNewIndex());
 	}
 
+
+	@Override
+	public void scoreChange(ScoreChangeEvent e) {
+		content.getBackground(GeneralType.SCORE).setValue(String.valueOf(e.getScore()));
+	}
+	
 	public static class Correspondance {
 		public static ButtonType ButtonToButtonType(Button e) {
 			ButtonType b;
@@ -191,11 +197,4 @@ public class View extends JFrame implements ModelListener {
 			return b;
 		}
 	}
-
-	@Override
-	public void scoreChange(ScoreChangeEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
 }

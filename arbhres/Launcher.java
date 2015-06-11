@@ -14,13 +14,14 @@ import arbhres.model.Model;
 
 public class Launcher {
 	public static void main(String[] args) throws IOException, InterruptedException {
-		Model model = new Model();
 		View view = new View();
+		Model model = new Model();
+		model.addModelListener(view);
 		Controller controller = new Controller(view);
 		view.addKeyListener(controller);
 		view.addMouseListener(controller);
 		controller.addControllerListener(model);
-		model.addModelListener(view);
+
 		
 	}
 }
