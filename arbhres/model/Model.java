@@ -34,15 +34,11 @@ public class Model implements ControllerListener {
 	private int seeTurn;
 	private final EventListenerList listeners = new EventListenerList();
 	private int targetIndex;
-	private RandomModifier rndModifier;
 	private boolean eraseBool;
 	private int swapStep;
 	private boolean lTurnBool;
 	private boolean rTurnBool;
 	
-	public RandomModifier getRndModifier() {
-		return rndModifier;
-	}
 	
 	public void setBackup(GridBackup backup) {
 		this.backup = backup;
@@ -145,15 +141,16 @@ public class Model implements ControllerListener {
 				this.moveGrid = true;
 				break;
 			case BONUS_RANDOM:
-				this.rndModifier.setBlindTurns(this.blindTurn);
-				this.rndModifier.setSeeTurns(this.seeTurn);
-				this.rndModifier.setTargetIndex(this.targetIndex);
+				RandomModifier rndModifier = new RandomModifier(this.grid);
+				rndModifier.setBlindTurns(this.blindTurn);
+				rndModifier.setSeeTurns(this.seeTurn);
+				rndModifier.setTargetIndex(this.targetIndex);
 				
-				score = this.rndModifier.apply(score);
+				score = rndModifier.apply(score);
 				this.fireScoreChange(score);
-				this.blindTurn+=this.rndModifier.getBlindTurns();
-				this.seeTurn+=this.rndModifier.getSeeTurns();
-				this.targetIndex=this.rndModifier.getTargetIndex();
+				this.blindTurn+=rndModifier.getBlindTurns();
+				this.seeTurn+=rndModifier.getSeeTurns();
+				this.targetIndex=rndModifier.getTargetIndex();
 				this.fireAddTarget(targetIndex);
 				this.pressButton = true;
 				this.moveGrid = true;
@@ -281,6 +278,7 @@ public class Model implements ControllerListener {
 			
 			if (this.swapStep > 0 && tileIndex <= 16) {
 				if (swapStep == 1) {
+					this.fireHighlightTile(tileIndex);
 					this.tileIndex2 = this.tileIndex;
 					System.out.println("et de 1");
 					this.swapStep++;
@@ -292,6 +290,7 @@ public class Model implements ControllerListener {
 					chgScore=swap.apply(tileIndex, tileIndex2);
 					
 					if (chgScore != 0) {
+						this.fireUnhighlightTile(tileIndex2);
 						this.score-=chgScore;
 						this.fireScoreChange(score);
 						
@@ -536,6 +535,7 @@ public class Model implements ControllerListener {
 			}
 			listener.scoreChange(event);
 		}
+		System.out.println("Score : " + score);
 	}
 	
 	/**
