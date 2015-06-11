@@ -1,8 +1,6 @@
 package arbhres.view.viewContent.sprite.general;
 
 import java.awt.Rectangle;
-import java.awt.geom.Rectangle2D;
-
 import arbhres.view.graphicObject.GraphicObject;
 import arbhres.view.graphicObject.Picture;
 import arbhres.view.graphicObject.Text;

@@ -1,18 +1,10 @@
 package arbhres.view.viewContent.sprite.button;
 
 import java.awt.Rectangle;
-import java.awt.geom.Rectangle2D;
-
 import arbhres.view.viewContent.sprite.Sprite;
 import arbhres.view.viewContent.sprite.SpriteType;
 import arbhres.view.viewContent.sprite.general.HintPhrase;
 
-/** 
- * @author Esia Belbachir
- * @version 1.0
- * @since 06/10/15
- * Describes the caracterictics of a Button.
- */
 public enum ButtonType implements SpriteType {
     NEW_GAME	(ButtonLocation.NEW_GAME, 0, 0, "newGame", null),
     RANDOM		(ButtonLocation.STORE, 0, 0, "random", null),
@@ -32,13 +24,6 @@ public enum ButtonType implements SpriteType {
     private static final String unpressedSuffix = "UP";
     private static final String pressedSuffix = "P";
     
-    /**
-     * Create a ButtonType that includes the files path and the location
-     * @param loc type of location
-     * @param x emplacement on x-axis
-     * @param y emplacement on y-axis
-     * @param name file name without the path, suffix, and extension
-     */
     private ButtonType(ButtonLocation loc, int x, int y, String name, HintPhrase h) {
 		spriteUP = Sprite.path + name + unpressedSuffix + Sprite.extension;
 		spriteP = Sprite.path + name + pressedSuffix + Sprite.extension;
@@ -50,26 +35,14 @@ public enum ButtonType implements SpriteType {
 		}
     }
     
-    /**
-     * 
-     * @return the file path to the unpressed sprite
-     */
     public String getSpriteUP() {
 		return spriteUP;
 	}
 
-    /**
-     * 
-     * @return return the path to the pressed sprite
-     */
 	public String getSpriteP() {
 		return spriteP;
 	}
 
-	/**
-	 * 
-	 * @return returns the location of the sprite
-	 */
 	public Rectangle getLocation() {
 		return location;
 	}
@@ -78,10 +51,6 @@ public enum ButtonType implements SpriteType {
 		return hint;
 	}
 	
-	/**
-	 * Lists the existing buttons.
-	 * @return An array of ButtonType objects.
-	 */
     public static ButtonType[] getButtonTypes() {
 	ButtonType[] s = {
 		NEW_GAME,
@@ -96,5 +65,4 @@ public enum ButtonType implements SpriteType {
 		};
 	return s;
     }
-
 }

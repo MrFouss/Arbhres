@@ -47,12 +47,12 @@ public class View extends JFrame implements ModelListener {
 
 	@Override
 	public void switchBlindMode(StateEvent e) {
-		content.setBlindMode(true);
+		content.setBlindMode(e.getState());
 	}
 
 	@Override
 	public void switchSeeMode(StateEvent e) {
-		content.setBlindMode(false);
+		content.setBlindMode(e.getState());
 	}
 
 	@Override
@@ -107,6 +107,8 @@ public class View extends JFrame implements ModelListener {
 	@Override
 	public void restartGUI() {
 		content.initViewContent();
+		System.gc();
+		System.gc();
 	}
 	
 	@Override
@@ -125,6 +127,8 @@ public class View extends JFrame implements ModelListener {
 		String s = content.getButton(bt).getHint();
 		content.getBackground(GeneralType.HINT).setValue(s);
 	}
+	
+	
 	
 	public static class Correspondance {
 		public static ButtonType ButtonToButtonType(Button e) {
