@@ -37,6 +37,8 @@ public class Model implements ControllerListener {
 	private RandomModifier rndModifier;
 	private boolean eraseBool;
 	private int swapStep;
+	private boolean lTurnBool;
+	private boolean rTurnBool;
 	
 	public RandomModifier getRndModifier() {
 		return rndModifier;
@@ -129,6 +131,7 @@ public class Model implements ControllerListener {
 				Pause pause = new Pause(this.grid.getQueue());
 				if (pause.isAvailable(this.score)) {
 					score-=pause.apply();
+					this.fireRemoveTile(19);
 					this.fireScoreChange(score);
 					this.fireReleaseButton(Button.BONUS_PAUSE);
 				}
@@ -177,38 +180,28 @@ public class Model implements ControllerListener {
 				TurnLeft turnLeft = new TurnLeft(grid);
 				
 				if (turnLeft.isAvailable(score) ) {
+					this.lTurnBool = true;
 					this.clickTile = true;
-					while (this.clickTile) {
-						try {
-							Thread.sleep(100);
-						} catch (InterruptedException e1) {
-							
-						}
-					}
-					score-=turnLeft.apply(this.tileIndex);
-					this.fireScoreChange(score);
+					
+
 				} else {
 					this.pressButton = true;
 					this.moveGrid = true;
+					this.fireReleaseButton(Button.BONUS_TURNLEFT);
 				}
 				break;
 			case BONUS_TURNRIGHT:
 				TurnRight turnRight = new TurnRight(grid);
 				
 				if (turnRight.isAvailable(score) ) {
+					this.rTurnBool = true;
 					this.clickTile = true;
-					while (this.clickTile) {
-						try {
-							Thread.sleep(100);
-						} catch (InterruptedException e1) {
-							
-						}
-					}
-					score-=turnRight.apply(this.tileIndex);
-					this.fireScoreChange(score);
+
+				} else {
+					this.pressButton = true;
+					this.moveGrid = true;
+					this.fireReleaseButton(Button.BONUS_TURNRIGHT);
 				}
-				this.pressButton = true;
-				this.moveGrid = true;
 				break;
 			case BONUS_UNDO:
 				Undo undo = new Undo();
@@ -304,6 +297,32 @@ public class Model implements ControllerListener {
 				}
 			}
 			
+			if (this.lTurnBool && tileIndex <= 15) {
+				TurnLeft turnLeft = new TurnLeft(grid);
+				
+				score-=turnLeft.apply(this.tileIndex);
+				
+				this.fireScoreChange(score);
+				this.lTurnBool = false;
+				this.pressButton = true;
+				this.clickTile = false;
+				this.moveGrid = true;
+				this.fireReleaseButton(Button.BONUS_TURNLEFT);
+			}
+			
+			if (this.rTurnBool && tileIndex <= 15) {
+				TurnRight turnRight = new TurnRight(grid);
+				
+				score-=turnRight.apply(this.tileIndex);
+				
+				this.fireScoreChange(score);
+				this.rTurnBool = false;
+				this.pressButton = true;
+				this.clickTile = false;
+				this.moveGrid = true;
+				this.fireReleaseButton(Button.BONUS_TURNRIGHT);
+			}
+
 		}
 	}
 	
