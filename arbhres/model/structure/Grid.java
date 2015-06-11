@@ -208,10 +208,10 @@ public class Grid {
 	public int selectAnySide() {
 		Random rnd = new Random();
 		int tileIndex;
-		boolean columnEmpty=true;
+		boolean columnEmpty=false;
 		int column=0;
 		for(int i=0;i<4;i++){
-			if(!isTileEmpty(3+i*4)){
+			if(isTileEmpty(3+i*4)){
 				column++;
 			}
 		}

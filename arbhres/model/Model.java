@@ -187,9 +187,10 @@ public class Model implements ControllerListener {
 					}
 					score-=turnLeft.apply(this.tileIndex);
 					this.fireScoreChange(score);
+				} else {
+					this.pressButton = true;
+					this.moveGrid = true;
 				}
-				this.pressButton = true;
-				this.moveGrid = true;
 				break;
 			case BONUS_TURNRIGHT:
 				TurnRight turnRight = new TurnRight(grid);
@@ -272,6 +273,7 @@ public class Model implements ControllerListener {
 				
 				this.fireScoreChange(score);
 				this.fireReleaseButton(Button.BONUS_ERASE);
+				this.eraseBool = false;
 				this.pressButton = true;
 				this.clickTile = false;
 				this.moveGrid = true;
