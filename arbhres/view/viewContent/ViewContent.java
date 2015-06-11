@@ -97,7 +97,7 @@ public class ViewContent extends JPanel {
 	private void setTile(TileType type, int index, TileSprite ts) {
 		if (index >= 0 && index <= 19) {
 			tiles.get(type)[index] = ts;
-			if (!seeMode && index == 18 || index == 17) {
+			if (!seeMode && (index == 18 || index == 17) && getTile(type, index) != null) {				
 				getTile(type, index).setVisible(false);
 			}
 		}
