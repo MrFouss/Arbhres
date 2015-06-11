@@ -107,6 +107,8 @@ public class View extends JFrame implements ModelListener {
 	@Override
 	public void restartGUI() {
 		content.initViewContent();
+		System.gc();
+		System.gc();
 	}
 	
 	@Override

@@ -4,12 +4,8 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Point;
-import java.awt.geom.Rectangle2D;
 import java.util.HashMap;
-
 import javax.swing.JPanel;
-
-import arbhres.events.ButtonClickEvent.Button;
 import arbhres.view.viewContent.sprite.Scaller;
 import arbhres.view.viewContent.sprite.button.ButtonSprite;
 import arbhres.view.viewContent.sprite.button.ButtonType;
@@ -31,12 +27,15 @@ public class ViewContent extends JPanel {
 	    super();
 	    this.setBackground(Color.white);
 		this.setPreferredSize(Scaller.applyFactor(new Dimension (4650, 4325)));
-		initViewContent();
+		initBackground();
+		initButtons();
+		initTiles();
+
+		blindMode = false;
 	}
 	
 	public void initViewContent() {
-		initBackground();
-		initButtons();
+		background.get(GeneralType.EXTENDED_NEXT_MENU).setVisible(false);
 		initTiles();
 
 		blindMode = false;
