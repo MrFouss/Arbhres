@@ -97,6 +97,9 @@ public class ViewContent extends JPanel {
 	private void setTile(TileType type, int index, TileSprite ts) {
 		if (index >= 0 && index <= 19) {
 			tiles.get(type)[index] = ts;
+			if (!seeMode && index == 18 || index == 17) {
+				getTile(type, index).setVisible(false);
+			}
 		}
 	}
 	
@@ -126,9 +129,6 @@ public class ViewContent extends JPanel {
 		Point p = getTilePosition(index);
 		setTile(type, index,
 				new TileSprite(getTileLocation(index), type, value, (int)p.getX(), (int)p.getY()));
-		if (!seeMode && index == 18 || index == 19) {
-			getTile(type, index).setVisible(false);
-		}
 		if (type == TileType.TILE) {
 			setTile(TileType.BLIND, index,
 					new TileSprite(getTileLocation(index), TileType.BLIND, 0, (int)p.getX(), (int)p.getY()));
@@ -202,8 +202,8 @@ public class ViewContent extends JPanel {
 				if (ts[18] != null) {
 					ts[18].setVisible(s);
 				}
-				if (ts[19] != null) {
-					ts[19].setVisible(s);
+				if (ts[17] != null) {
+					ts[17].setVisible(s);
 				}
 				background.get(GeneralType.EXTENDED_NEXT_MENU).setVisible(s);
 			}
