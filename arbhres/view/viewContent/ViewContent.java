@@ -74,13 +74,9 @@ public class ViewContent extends JPanel {
 		}
 	}
 	
-	//background
-	
 	public GeneralSprite getBackground(GeneralType type) {
 		return background.get(type);
 	}
-	
-	//buttons
 	
 	public ButtonSprite getButton(ButtonType bt) {
 		return buttons.get(bt);
@@ -151,7 +147,6 @@ public class ViewContent extends JPanel {
 	
 	public void moveTile(TileType type, int i1, int i2) {
 		TileSprite ts = getTile(type, i1);
-		Point A = getTilePosition(i1);
 		Point B = getTilePosition(i2);
 		
 		if (ts != null) {

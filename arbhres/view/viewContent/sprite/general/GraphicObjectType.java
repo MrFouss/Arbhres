@@ -1,6 +1,8 @@
 package arbhres.view.viewContent.sprite.general;
 
+import java.awt.Rectangle;
 import java.awt.geom.Rectangle2D;
+
 import arbhres.view.graphicObject.GraphicObject;
 import arbhres.view.graphicObject.Picture;
 import arbhres.view.graphicObject.Text;
@@ -11,7 +13,7 @@ public enum GraphicObjectType
 	PICTURE,
 	TEXT;
 	
-	public GraphicObject getGraphicObject(Rectangle2D position, String name){
+	public GraphicObject getGraphicObject(Rectangle position, String name){
 	    GraphicObject go;
 	    switch (this) {
 	    case PICTURE:

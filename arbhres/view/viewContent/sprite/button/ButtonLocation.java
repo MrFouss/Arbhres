@@ -1,7 +1,6 @@
 package arbhres.view.viewContent.sprite.button;
 
-import java.awt.geom.Rectangle2D;
-
+import java.awt.Rectangle;
 import arbhres.view.viewContent.sprite.Scaller;
 
 /** 
@@ -11,10 +10,10 @@ import arbhres.view.viewContent.sprite.Scaller;
  * Localize the buttons.
  */
 public enum ButtonLocation {
-	   	NEW_GAME	(new Rectangle2D.Double(200, 1385, 550, 400), 1, 1),
-	   	STORE 		(new Rectangle2D.Double(3575, 1105, 400, 400), 2, 4);    
+	   	NEW_GAME	(new Rectangle(200, 1385, 550, 400), 1, 1),
+	   	STORE 		(new Rectangle(3575, 1105, 400, 400), 2, 4);    
 	   	
-	   	private final Rectangle2D location;
+	   	private final Rectangle location;
 	   	private final int xSize;
 	   	private final int ySize;
 	   	
@@ -25,7 +24,7 @@ public enum ButtonLocation {
 	   	 * Creates a new ButtonLocation.
 	   	 * @param loc Value of the location field
 	   	 */
-	   	private ButtonLocation(Rectangle2D loc, int x, int y) {
+	   	private ButtonLocation(Rectangle loc, int x, int y) {
 	   		location = loc;
 	   		xSize = x;
 	   		ySize = y;
@@ -40,7 +39,7 @@ public enum ButtonLocation {
 	   	 * @param Y y coordinate
 	   	 * @return the new location
 	   	 */
-	   	public Rectangle2D getBox(int X, int Y) {
+	   	public Rectangle getBox(int X, int Y) {
 	   	    int x;
 	   	    int y;
 
@@ -48,10 +47,9 @@ public enum ButtonLocation {
 	   		y = Math.min(Math.max(Y, 0), ySize-1);
 	   	    
 	   	    return Scaller.applyFactor(
-	   		    new Rectangle2D.Double(location.getX() + x * xStep + x * location.getWidth(),
-	   		    location.getY() + y * yStep + y * location.getHeight(),
-	   		    location.getWidth(),
-	   		    location.getHeight())
+	   		    new Rectangle((int)(location.x + x * xStep + x * location.width),
+	   		    (int)(location.y + y * yStep + y * location.height),
+	   		    location.width, location.height)
 	   		    );
 	   	}
     }

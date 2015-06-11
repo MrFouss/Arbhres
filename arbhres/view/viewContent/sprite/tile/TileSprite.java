@@ -1,8 +1,8 @@
 package arbhres.view.viewContent.sprite.tile;
 
 import java.awt.Graphics;
-import java.awt.geom.Point2D;
-import java.awt.geom.Rectangle2D;
+import java.awt.Point;
+import java.awt.Rectangle;
 
 import arbhres.view.graphicObject.Picture;
 import arbhres.view.viewContent.sprite.Sprite;
@@ -24,11 +24,11 @@ public class TileSprite implements Sprite {
     	this.value = value;
     }
     
-    public Rectangle2D getBox() {
+    public Rectangle getBox() {
     	return sprite.getBox();
     }
     
-    public void setPosition(Point2D dest) {
+    public void setPosition(Point dest) {
     	sprite.setLocation(dest);
     }
     
@@ -40,7 +40,7 @@ public class TileSprite implements Sprite {
 		return value;
 	}
 
-	public boolean contains(Point2D p) {
+	public boolean contains(Point p) {
 		return sprite.contains(p);
 	}
 	

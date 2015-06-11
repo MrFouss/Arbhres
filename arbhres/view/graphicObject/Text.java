@@ -5,21 +5,17 @@ import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Point;
+import java.awt.Rectangle;
 import java.awt.RenderingHints;
-import java.awt.geom.Point2D;
-import java.awt.geom.Rectangle2D;
 
 public class Text extends GraphicObject {
 	private String content;
 	private Font font;
 	
-	public Text(Rectangle2D box, String content) {
+	public Text(Rectangle box, String content) {
 		super(box);
-		try {
-			this.content = content;
-		} catch (NullPointerException e) {
-			this.content = "";
-		}
+		this.content = content;
 		this.font = new Font("Arial", Font.PLAIN, 50);
 	}
 	
@@ -49,11 +45,11 @@ public class Text extends GraphicObject {
 		}
 	}
 	
-	private Point2D centerText(Graphics2D g2) {
+	private Point centerText(Graphics2D g2) {
 		FontMetrics fm = g2.getFontMetrics(font);
 		
-		Point2D p = new Point2D.Double(box.getCenterX() - fm.stringWidth(content)/2, 
-				box.getCenterY() + (fm.getAscent() - fm.getDescent())/2);
+		Point p = new Point((int)(box.getCenterX() - fm.stringWidth(content)/2), 
+				(int)(box.getCenterY() + (fm.getAscent() - fm.getDescent())/2));
 		
 		return p;
 	}
@@ -64,7 +60,7 @@ public class Text extends GraphicObject {
 			
 			adaptFont(g2);
 			
-			Point2D point = centerText(g2);
+			Point point = centerText(g2);
 
 			g2.setFont(font);
 			g2.setColor(Color.black);

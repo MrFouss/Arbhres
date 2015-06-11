@@ -120,6 +120,12 @@ public class View extends JFrame implements ModelListener {
 		content.getBackground(GeneralType.SCORE).setValue(String.valueOf(e.getScore()));
 	}
 	
+	public void randomButtonDiscovered(ButtonClickEvent e) {
+		ButtonType bt = Correspondance.ButtonToButtonType(e.getButton());
+		String s = content.getButton(bt).getHint();
+		content.getBackground(GeneralType.HINT).setValue(s);
+	}
+	
 	public static class Correspondance {
 		public static ButtonType ButtonToButtonType(Button e) {
 			ButtonType b;

@@ -1,5 +1,6 @@
 package arbhres.view.viewContent.sprite.button;
 
+import java.awt.Rectangle;
 import java.awt.geom.Rectangle2D;
 
 import arbhres.view.viewContent.sprite.Sprite;
@@ -23,15 +24,9 @@ public enum ButtonType implements SpriteType {
     TURN_LEFT	(ButtonLocation.STORE, 0, 3, "turnLeft", HintPhrase.HINT_TURN_LEFT),
     TURN_RIGHT	(ButtonLocation.STORE, 1, 3, "turnRight", HintPhrase.HINT_TURN_RIGHT);
     
-    /**
-     * sprite UNpressed
-     */
     private String spriteUP;
-    /**
-     * sprite Pressed
-     */
 	private String spriteP;
-    private Rectangle2D location;
+    private Rectangle location;
     private String hint;
     
     private static final String unpressedSuffix = "UP";
@@ -75,7 +70,7 @@ public enum ButtonType implements SpriteType {
 	 * 
 	 * @return returns the location of the sprite
 	 */
-	public Rectangle2D getLocation() {
+	public Rectangle getLocation() {
 		return location;
 	}
     

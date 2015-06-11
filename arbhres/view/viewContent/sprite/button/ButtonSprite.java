@@ -1,7 +1,9 @@
 package arbhres.view.viewContent.sprite.button;
 
 import java.awt.Graphics;
+import java.awt.Point;
 import java.awt.geom.Point2D;
+
 import arbhres.view.graphicObject.*;
 import arbhres.view.viewContent.sprite.Sprite;
 
@@ -28,7 +30,7 @@ public class ButtonSprite implements Sprite {
      * @param point the point to test
      * @return TRUE if it does, FALSE otherwise
      */
-    public boolean contains(Point2D point) {
+    public boolean contains(Point point) {
     	return sprite.contains(point);
     }
     

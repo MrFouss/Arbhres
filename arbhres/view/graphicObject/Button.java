@@ -1,14 +1,14 @@
 package arbhres.view.graphicObject;
 
 import java.awt.Graphics;
-import java.awt.geom.Rectangle2D;
+import java.awt.Rectangle;
 
 public class Button extends GraphicObject {
 	private Picture unpressed;
 	private Picture pressed;
 	private ButtonStatus status;
 	
-	public Button(Rectangle2D box, String Upath, String Ppath) {
+	public Button(Rectangle box, String Upath, String Ppath) {
 		super(box);
 		unpressed = new Picture(box, Upath);
 		pressed = new Picture(box, Ppath);
