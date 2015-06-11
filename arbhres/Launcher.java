@@ -4,6 +4,8 @@ import java.io.IOException;
 
 import arbhres.view.View;
 import arbhres.controller.Controller;
+import arbhres.events.ButtonClickEvent;
+import arbhres.events.ButtonClickEvent.Button;
 import arbhres.model.Model;
 
 /**
@@ -22,7 +24,8 @@ public class Launcher {
 		view.addMouseListener(controller);
 		controller.addControllerListener(model);
 		controller.addControllerListener(model.getRndModifier());
-
+		ButtonClickEvent e = new ButtonClickEvent(Button.NEW_GAME);
+		model.buttonClicked(e);
 		
 	}
 }
