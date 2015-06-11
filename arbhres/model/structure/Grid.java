@@ -359,7 +359,7 @@ public class Grid {
 		if(hasMoved || this.isGridEmpty()) {
 			int side = selectAnySide();
 			int valueNew = queue.poll();
-			model.fireRemoveTile(17);
+			model.fireRemoveTile(19);
 			model.fireMoveTile(18, 19);
 			model.fireMoveTile(17, 18);
 			
@@ -368,7 +368,7 @@ public class Grid {
 				this.model.fireAddTile(rotateTile(nbRotate,side), valueNew);
 				int rndTile = randomTile();
 				queue.offer(rndTile);
-				model.fireAddTile(19, rndTile);
+				model.fireAddTile(17, rndTile);
 				backup = tmpBackup;
 			}
 		}		

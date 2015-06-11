@@ -31,6 +31,7 @@ public class TileQueue {
 	}
 	
 	public void offer(int integer) {
+		System.out.println(integer);
 		this.queue.offer(integer);
 	}
 	
@@ -39,6 +40,10 @@ public class TileQueue {
 	}
 	
 	public int poll() {
+		for(int i = 0; i < 3; i++) {
+			System.out.println(this.queue.peek());
+			this.queue.offer(this.queue.poll());
+		}
 		return this.queue.poll();
 	}
 

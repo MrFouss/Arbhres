@@ -34,7 +34,7 @@ public class Model implements ControllerListener {
 	private final EventListenerList listeners = new EventListenerList();
 	private int targetIndex;
 	private RandomModifier rndModifier;
-	private Object lock;
+	private boolean eraseBool;
 	
 	public RandomModifier getRndModifier() {
 		return rndModifier;
@@ -49,7 +49,7 @@ public class Model implements ControllerListener {
 		this.blindTurn = 0;
 		this.seeTurn = 0;
 		this.targetIndex = -1;
-		this.lock = new Object();
+		this.eraseBool = false;
 		
 	}
 	
@@ -107,12 +107,14 @@ public class Model implements ControllerListener {
 				this.seeTurn = 0;
 				this.targetIndex = -1;
 				grid.initTiles();
+				this.pressButton = true;
+				this.fireReleaseButton(e.getButton());
 				break;
 			case BONUS_ERASE:
 				Erase erase = new Erase(this.grid);
 				if (erase.isAvailable(score) ) {
-					//score-=erase.apply(this.tileIndex);
-					//this.fireScoreChange(score);
+					this.eraseBool = true;
+					this.clickTile = true;
 				}
 				break;
 			case BONUS_PAUSE:
@@ -121,6 +123,7 @@ public class Model implements ControllerListener {
 					score-=pause.apply();
 					this.fireScoreChange(score);
 				}
+				this.pressButton = true;
 				break;
 			case BONUS_RANDOM:
 				this.rndModifier.setBlindTurns(this.blindTurn);
@@ -133,6 +136,7 @@ public class Model implements ControllerListener {
 				this.seeTurn+=this.rndModifier.getSeeTurns();
 				this.targetIndex=this.rndModifier.getTargetIndex();
 				this.fireAddTarget(targetIndex);
+				this.pressButton = true;
 				break;
 			case BONUS_SEE:
 				See see = new See();
@@ -142,6 +146,7 @@ public class Model implements ControllerListener {
 					this.fireScoreChange(score);
 					this.seeTurn += see.getSeeTurns();
 				}
+				this.pressButton = true;
 				break;
 			case BONUS_SWAP:
 				Swap swap = new Swap(grid);
@@ -169,6 +174,7 @@ public class Model implements ControllerListener {
 					score-=swap.apply(tileIndex1, tileIndex2);
 					this.fireScoreChange(score);
 				}
+				this.pressButton = true;
 				break;
 			case BONUS_TURNLEFT:
 				TurnLeft turnLeft = new TurnLeft(grid);
@@ -185,6 +191,7 @@ public class Model implements ControllerListener {
 					score-=turnLeft.apply(this.tileIndex);
 					this.fireScoreChange(score);
 				}
+				this.pressButton = true;
 				break;
 			case BONUS_TURNRIGHT:
 				TurnRight turnRight = new TurnRight(grid);
@@ -201,6 +208,7 @@ public class Model implements ControllerListener {
 					score-=turnRight.apply(this.tileIndex);
 					this.fireScoreChange(score);
 				}
+				this.pressButton = true;
 				break;
 			case BONUS_UNDO:
 				Undo undo = new Undo();
@@ -208,13 +216,13 @@ public class Model implements ControllerListener {
 					score-=undo.apply(grid, backup);
 					this.fireScoreChange(score);
 				}
+				this.pressButton = true;
 				break;
 			default:
 				break;
 			}
-			this.fireReleaseButton(e.getButton());
+			
 			this.moveGrid = true;
-			this.pressButton = true;
 		}
 	}
 	
@@ -250,8 +258,18 @@ public class Model implements ControllerListener {
 		System.out.println("Tile clicked (index: " +e.getTileIndex()+ " ; value: " +e.getTileValue() + ")");
 		if (this.clickTile) {
 			this.tileIndex = e.getTileIndex();
-			this.clickTile = false;
-			this.lock.notify();
+			
+			if (this.eraseBool && tileIndex <= 16) {
+				Erase erase = new Erase(this.grid);
+				this.score = erase.apply(tileIndex);
+				
+				this.fireScoreChange(score);
+				this.fireReleaseButton(Button.BONUS_ERASE);
+				this.pressButton = true;
+				this.clickTile = false;
+			}
+			
+			
 		}
 	}
 	
