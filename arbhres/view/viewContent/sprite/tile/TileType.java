@@ -25,8 +25,8 @@ public enum TileType {
     public static TileType[] getTileTypes() {
     	TileType[] t = {
     			TILE,
-    			HIGHLIGHT,
     			BLIND,
+    			HIGHLIGHT,
     			TARGET
     	};
     	

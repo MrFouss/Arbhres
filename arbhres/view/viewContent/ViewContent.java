@@ -188,7 +188,7 @@ public class ViewContent extends JPanel {
 			
 			for (TileSprite ts : tiles.get(toShow)) {
 				if (ts != null) {
-					ts.setVisible(false);
+					ts.setVisible(true);
 				}
 			}
 		}
