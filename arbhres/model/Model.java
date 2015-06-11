@@ -122,6 +122,7 @@ public class Model implements ControllerListener {
 				if (pause.isAvailable(this.score)) {
 					score-=pause.apply();
 					this.fireScoreChange(score);
+					this.fireReleaseButton(Button.BONUS_PAUSE);
 				}
 				this.pressButton = true;
 				break;
