@@ -95,6 +95,7 @@ public class Grid {
 	 * @param inventory The new value to set
 	 */
 	public void setInventory(int inventory) {
+		model.fireAddTile(16, inventory);
 		this.inventory=inventory;
 	}
 	
@@ -363,6 +364,8 @@ public class Grid {
 			model.fireRemoveTile(19);
 			model.fireMoveTile(18, 19);
 			model.fireMoveTile(17, 18);
+			model.fireRemoveTile(19);
+			model.fireAddTile(19, queue.peek());
 			int rndTile = randomTile();
 			queue.offer(rndTile);
 			model.fireAddTile(17, rndTile);
