@@ -13,15 +13,21 @@ public class TileSprite implements Sprite {
     private final Picture sprite;
     
     public TileSprite(TileLocation loc, TileType type, int value, int x, int y) {
-     	if (type == TileType.TILE) {
-			sprite = new Picture(loc.getBoxOfTile(x, y),
-					path + type.getname() + value + extension);
+     	if (loc != null && type != null) {
+        	if (type == TileType.TILE) {
+    			sprite = new Picture(loc.getBoxOfTile(x, y),
+    					path + type.getname() + value + extension);
+    			this.value = value;
+    		} else {
+    			sprite = new Picture(loc.getBoxOfTile(x, y),
+    					path + type.getname() + extension);
+    			sprite.setOpacity(type.getOpacity());
+    			this.value = 0;
+    		}
 		} else {
-			sprite = new Picture(loc.getBoxOfTile(x, y),
-					path + type.getname() + extension);
-			sprite.setOpacity(type.getOpacity());
+			value = 0;
+			sprite = null;
 		}
-    	this.value = value;
     }
     
     public Rectangle getBox() {
@@ -29,13 +35,15 @@ public class TileSprite implements Sprite {
     }
     
     public void setPosition(Point dest) {
-    	sprite.setLocation(dest);
+    	if (dest != null) {
+    		sprite.setLocation(dest);	
+		}
     }
     
-    public void paint(Graphics g) {
-	sprite.paint(g);
-    }
-
+	public void setVisible(boolean visible) {
+		sprite.setVisible(visible);
+	}
+	
 	public int getValue() {
 		return value;
 	}
@@ -44,7 +52,12 @@ public class TileSprite implements Sprite {
 		return sprite.contains(p);
 	}
 	
-	public void setVisible(boolean visible) {
-		sprite.setVisible(visible);
-	}
+
+	
+    public void paint(Graphics g) {
+    	if (sprite != null) {
+		    sprite.paint(g);	
+		}
+    }
 }
+
