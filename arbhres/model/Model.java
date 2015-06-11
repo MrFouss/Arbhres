@@ -221,7 +221,7 @@ public class Model implements ControllerListener {
 			case BONUS_UNDO:
 				Undo undo = new Undo();
 				if (undo.isAvailable(score, this.backup)) {
-					score-=undo.apply(grid, this.backup);
+					score = undo.apply(grid, this.backup);
 					this.fireScoreChange(score);
 				}
 				this.pressButton = true;
@@ -265,9 +265,9 @@ public class Model implements ControllerListener {
 				this.targetIndex = -1;
 			}
 			
-			if (this.blindTurn != 0) {
+			if (this.blindTurn > 0) {
 				this.blindTurn-=1;
-				if (this.seeTurn == 0) {
+				if (this.blindTurn == 0) {
 					this.fireSwitchBlindMode(false);
 				}
 			}

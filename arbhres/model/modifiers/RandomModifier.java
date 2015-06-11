@@ -14,7 +14,7 @@ import arbhres.model.Model;
  * @version	1.0
  * @since	06/05/2015
  */
-public class RandomModifier implements ControllerListener{
+public class RandomModifier {
 	private Grid grid;
 	private Model model;
 	private boolean clickTile;
@@ -40,7 +40,7 @@ public class RandomModifier implements ControllerListener{
 		Random rnd = new Random();
 		if (/*rnd.nextBoolean()*/true) { //1 chance over 2 to have a malus
 			//maluses
-			switch (rnd.nextInt(4)) {
+			switch (/*rnd.nextInt(4)*/1) {
 			case 0:
 				System.out.println("target");
 				Target target = new Target(this.grid, this.targetIndex );
@@ -74,14 +74,9 @@ public class RandomModifier implements ControllerListener{
 			case 0:
 				Erase erase = new Erase(grid);
 				if (erase.isAvailable(erase.updateScore()) ) {
+					//this.eraseBool = true;
 					this.clickTile = true;
-					while (this.clickTile) {
-						try {
-							Thread.sleep(100);
-						} catch (InterruptedException e1) {
-							
-						}
-					}
+
 					price = erase.apply(this.tileIndex);
 				}
 				break;
@@ -176,22 +171,7 @@ public class RandomModifier implements ControllerListener{
 		return Math.max(score - price, 0);
 	}
 
-	@Override
-	public void buttonClicked(ButtonClickEvent e) {
-	}
 
-	@Override
-	public void gridMoved(MovementEvent e) {	
-	}
-
-	@Override
-	public void tileClicked(TileClickEvent e) {
-		if (this.clickTile) {
-			this.tileIndex = e.getTileIndex();
-			this.clickTile = false;
-		}
-		
-	}
 
 	public int getSeeTurns() {
 		return seeTurns;
