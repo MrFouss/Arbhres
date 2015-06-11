@@ -207,13 +207,25 @@ public class Grid {
 	public int selectAnySide() {
 		Random rnd = new Random();
 		int tileIndex;
-		
+		boolean columnEmpty=true;
+		int column=0;
+		for(int i=0;i<4;i++){
+			if(!isTileEmpty(3+i*4)){
+				column++;
+			}
+		}
+		if(column>0){
+			columnEmpty=true;
+		}
 		// while the selected spot is not empty
-		do {
-			tileIndex = 3 + (rnd.nextInt(3)) * 4; // look for another empty spot
-		} while(!isTileEmpty(tileIndex));
-		
-		return tileIndex;
+		if(columnEmpty){
+			do {
+				tileIndex = 3 + (rnd.nextInt(3)) * 4; // look for another empty spot
+			} while (!isTileEmpty(tileIndex));
+			return tileIndex;
+		} else {
+			return -1;
+		}
 	}
 	
 	
@@ -347,10 +359,12 @@ public class Grid {
 		if(hasMoved || this.isGridEmpty()) {
 			int side = selectAnySide();
 			int valueNew = queue.getQueue().poll();
-			addTile(side, valueNew);
-			model.fireAddTile(rotateTile(nbRotate, side), valueNew);
-			queue.getQueue().offer(randomTile());
-			backup = tmpBackup;
+			if(side != -1){
+				addTile(side, valueNew);
+				model.fireAddTile(rotateTile(nbRotate, side), valueNew);
+				queue.getQueue().offer(randomTile());
+				backup = tmpBackup;
+			}
 		}		
 		
 		switch (direction) {
@@ -451,13 +465,13 @@ public class Grid {
 	}
 	
 	private void displayGrid() {
-		System.out.print("________________________________________________________________");
+		System.out.print("____________________________________________________________");
 		for(int j=0; j<4; j++) {
 			System.out.print("\n|");
 			for(int i=0; i<4; i++) {
-				System.out.print("\t" + tiles[i+j*4] + "\t|");
+				System.out.print("  " + tiles[i+j*4] + "  |");
 			}
 		}
-		System.out.println("\n________________________________________________________________");
+		System.out.println("\n____________________________________________________________");
 	}
 }
