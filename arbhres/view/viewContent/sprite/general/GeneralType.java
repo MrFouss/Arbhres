@@ -6,7 +6,7 @@ import arbhres.view.viewContent.sprite.Sprite;
 public enum GeneralType {
 	BACKGROUND			(GraphicObjectType.PICTURE, new Rectangle(0, 0, 4650, 4325), "background"),
 	SCORE 				(GraphicObjectType.TEXT, new Rectangle(1490, 980, 1950, 227), "0"),
-	HINT				(GraphicObjectType.TEXT, new Rectangle(100, 3975, 4450, 200), "HINT : Will be displayed here !"),
+	HINT				(GraphicObjectType.TEXT, new Rectangle(100, 3975, 4450, 200), "HINTS will be displayed here !"),
 	EXTENDED_NEXT_MENU	(GraphicObjectType.PICTURE,new Rectangle( 200, 1905, 550, 1870), "extendedNextMenu");
 	
 	private String content;

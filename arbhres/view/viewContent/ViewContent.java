@@ -271,21 +271,23 @@ public class ViewContent extends JPanel {
 	
 	public void paint(Graphics g)
 	{
-		for (GeneralSprite s : background.values()) {
-			
-			s.paint(g);
-		}
+		background.get(GeneralType.BACKGROUND).paint(g);
+		background.get(GeneralType.EXTENDED_NEXT_MENU).paint(g);
+		background.get(GeneralType.SCORE).paint(g);
+		background.get(GeneralType.HINT).paint(g);
 		
 		for (ButtonSprite b : buttons.values()) {
 			b.paint(g);
 		}
 
-		for (TileSprite[] ts : tiles.values()) {
-			for (TileSprite a : ts) {
+		TileType[] tt = TileType.getTileTypes();
+		for (int i = 0; i < tt.length; i++) {
+			for (TileSprite a : tiles.get(tt[i])) {
 				if (a != null) {
 					a.paint(g);
 				}
 			}
 		}
+
 	}
 }
