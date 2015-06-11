@@ -54,7 +54,7 @@ public class View extends JFrame implements ModelListener {
 
 	@Override
 	public void switchSeeMode(StateEvent e) {
-		content.setBlindMode(e.getState());
+		content.setSeeMode(e.getState());
 	}
 
 	@Override
@@ -72,10 +72,6 @@ public class View extends JFrame implements ModelListener {
 		ButtonType bt = Correspondance.ButtonToButtonType(e.getButton());
 		content.getButton(bt).setPressed(true);
 		content.getBackground(GeneralType.HINT).setValue(bt.getHint());
-		
-		Graphics g = content.getGraphics();
-		content.getButton(bt).paint(g);
-		g.dispose();
 	}
 
 	@Override
@@ -83,10 +79,6 @@ public class View extends JFrame implements ModelListener {
 		ButtonType bt = Correspondance.ButtonToButtonType(e.getButton());
 		content.getButton(bt).setPressed(false);
 		content.getBackground(GeneralType.HINT).setValue("");
-		
-		Graphics g = content.getGraphics();
-		content.getButton(bt).paint(g);
-		g.dispose();
 	}
 
 	@Override

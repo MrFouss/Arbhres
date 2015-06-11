@@ -22,6 +22,7 @@ public class ViewContent extends JPanel {
 	private HashMap<TileType, TileSprite[]> tiles;
 
 	private boolean blindMode;
+	private boolean seeMode;
 	
 	public ViewContent() {
 	    super();
@@ -32,6 +33,7 @@ public class ViewContent extends JPanel {
 		initTiles();
 
 		blindMode = false;
+		seeMode = false;
 	}
 	
 	public void initViewContent() {
@@ -39,6 +41,7 @@ public class ViewContent extends JPanel {
 		initTiles();
 
 		blindMode = false;
+		seeMode = false;
 	}
 	
 	private void initBackground() {
@@ -94,6 +97,9 @@ public class ViewContent extends JPanel {
 	private void setTile(TileType type, int index, TileSprite ts) {
 		if (index >= 0 && index <= 19) {
 			tiles.get(type)[index] = ts;
+			if (!seeMode && index == 18 || index == 17) {
+				getTile(type, index).setVisible(false);
+			}
 		}
 	}
 	
@@ -161,6 +167,8 @@ public class ViewContent extends JPanel {
 
 	public void setBlindMode(boolean b) {
 		if (blindMode != b) {
+			blindMode = b;
+			
 			TileType toHide;
 			TileType toShow;
 			
@@ -182,6 +190,22 @@ public class ViewContent extends JPanel {
 				if (ts != null) {
 					ts.setVisible(false);
 				}
+			}
+		}
+	}
+	
+	public void setSeeMode(boolean s) {
+		if (s != seeMode) {
+			seeMode = s;
+			
+			for (TileSprite[] ts : tiles.values()) {
+				if (ts[18] != null) {
+					ts[18].setVisible(s);
+				}
+				if (ts[17] != null) {
+					ts[17].setVisible(s);
+				}
+				background.get(GeneralType.EXTENDED_NEXT_MENU).setVisible(s);
 			}
 		}
 	}
