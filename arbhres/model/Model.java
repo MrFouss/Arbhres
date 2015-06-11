@@ -36,6 +36,10 @@ public class Model implements ControllerListener {
 	private int targetIndex;
 	private RandomModifier rndModifier;
 	
+	public RandomModifier getRndModifier() {
+		return rndModifier;
+	}
+
 	public Model () {
 		this.score = 0;
 		this.grid = new Grid(this);
@@ -86,6 +90,7 @@ public class Model implements ControllerListener {
 		if (this.pressButton) {
 			this.moveGrid = false;
 			this.pressButton = false;
+			this.firePressButton(e.getButton());
 			switch (e.getButton()) {
 			case NEW_GAME:
 				this.fireRestartGUI();
@@ -106,7 +111,7 @@ public class Model implements ControllerListener {
 					this.clickTile = true;
 					while (this.clickTile) {
 						try {
-							Thread.sleep(100);
+							Thread.sleep(500);
 						} catch (InterruptedException e1) {
 							
 						}
@@ -123,18 +128,22 @@ public class Model implements ControllerListener {
 				}
 				break;
 			case BONUS_RANDOM:
-				RandomModifier rndMod = new RandomModifier(this.grid, this.targetIndex);
-				score = rndMod.apply(score);
+				this.rndModifier.setBlindTurns(this.blindTurn);
+				this.rndModifier.setSeeTurns(this.seeTurn);
+				this.rndModifier.setTargetIndex(this.targetIndex);
+				
+				score = this.rndModifier.apply(score);
 				this.fireScoreChange(score);
-				this.blindTurn+=rndMod.getBlindTurns();
-				this.seeTurn+=rndMod.getSeeTurns();
-				this.targetIndex=rndMod.getTargetIndex();
+				this.blindTurn+=this.rndModifier.getBlindTurns();
+				this.seeTurn+=this.rndModifier.getSeeTurns();
+				this.targetIndex=this.rndModifier.getTargetIndex();
 				//TODO add fire target
 				break;
 			case BONUS_SEE:
 				See see = new See();
 				if(see.isAvailable(this.score)) {
 					score -= see.apply();
+					this.fireSwitchSeeMode(true);
 					this.fireScoreChange(score);
 					this.seeTurn += see.getSeeTurns();
 				}
@@ -208,6 +217,7 @@ public class Model implements ControllerListener {
 			default:
 				break;
 			}
+			//this.fireReleaseButton(e.getButton());
 			this.moveGrid = true;
 			this.pressButton = true;
 		}

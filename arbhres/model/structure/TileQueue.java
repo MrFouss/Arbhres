@@ -2,6 +2,8 @@ package arbhres.model.structure;
 
 import java.util.*;
 
+import arbhres.model.Model;
+
 /**
  * @author	Pierre Brunet "pierre.brunet@krophil.fr"
  * @version	1.0
@@ -12,6 +14,7 @@ import java.util.*;
  */
 public class TileQueue {
 	private Queue<Integer> queue;
+	private Model model;
 
 	/**
 	 * Queue constructor with no parameters
@@ -27,6 +30,7 @@ public class TileQueue {
 	
 	public void offer(int integer) {
 		this.queue.offer(integer);
+		model.fireAddTile(19, integer);
 	}
 	
 	public int peek() {
@@ -34,6 +38,9 @@ public class TileQueue {
 	}
 	
 	public int poll() {
+		model.fireRemoveTile(17);
+		model.fireMoveTile(18, 17);
+		model.fireMoveTile(19, 18);
 		return this.queue.poll();
 	}
 

@@ -151,7 +151,6 @@ public class Grid {
 			this.tiles[tileIndex]=-1;
 		}
 		model.fireRemoveTile(tileIndex);
-		model.fireRefreshGUI();
 	}
 	
 	/**
@@ -172,6 +171,7 @@ public class Grid {
 	 */
 	public void addTile(int coord, int value) {
 		this.tiles[coord] = value;
+		model.fireAddTile(coord, value);
 	}
 	
 	/**

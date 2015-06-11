@@ -21,6 +21,7 @@ public class Launcher {
 		view.addKeyListener(controller);
 		view.addMouseListener(controller);
 		controller.addControllerListener(model);
+		controller.addControllerListener(model.getRndModifier());
 
 		
 	}

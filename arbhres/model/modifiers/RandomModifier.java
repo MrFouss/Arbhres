@@ -26,11 +26,11 @@ public class RandomModifier implements ControllerListener{
 	 * 
 	 * @param grid The main grid
 	 */
-	public RandomModifier(Grid grid, int targetIndex) {
+	public RandomModifier(Grid grid) {
 		this.grid = grid;
 		this.seeTurns = 0;
 		this.blindTurns = 0;
-		this.targetIndex = targetIndex;
+		this.targetIndex = -1;
 	}
 	
 	public long apply(long score) {
@@ -186,15 +186,28 @@ public class RandomModifier implements ControllerListener{
 	}
 
 	public int getSeeTurns() {
-		return this.seeTurns;
+		return seeTurns;
+	}
+
+	public void setSeeTurns(int seeTurns) {
+		this.seeTurns = seeTurns;
 	}
 
 	public int getBlindTurns() {
-		return this.blindTurns;
+		return blindTurns;
+	}
+
+	public void setBlindTurns(int blindTurns) {
+		this.blindTurns = blindTurns;
 	}
 
 	public int getTargetIndex() {
-		return this.targetIndex;
+		return targetIndex;
 	}
-	
+
+	public void setTargetIndex(int targetIndex) {
+		this.targetIndex = targetIndex;
+	}
+
+
 }
