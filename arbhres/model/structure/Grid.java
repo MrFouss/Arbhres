@@ -220,7 +220,7 @@ public class Grid {
 		// while the selected spot is not empty
 		if(columnEmpty){
 			do {
-				tileIndex = 3 + (rnd.nextInt(3)) * 4; // look for another empty spot
+				tileIndex = 3 + (rnd.nextInt(4)) * 4; // look for another empty spot
 			} while (!isTileEmpty(tileIndex));
 			return tileIndex;
 		} else {
