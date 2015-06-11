@@ -239,7 +239,14 @@ public class Model implements ControllerListener {
 				score+=scoreChange;
 				this.fireScoreChange(score);
 				blindTurn = Math.max(blindTurn - 1, -1);
-				seeTurn = Math.max(seeTurn - 1, -1);
+			}
+			
+			if (this.seeTurn != 0) {
+				this.seeTurn-=1;
+				if (this.seeTurn == 0) {
+					this.fireSwitchSeeMode(false);
+					this.fireReleaseButton(Button.BONUS_SEE);
+				}
 			}
 			
 			if (this.targetIndex != -1) {
