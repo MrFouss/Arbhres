@@ -128,6 +128,7 @@ public class RandomModifier {
 					
 					price = swap.updateScore();
 				}
+				break;
 				default:
 					return score;
 			}

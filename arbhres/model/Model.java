@@ -328,10 +328,8 @@ public class Model implements ControllerListener {
 				if (swapStep == 1) {
 					this.fireHighlightTile(tileIndex);
 					this.tileIndex2 = this.tileIndex;
-					System.out.println("et de 1");
 					this.swapStep++;
 				} else {
-					System.out.println("et de 2");
 					long chgScore;
 					Swap swap = new Swap(grid);
 	
