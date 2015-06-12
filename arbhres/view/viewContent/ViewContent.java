@@ -131,15 +131,13 @@ public class ViewContent extends JPanel {
 				new TileSprite(getTileLocation(index), type, value, p.x, p.y));
 		if (type == TileType.TILE) {
 			setTile(TileType.BLIND, index,
-					new TileSprite(getTileLocation(index), TileType.BLIND, 0, p.x, p.y));
+					new TileSprite(getTileLocation(index), TileType.BLIND, 0, p.x, p.y));			
 			if (blindMode) {
 				getTile(type, index).setVisible(false);
 			} else {
 				getTile(TileType.BLIND, index).setVisible(false);
 			}
 		}
-		
-
 	}
 	
 	public void removeTile(TileType type, int index)
@@ -152,16 +150,18 @@ public class ViewContent extends JPanel {
 	
 	public void moveTile(TileType type, int i1, int i2) {
 		TileSprite ts = getTile(type, i1);
+		TileSprite ts2 = getTile(TileType.BLIND, i1);
 		Point B = getTilePosition(i2);
 		
 		if (ts != null) {
-			ts.setPosition(getTileLocation(i2).getCoordinateOfTile((int)B.getX(), (int)B.getY()));
+			ts.setPosition(getTileLocation(i2).getCoordinateOfTile(B.x, B.y));
 			setTile(type, i2, ts);
 			removeTile(type, i1);
-		}
-
-		if (type == TileType.TILE) {
-			moveTile(TileType.BLIND, i1, i2);
+			if (type == TileType.TILE) {
+				ts2.setPosition(getTileLocation(i2).getCoordinateOfTile(B.x, B.y));	
+				setTile(TileType.BLIND, i2, ts2);
+				removeTile(TileType.BLIND, i1);
+			}
 		}
 	}
 
@@ -190,6 +190,20 @@ public class ViewContent extends JPanel {
 				if (ts != null) {
 					ts.setVisible(true);
 				}
+			}
+			
+			TileType toHide2;
+			if (b) {
+				toHide2 = TileType.BLIND;
+			} else {
+				toHide2 = TileType.TILE;
+			}
+			
+			if (getTile(toHide2, 18) != null) {
+				getTile(toHide2, 18).setVisible(false);
+			}
+			if (getTile(toHide2, 17) != null) {
+				getTile(toHide2, 17).setVisible(false);
 			}
 		}
 	}
