@@ -22,6 +22,10 @@ public class RandomModifier {
 	private int seeTurns;
 	private int blindTurns;
 	private int targetIndex;
+	private boolean eraseBool;
+	private boolean lTurnBool;
+	private boolean rTurnBool;
+	private int swapStep;
 	
 	/**
 	 * Create the modifier without price, which is generated each time the bonus is used
@@ -34,13 +38,23 @@ public class RandomModifier {
 		this.blindTurns = 0;
 		this.targetIndex = -1;
 		this.model = model;
+		this.eraseBool = false;
+		this.seeTurns = 0;
+		this.lTurnBool = false;
+		this.rTurnBool = false;
+		this.swapStep = 0;
 	}
 	
 	public long apply(long score) {
 		Random rnd = new Random();
-		if (/*rnd.nextBoolean()*/true) { //1 chance over 2 to have a malus
+		this.eraseBool = false;
+		this.lTurnBool = false;
+		this.rTurnBool = false;
+		this.clickTile = false;
+		
+		if (rnd.nextBoolean()) { //1 chance over 2 to have a malus
 			//maluses
-			switch (/*rnd.nextInt(4)*/1) {
+			switch (rnd.nextInt(4)) {
 			case 0:
 				System.out.println("target");
 				Target target = new Target(this.grid, this.targetIndex );
@@ -50,10 +64,9 @@ public class RandomModifier {
 				}
 				break;
 			case 1:
-				System.out.println("blind");
 				Blind blind = new Blind();
 				score-=blind.apply();
-				blindTurns += blind.getBlindTurns();
+				this.blindTurns = blind.getBlindTurns();
 				break;
 			case 2:
 				System.out.println("rlturn");
@@ -70,83 +83,56 @@ public class RandomModifier {
 		} else {
 			//bonuses
 			long price = 0;
+			
 			switch (rnd.nextInt(6)) {
 			case 0:
 				Erase erase = new Erase(grid);
 				if (erase.isAvailable(erase.updateScore()) ) {
-					//this.eraseBool = true;
+					this.eraseBool = true;
 					this.clickTile = true;
-
-					price = erase.apply(this.tileIndex);
+					price = erase.updateScore();
 				}
 				break;
 			case 1:
 				See see = new See();
-				price = see.apply();
+				see.apply();
 				this.seeTurns += see.getSeeTurns();
 				break;
 			case 2:
 				Pause pause = new Pause(grid.getQueue());
-				price = pause.apply();
+				pause.apply();
 				break;
 			case 3:
 				TurnLeft turnLeft = new TurnLeft(grid);
-
+				
 				this.clickTile = true;
-				while (this.clickTile) {
-					try {
-						Thread.sleep(100);
-					} catch (InterruptedException e1) {
-						
-					}
-				}
-				price = turnLeft.apply(this.tileIndex);
+				this.lTurnBool = true;
+
+				price = turnLeft.updateScore();
 				break;
 			case 4:
 				TurnRight turnRight = new TurnRight(grid);
 				
 				this.clickTile = true;
-				while (this.clickTile) {
-					try {
-						Thread.sleep(100);
-					} catch (InterruptedException e1) {
-						
-					}
-				}
-				price = turnRight.apply(this.tileIndex);
+				this.rTurnBool = true;
+
+				price = turnRight.updateScore();
 				break;
 			case 5:
 				Swap swap = new Swap(grid);
-				int tileIndex1, tileIndex2;
 				
 				if (swap.isAvailable(swap.updateScore()) ) {
+					
 					this.clickTile = true;
-					while (this.clickTile) {
-						try {
-							Thread.sleep(100);
-						} catch (InterruptedException e1) {
-							
-						}
-					}
-					tileIndex1 = this.tileIndex;
-					this.clickTile = true;
-					while (this.clickTile) {
-						try {
-							Thread.sleep(100);
-						} catch (InterruptedException e1) {
-							
-						}
-					}
-					tileIndex2 = this.tileIndex;
-					swap.apply(tileIndex1, tileIndex2);
+					this.swapStep = 1;
+					
+					price = swap.updateScore();
 				}
 				default:
 					return score;
 			}
+			return this.updateScore(score) + price;
 		}
-		
-		
-		return this.updateScore(score);
 	}
 	
 	/**
@@ -197,5 +183,22 @@ public class RandomModifier {
 		this.targetIndex = targetIndex;
 	}
 
+	public boolean getEraseBool() {
+		return this.eraseBool;
+	}
+	public boolean getlTurnBool() {
+		return lTurnBool;
+	}
 
+	public boolean getrTurnBool() {
+		return rTurnBool;
+	}
+
+	public boolean getClickTile() {
+		return clickTile;
+	}
+	
+	public int getSwapStep() {
+		return this.swapStep;
+	}
 }

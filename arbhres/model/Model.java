@@ -144,7 +144,6 @@ public class Model implements ControllerListener {
 				RandomModifier rndModifier = new RandomModifier(this.grid, this);
 				rndModifier.setTargetIndex(this.targetIndex);
 				rndModifier.setBlindTurns(this.blindTurn);
-				
 				rndModifier.setSeeTurns(this.seeTurn);
 				
 				
@@ -159,12 +158,42 @@ public class Model implements ControllerListener {
 					this.fireSwitchBlindMode(true);
 				}
 				
-				this.seeTurn+=rndModifier.getSeeTurns();
+				
+				this.clickTile = rndModifier.getClickTile();
+				
+				if (rndModifier.getEraseBool()) {
+					this.eraseBool = true;
+					this.firePressButton(Button.BONUS_ERASE);
+				}
+				
+				if (rndModifier.getSeeTurns() > 0) {
+					this.seeTurn = rndModifier.getSeeTurns();
+					this.fireSwitchSeeMode(true);
+					this.firePressButton(Button.BONUS_SEE);
+				}
+				
+				if (rndModifier.getlTurnBool()) {
+					this.lTurnBool = true;
+					this.firePressButton(Button.BONUS_TURNLEFT);
+				}
+				
+				if (rndModifier.getrTurnBool()) {
+					this.rTurnBool = true;
+					this.firePressButton(Button.BONUS_TURNRIGHT);
+				}
+				
+				if (rndModifier.getSwapStep() == 1) {
+					this.swapStep = 1;
+					this.firePressButton(Button.BONUS_SWAP);
+				}
+				
+				
 
-
-
-				this.pressButton = true;
-				this.moveGrid = true;
+				if (!this.clickTile) {
+					this.pressButton = true;
+					this.moveGrid = true;
+				}
+				
 				this.fireReleaseButton(Button.BONUS_RANDOM);
 				break;
 			case BONUS_SEE:
@@ -248,7 +277,6 @@ public class Model implements ControllerListener {
 			if (scoreChange != -1) {
 				score+=scoreChange;
 				this.fireScoreChange(score);
-				blindTurn = Math.max(blindTurn - 1, -1);
 			}
 			
 			if (this.seeTurn != 0) {
