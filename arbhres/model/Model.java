@@ -105,7 +105,7 @@ public class Model implements ControllerListener {
 				this.fireRestartGUI();
 				this.firePressButton(e.getButton());
 				this.fireRefreshGUI();
-				this.score = 100000000;
+				this.score = 0;
 				this.fireScoreChange(score);
 				this.grid = new Grid(this);
 				this.pressButton = true;
