@@ -16,6 +16,7 @@ import arbhres.view.viewContent.sprite.tile.TileSprite;
 import arbhres.view.viewContent.sprite.tile.TileType;
 
 public class ViewContent extends JPanel {
+	private static final long serialVersionUID = 6598338911570957351L;
 	private HashMap<GeneralType, GeneralSprite> background;
 	private HashMap<ButtonType, ButtonSprite> buttons;
 	private HashMap<TileType, TileSprite[]> tiles;

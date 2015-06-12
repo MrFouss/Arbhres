@@ -141,7 +141,7 @@ public class Model implements ControllerListener {
 				this.moveGrid = true;
 				break;
 			case BONUS_RANDOM:
-				RandomModifier rndModifier = new RandomModifier(this.grid, this);
+				RandomModifier rndModifier = new RandomModifier(this.grid);
 				rndModifier.setTargetIndex(this.targetIndex);
 				rndModifier.setBlindTurns(this.blindTurn);
 				rndModifier.setSeeTurns(this.seeTurn);

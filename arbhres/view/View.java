@@ -15,7 +15,8 @@ import arbhres.view.viewContent.sprite.general.GeneralType;
 import arbhres.view.viewContent.sprite.tile.TileType;
 
 public class View extends JFrame implements ModelListener {
-    	private ViewContent content;
+	private static final long serialVersionUID = 5484895230228945076L;
+		private ViewContent content;
     
 	public View() {
 	    super("Arbhres!");

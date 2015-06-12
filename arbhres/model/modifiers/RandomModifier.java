@@ -2,12 +2,7 @@ package arbhres.model.modifiers;
 
 import java.util.Random;
 
-import arbhres.events.ButtonClickEvent;
-import arbhres.events.MovementEvent;
-import arbhres.events.TileClickEvent;
-import arbhres.controller.listeners.ControllerListener;
 import arbhres.model.structure.Grid;
-import arbhres.model.Model;
 
 /**
  * @author Stéphane Perrez "stephane.perrez@utbm.fr"
@@ -16,9 +11,7 @@ import arbhres.model.Model;
  */
 public class RandomModifier {
 	private Grid grid;
-	private Model model;
 	private boolean clickTile;
-	private int tileIndex;
 	private int seeTurns;
 	private int blindTurns;
 	private int targetIndex;
@@ -32,12 +25,11 @@ public class RandomModifier {
 	 * 
 	 * @param grid The main grid
 	 */
-	public RandomModifier(Grid grid, Model model) {
+	public RandomModifier(Grid grid) {
 		this.grid = grid;
 		this.seeTurns = 0;
 		this.blindTurns = 0;
 		this.targetIndex = -1;
-		this.model = model;
 		this.eraseBool = false;
 		this.seeTurns = 0;
 		this.lTurnBool = false;
